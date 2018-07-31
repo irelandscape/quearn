@@ -1,3 +1,2 @@
-# Quasar App
-
-> WIP
+# steemqa
+A Q&amp;A Steem Application
