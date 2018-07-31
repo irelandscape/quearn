@@ -1,0 +1,2 @@
+https://v2.steemconnect.com/oauth2/authorize?client_id=steemqa&redirect_uri=http%3A%2F%2Flocalhost%3A3000&scope=vote,comment
+https://v2.steemconnect.com/oauth2/authorize?client_id=demo-app&redirect_uri=http%3A%2F%2Flocalhost%3A3000&scope=vote,comment
