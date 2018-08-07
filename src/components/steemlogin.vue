@@ -6,12 +6,13 @@
             color="primary"
             @click="rightDrawerOpen = !rightDrawerOpen"
           >
-          {{username}}
+            {{username}}
           </q-chip>
 
           <q-layout-drawer
             v-model="rightDrawerOpen"
             side = "right"
+            :overlay=true
             :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
           >
             <q-list
@@ -22,23 +23,29 @@
               <q-list-header>My Account</q-list-header>
               <q-item @click.native="openURL('http://quasar-framework.org')">
                 <q-item-side icon="account_box" />
-                <q-item-main label="Profile" />
+                <q-item-main :label="$tc('myaccount')" />
               </q-item>
               <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
                 <q-item-side icon="bookmark" />
-                <q-item-main label="Bookmarks" />
+                <q-item-main :label="$tc('bookmark', 2)" />
               </q-item>
               <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
-                <q-item-side icon="live_help" />
-                <q-item-main label="My Questions" />
+                <q-item-side icon="contact_support" />
+                <q-item-main :label="$t('myquestions')" />
               </q-item>
+
+              <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
+                <q-item-side icon="check_circle" />
+                <q-item-main :label="$t('myanswers')" />
+              </q-item>
+
               <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
                 <q-item-side icon="message" />
-                <q-item-main label="My Comments" />
+                <q-item-main :label="$t('mycomments')" />
               </q-item>
               <q-item @click.native="openURL('https://github.com/quasarframework/')">
                 <q-item-side icon="assignment" />
-                <q-item-main label="My Topics" />
+                <q-item-main :label="$t('mytopics')" />
               </q-item>
               <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
                 <q-item-side icon="chat" />
@@ -46,7 +53,7 @@
               </q-item>
               <q-item @click.native="logout()">
                 <q-item-side icon="exit_to_app" />
-                <q-item-main label="Logout" />
+                <q-item-main :label="$t('logout')" />
               </q-item>
             </q-list>
           </q-layout-drawer>
@@ -54,7 +61,7 @@
         <template v-else>
           <q-btn
             @click="login()"
-            label = "login"
+            :label = "$t('login')"
           >
           </q-btn>
         </template>

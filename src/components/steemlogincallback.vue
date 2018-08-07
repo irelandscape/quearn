@@ -20,10 +20,7 @@ export default {
       return this.$store.dispatch('auth/login', get(this.$route, 'query'))
     }
   },
-
-  // mounted hook.
   mounted () {
-    console.log('hello')
     // call the parse query method upon render.
     return this.parseQuery()
       .then(() => {

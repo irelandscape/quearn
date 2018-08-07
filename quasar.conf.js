@@ -4,6 +4,7 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
+      'i18n'
     ],
     css: [
       'app.styl'
@@ -54,7 +55,14 @@ module.exports = function (ctx) {
         'QItem',
         'QItemMain',
         'QItemSide',
-        'QChip'
+        'QChip',
+        'QTabs',
+        'QTab',
+        'QTabPane',
+        'QCard',
+        'QCardMain',
+        'QCardSeparator',
+        'QCardTitle'
       ],
       directives: [
         'Ripple'

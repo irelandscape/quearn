@@ -25,6 +25,8 @@
 
     <q-layout-drawer
       v-model="leftDrawerOpen"
+      side = "left"
+      :overlay=false
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
     >
       <q-list
@@ -45,7 +47,37 @@
     </q-layout-drawer>
 
     <q-page-container>
-      <router-view />
+      <q-tabs
+        class="justified"
+        align="center"
+        :inverted="$q.theme === 'ios'"
+      >
+        <q-tab
+          default slot="title" icon="home"
+          name="tab-home"
+        >
+          {{ $t('home') }}
+        </q-tab>
+        <q-tab
+          default slot="title" icon="search"
+          name="tab-search"
+        >
+          {{ $t('search') }}
+        </q-tab>
+
+        <q-tab-pane name="tab-home">
+          <steemcard
+            cssstyle="width: 350px; height: 200px"
+            blocknbr="58678105"
+          >
+          </steemcard>
+        </q-tab-pane>
+
+        <q-tab-pane name="tab-search">
+          Search
+        </q-tab-pane>
+      </q-tabs>
+
     </q-page-container>
   </q-layout>
 </template>
@@ -53,22 +85,29 @@
 <script>
 import { openURL } from 'quasar'
 import Steemlogin from 'components/steemlogin'
+import Steemcard from 'components/steemcard'
 
 export default {
   name: 'LayoutDefault',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: this.$q.platform.is.desktop,
+      steemcardstyle: 'width: 500px'
     }
   },
   methods: {
     openURL
   },
   components: {
-    Steemlogin
+    Steemlogin,
+    Steemcard
   }
 }
 </script>
 
-<style>
+<style lang="stylus">
+  @import '~variables'
+  .q-tabs-bar
+    color orange
+    margin-bottom: 1px;
 </style>
