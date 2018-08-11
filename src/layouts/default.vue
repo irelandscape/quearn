@@ -66,11 +66,10 @@
         </q-tab>
 
         <q-tab-pane name="tab-home">
-          <steemcard
-            cssstyle="width: 350px; height: 200px"
-            blocknbr="58678105"
+          <steemcardswiper
+            :query="{tag: 'steemstem'}"
           >
-          </steemcard>
+          </steemcardswiper>
         </q-tab-pane>
 
         <q-tab-pane name="tab-search">
@@ -85,14 +84,13 @@
 <script>
 import { openURL } from 'quasar'
 import Steemlogin from 'components/steemlogin'
-import Steemcard from 'components/steemcard'
+import Steemcardswiper from 'components/steemcardswiper'
 
 export default {
   name: 'LayoutDefault',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop,
-      steemcardstyle: 'width: 500px'
+      leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
   methods: {
@@ -100,7 +98,7 @@ export default {
   },
   components: {
     Steemlogin,
-    Steemcard
+    Steemcardswiper
   }
 }
 </script>
