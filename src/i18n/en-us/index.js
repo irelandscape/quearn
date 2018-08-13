@@ -11,5 +11,6 @@ export default {
   mycomments: 'my comments',
   myquestions: 'my questions',
   mytopics: 'my topics',
+  newquestion: 'new question',
   search: 'search'
 }

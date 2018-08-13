@@ -4,7 +4,8 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
-      'i18n'
+      'i18n',
+      'steemfilters'
     ],
     css: [
       'app.styl'
@@ -57,13 +58,16 @@ module.exports = function (ctx) {
         'QItemSide',
         'QChip',
         'QTabs',
+        'QRouteTab',
         'QTab',
         'QTabPane',
         'QCard',
         'QCardMain',
         'QCardSeparator',
         'QCardTitle',
-        'QCardMedia'
+        'QCardMedia',
+        'QModal',
+        'QTooltip',
       ],
       directives: [
         'Ripple'

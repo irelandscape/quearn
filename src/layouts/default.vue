@@ -26,6 +26,7 @@
     <q-layout-drawer
       v-model="leftDrawerOpen"
       side = "left"
+      :breakpoint = 99999
       :overlay=false
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
     >
@@ -47,36 +48,7 @@
     </q-layout-drawer>
 
     <q-page-container>
-      <q-tabs
-        class="justified"
-        align="center"
-        :inverted="$q.theme === 'ios'"
-      >
-        <q-tab
-          default slot="title" icon="home"
-          name="tab-home"
-        >
-          {{ $t('home') }}
-        </q-tab>
-        <q-tab
-          default slot="title" icon="search"
-          name="tab-search"
-        >
-          {{ $t('search') }}
-        </q-tab>
-
-        <q-tab-pane name="tab-home">
-          <steemcardswiper
-            :query="{tag: 'steemstem'}"
-          >
-          </steemcardswiper>
-        </q-tab-pane>
-
-        <q-tab-pane name="tab-search">
-          Search
-        </q-tab-pane>
-      </q-tabs>
-
+      <router-view />
     </q-page-container>
   </q-layout>
 </template>
@@ -84,7 +56,8 @@
 <script>
 import { openURL } from 'quasar'
 import Steemlogin from 'components/steemlogin'
-import Steemcardswiper from 'components/steemcardswiper'
+import Pagemain from 'pages/main'
+import Pagequestion from 'pages/question'
 
 export default {
   name: 'LayoutDefault',
@@ -94,11 +67,15 @@ export default {
     }
   },
   methods: {
-    openURL
+    openURL,
+    showquestion: function () {
+      console.log('hello')
+    }
   },
   components: {
     Steemlogin,
-    Steemcardswiper
+    Pagemain,
+    Pagequestion
   }
 }
 </script>
@@ -108,4 +85,7 @@ export default {
   .q-tabs-bar
     color orange
     margin-bottom: 1px;
+
+  #questiondetails
+    hidden
 </style>
