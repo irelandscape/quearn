@@ -27,16 +27,27 @@
     <q-field
       icon="notes"
       label="Description"
-      label-width=1
       helper="Use this field to elaborate on your question."
     >
       <q-input
         type="textarea"
         :value="input" @input="update"
+        class="boxed"
       />
     </q-field>
+
+    <q-field
+      inset="full"
+    >
+      <q-btn
+        color="primary"
+        icon="send"
+        :label="$t('submit')"
+      />
+    </q-field>
+
     <strong>Preview</strong>
-    <div class="result" v-html="compiledMarkdown"></div>
+    <div class="blog" v-html="compiledMarkdown"></div>
   </q-tab-pane>
 </template>
 
@@ -82,10 +93,14 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-  .result
-    padding: 1rem;
-    background: #eeeeee;
-    border: 1px solid #666666;
+<style lang="stylus" scoped>
+  @import "../assets/css/blog.styl"
 
+  .blog
+    background: #eeeeee;
+    border: 1px solid grey;
+
+  .boxed
+    border: 1px solid grey;
+    padding: 0.2rem;
 </style>

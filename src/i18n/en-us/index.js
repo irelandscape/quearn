@@ -15,5 +15,6 @@ export default {
   mytopics: 'My topics',
   newquestion: 'New question',
   questionrequirement: 'Must finish with a question mark!',
-  search: 'Search'
+  search: 'Search',
+  submit: 'Submit'
 }

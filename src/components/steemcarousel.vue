@@ -13,14 +13,22 @@
       >
         <img :src="image(blog)"/>
         <h2>{{blog.title}}</h2>
-        <span class="author">by {{blog.author}}</span>
+        <span class="author">
+          by {{blog.author}}
+        </span>
+        <div>
+          <timeago :datetime="blog.created" :auto-update="60"></timeago>
+        </div>
       </div>
       <div v-else class="mobile"
         v-on:click="showquestion(blog)"
       >
         <img :src="image(blog)"/>
         <h2>{{blog.title}}</h2>
-        <span class="author">by {{blog.author}}</span>
+        <span class="author">
+          by {{blog.author}},
+          <timeago :datetime="blog.created" :auto-update="60"></timeago>
+        </span>
       </div>
     </q-carousel-slide>
   </q-carousel>
@@ -105,6 +113,10 @@ export default {
     font-size: 1.0rem;
 
   >>> .author
+    color: #ffa500;
+    font-style: italic;
+
+  >>> time
     color: grey;
     font-style: italic;
 </style>

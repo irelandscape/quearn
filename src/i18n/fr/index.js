@@ -14,5 +14,6 @@ export default {
   mytopics: 'Mes sujets',
   newquestion: 'Nouvelle question',
   questionrequirement: 'Doit finir avec un point d\'interrogation!',
-  search: 'Rechercher'
+  search: 'Rechercher',
+  submit: 'Envoyer'
 }
