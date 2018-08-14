@@ -2,15 +2,17 @@
 
 // en-us translation files.
 export default {
-  bookmark: 'favoris',
-  home: 'acceuil',
-  login: 'se connecter',
-  logout: 'se deconnecter',
-  myaccount: 'mon compte',
-  myanswers: 'mes réponses',
-  mycomments: 'mes commentaires',
-  myquestions: 'mes questions',
-  mytopics: 'mes sujets',
-  newquestion: 'nouvelle question',
-  search: 'rechercher'
+  about: 'Infos',
+  bookmark: 'Favoris',
+  home: 'Acceuil',
+  login: 'Se connecter',
+  logout: 'Se deconnecter',
+  myaccount: 'Mon compte',
+  myanswers: 'Mes réponses',
+  mycomments: 'Mes commentaires',
+  myquestions: 'Mes questions',
+  mytopics: 'Mes sujets',
+  newquestion: 'Nouvelle question',
+  questionrequirement: 'Doit finir avec un point d\'interrogation!',
+  search: 'Rechercher'
 }

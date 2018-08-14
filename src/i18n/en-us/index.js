@@ -2,15 +2,18 @@
 
 // en-us translation files.
 export default {
-  bookmark: 'bookmark | bookmarks',
-  home: 'home',
-  login: 'login',
-  logout: 'logout',
-  myaccount: 'my account',
-  myanwsers: 'my answers',
-  mycomments: 'my comments',
-  myquestions: 'my questions',
-  mytopics: 'my topics',
-  newquestion: 'new question',
-  search: 'search'
+  about: 'About',
+  bookmark: 'Bookmark | Bookmarks',
+  home: 'Home',
+  latestquestions: 'Latest questions',
+  login: 'Login',
+  logout: 'Logout',
+  myaccount: 'My account',
+  myanwsers: 'My answers',
+  mycomments: 'My comments',
+  myquestions: 'My questions',
+  mytopics: 'My topics',
+  newquestion: 'New question',
+  questionrequirement: 'Must finish with a question mark!',
+  search: 'Search'
 }

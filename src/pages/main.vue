@@ -27,6 +27,13 @@
       >
         {{ $t('search') }}
       </q-route-tab>
+      <q-route-tab
+        slot="title" icon="info"
+        name="tab-about"
+        to="about"
+      >
+        {{ $t('about') }}
+      </q-route-tab>
       <router-view/>
     </q-tabs>
   </q-page>

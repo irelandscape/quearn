@@ -17,7 +17,7 @@
             <div>
               {{blog.author}}
               in <span class="topic">{{topic}}</span><br/>
-              3 days ago
+              <timeago :datetime="blog.created" :auto-update="60"></timeago>
             </div>
           </div>
         </q-card-title>

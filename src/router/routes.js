@@ -18,14 +18,17 @@ export default [
           {
             path: 'newquestion',
             name: 'newquestion',
-            component: () => import('components/tabnewquestion'),
-            props: true
+            component: () => import('components/tabnewquestion')
           },
           {
             path: 'search',
             name: 'search',
-            component: () => import('components/tabsearch'),
-            props: true
+            component: () => import('components/tabsearch')
+          },
+          {
+            path: 'about',
+            name: 'about',
+            component: () => import('components/tababout')
           }
         ]
       },

@@ -8,17 +8,17 @@
             <div slot="subtitle">by {{ blog.author }}</div>
         </q-toolbar-title>
         <q-btn
-          @click="login()"
+          @click="vm.$router.go(-1)"
           size="lg"
           to="/"
         >
-          <q-icon name="close" outlined >
+          <q-icon name="close" outlined>
             <q-tooltip>Back</q-tooltip>
           </q-icon>
         </q-btn>
     </q-toolbar>
     <div class="content">
-      <div v-html="blogBody" />
+      <div v-html="getBlogBody()" />
       <steemblogctrl :blog="blog" />
     </div>
   </q-page>
@@ -34,13 +34,28 @@ export default {
   },
   props: {
     blog: Object,
-    blogBody: String
+    blogBody: {
+      type: String,
+      default: null
+    }
   },
   data () {
     return {
     }
   },
   methods: {
+    getBlogBody: function () {
+      if (this.blogBody) {
+        return this.blogBody
+      } else {
+        let Remarkable = require('remarkable')
+        let md = new Remarkable({
+          html: true,
+          linkify: true
+        })
+        return md.render(this.blog.body)
+      }
+    }
   }
 }
 </script>

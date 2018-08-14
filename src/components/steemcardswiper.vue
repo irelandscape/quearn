@@ -17,6 +17,7 @@ import { Client } from 'dsteem'
 export default {
   name: 'Steemcardswiper',
   props: {
+    filter: String,
     query: Object
   },
   data () {
@@ -46,7 +47,7 @@ export default {
   mounted () {
     const client = new Client('https://api.steemit.com')
     this.query.limit = 10
-    client.database.getDiscussions('trending', this.query).then(response => {
+    client.database.getDiscussions(this.filter, this.query).then(response => {
       console.log(response)
       this.blogs = response
     })
