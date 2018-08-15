@@ -8,7 +8,6 @@
             <div slot="subtitle">by {{ blog.author }}</div>
         </q-toolbar-title>
         <q-btn
-          @click="vm.$router.go(-1)"
           size="lg"
           to="/"
         >

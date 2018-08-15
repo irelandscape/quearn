@@ -110,7 +110,7 @@ export default {
 
 <style lang="stylus">
   .q-card-media img
-    height: 10rem;
+    max-height: 10rem;
     width: auto;
     margin: auto;
     cursor: pointer;

@@ -6,7 +6,6 @@ export default [
     children: [
       {
         path: '',
-        name: 'main',
         component: () => import('pages/main'),
         children: [
           {

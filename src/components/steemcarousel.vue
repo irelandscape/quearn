@@ -32,7 +32,6 @@
       </div>
     </q-carousel-slide>
   </q-carousel>
-
 </template>
 
 <script>
@@ -87,36 +86,36 @@ export default {
 
 <style lang="stylus" scoped>
 
-  >>> .desktop img
+  .desktop img
     height: 15rem;
     width: auto;
     margin: auto;
     float: left;
     margin-right: 1rem;
 
-  >>> .mobile img
+  .mobile img
     height: 7rem;
     width: auto;
 
-  >>> .q-carousel-slide
+  .q-carousel-slide
     background: black;
     padding: 0;
     cursor: pointer;
 
-  >>> .desktop h2
+  .desktop h2
     color: white;
     font-size: 1.5rem;
     margin-top: 0;
 
-  >>> .mobile h2
+  .mobile h2
     color: white;
     font-size: 1.0rem;
 
-  >>> .author
+  .author
     color: #ffa500;
     font-style: italic;
 
-  >>> time
+  time
     color: grey;
     font-style: italic;
 </style>
