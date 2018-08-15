@@ -11,11 +11,8 @@
       />
     </q-field>
 
-    <q-field icon="label" label="Tag 1" >
-      <q-select :options="primaryTopics" value="primaryTopic" v-model="primaryTopic"/>
-      <q-select :options="secondaryTopics" value="secondaryTopic" v-model="secondaryTopic"/>
-      <q-select :options="ternaryTopics" value="ternaryTopic" v-model="ternaryTopic"/>
-    </q-field>
+    <topicpicker />
+
     <q-field icon="label" label="Tag 2" >
       <q-input type="text" value=""/>
     </q-field>
@@ -55,19 +52,18 @@
 
 <script>
 
+import topicpicker from 'components/topicpicker'
 var debounce = require('debounce')
 
 export default {
   name: 'TabNewQuestion',
   components: {
+    topicpicker
   },
   data: function () {
     return {
       text: '',
-      input: '',
-      primaryTopic: '',
-      secondaryTopic: '',
-      ternaryTopic: ''
+      input: ''
     }
   },
   computed: {
@@ -78,55 +74,6 @@ export default {
         linkify: true
       })
       return md.render(this.input)
-    },
-    primaryTopics: function () {
-      let topics = [{
-        label: this.$tc('choosetopic'),
-        value: '',
-        icon: 'school'
-      }]
-
-      for (let topic in this.$store.getters['steemqa/topics']) {
-        topics.push({
-          label: topic,
-          value: topic
-        })
-      }
-
-      return topics
-    },
-    secondaryTopics: function () {
-      if (this.primaryTopic.length === 0) {
-        return []
-      }
-
-      let topics = [
-      ]
-
-      for (let topic in this.$store.getters['steemqa/topics'][this.primaryTopic]) {
-        topics.push({
-          label: topic,
-          value: topic
-        })
-      }
-
-      return topics
-    },
-    ternaryTopics: function () {
-      if (this.primaryTopic.length === 0 || this.secondaryTopic.length === 0) {
-        return []
-      }
-
-      let topics = []
-
-      for (let topic of this.$store.getters['steemqa/topics'][this.primaryTopic][this.secondaryTopic]) {
-        topics.push({
-          label: topic,
-          value: topic
-        })
-      }
-
-      return topics
     }
   },
   methods: {

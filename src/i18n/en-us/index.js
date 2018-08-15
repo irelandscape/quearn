@@ -17,5 +17,6 @@ export default {
   newquestion: 'New question',
   questionrequirement: 'Must finish with a question mark!',
   search: 'Search',
-  submit: 'Submit'
+  submit: 'Submit',
+  subtopicsavailable: 'Sub-topics available'
 }

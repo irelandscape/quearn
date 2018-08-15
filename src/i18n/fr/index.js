@@ -16,5 +16,6 @@ export default {
   newquestion: 'Nouvelle question',
   questionrequirement: 'Doit finir avec un point d\'interrogation!',
   search: 'Rechercher',
-  submit: 'Envoyer'
+  submit: 'Envoyer',
+  subtopicsavailable: 'Sous-sujets disponible'
 }
