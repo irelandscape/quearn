@@ -67,6 +67,16 @@ A SteemQA client-side application is provided for:
 * Android devices, provided as an Android app.
 * iOS devices, provided as an iOS app.
 
+## Running the development server
+```
+$ cd steemqa
+$ npm install
+$ npm install -g vue-cli
+$ npm install -g quasar-cli
+$ quasar dev
+
+```
+
 ## Roadmap
 As the project is being developed during my limited spare time, no specific dates are listed in this section.
 Nevertheless here is the intended objectives for future releases.
