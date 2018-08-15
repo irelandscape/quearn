@@ -4,6 +4,7 @@
 export default {
   about: 'Infos',
   bookmark: 'Favoris',
+  choosetopic: 'Veuillez choisir un sujet',
   home: 'Acceuil',
   login: 'Se connecter',
   logout: 'Se deconnecter',

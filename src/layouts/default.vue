@@ -15,7 +15,7 @@
         </q-btn>
 
         <q-toolbar-title>
-          Steem Q&A
+          {{ appName }}
           <div slot="subtitle">Running on Quasar v{{ $q.version }}</div>
         </q-toolbar-title>
 
@@ -64,6 +64,11 @@ export default {
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop
+    }
+  },
+  computed: {
+    appName () {
+      return this.$store.getters['steemqa/appName']
     }
   },
   methods: {

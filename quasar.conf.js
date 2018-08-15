@@ -4,6 +4,7 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
+      'stemqa',
       'i18n',
       'steemfilters'
     ],

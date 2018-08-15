@@ -4,6 +4,7 @@
 export default {
   about: 'About',
   bookmark: 'Bookmark | Bookmarks',
+  choosetopic: 'Please choose a topic',
   home: 'Home',
   latestquestions: 'Latest questions',
   login: 'Login',

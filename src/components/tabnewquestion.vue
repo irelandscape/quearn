@@ -12,7 +12,9 @@
     </q-field>
 
     <q-field icon="label" label="Tag 1" >
-      <q-select :options="topics" value=""/>
+      <q-select :options="primaryTopics" value="primaryTopic" v-model="primaryTopic"/>
+      <q-select :options="secondaryTopics" value="secondaryTopic" v-model="secondaryTopic"/>
+      <q-select :options="ternaryTopics" value="ternaryTopic" v-model="ternaryTopic"/>
     </q-field>
     <q-field icon="label" label="Tag 2" >
       <q-input type="text" value=""/>
@@ -63,16 +65,9 @@ export default {
     return {
       text: '',
       input: '',
-      topics: [
-        {
-          label: 'science',
-          value: 'science'
-        },
-        {
-          label: 'technology',
-          value: 'technology'
-        }
-      ]
+      primaryTopic: '',
+      secondaryTopic: '',
+      ternaryTopic: ''
     }
   },
   computed: {
@@ -83,6 +78,55 @@ export default {
         linkify: true
       })
       return md.render(this.input)
+    },
+    primaryTopics: function () {
+      let topics = [{
+        label: this.$tc('choosetopic'),
+        value: '',
+        icon: 'school'
+      }]
+
+      for (let topic in this.$store.getters['steemqa/topics']) {
+        topics.push({
+          label: topic,
+          value: topic
+        })
+      }
+
+      return topics
+    },
+    secondaryTopics: function () {
+      if (this.primaryTopic.length === 0) {
+        return []
+      }
+
+      let topics = [
+      ]
+
+      for (let topic in this.$store.getters['steemqa/topics'][this.primaryTopic]) {
+        topics.push({
+          label: topic,
+          value: topic
+        })
+      }
+
+      return topics
+    },
+    ternaryTopics: function () {
+      if (this.primaryTopic.length === 0 || this.secondaryTopic.length === 0) {
+        return []
+      }
+
+      let topics = []
+
+      for (let topic of this.$store.getters['steemqa/topics'][this.primaryTopic][this.secondaryTopic]) {
+        topics.push({
+          label: topic,
+          value: topic
+        })
+      }
+
+      return topics
     }
   },
   methods: {
