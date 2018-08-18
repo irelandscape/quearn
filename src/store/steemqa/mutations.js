@@ -9,3 +9,7 @@ export const appName = (state, name) => {
 export const topics = (state, topics) => {
   state.topics = topics
 }
+
+export const serverURL = (state, serverURL) => {
+  state.serverURL = serverURL
+}

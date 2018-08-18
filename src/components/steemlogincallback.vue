@@ -2,7 +2,6 @@
 
 <!-- component script -->
 <script>
-console.log('A')
 // imports.
 import { get } from 'lodash-es'
 
@@ -16,7 +15,6 @@ export default {
   methods: {
     // parse oauth callback query.
     parseQuery () {
-      console.log(get(this.$route, 'query'))
       return this.$store.dispatch('auth/login', get(this.$route, 'query'))
     }
   },

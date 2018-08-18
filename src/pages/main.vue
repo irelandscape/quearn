@@ -41,9 +41,29 @@
 
 <script>
 
+import axios from 'axios'
+
 export default {
   name: 'PageMain',
-  components: {
+  mounted: function () {
+    let serverURL = this.$store.getters['steemqa/serverURL']
+    let username = this.$store.getters['steem/username']
+    let accessToken = this.$store.getters['steem/accessToken']
+
+    if (username && accessToken) {
+      axios.get(
+        serverURL + '/steemuser/',
+        {
+          params: {
+            username: username,
+            access_token: accessToken
+          }
+        }
+      ).then(function (response) {
+      }).catch(function (error) {
+        console.log(error)
+      })
+    }
   }
 }
 </script>

@@ -19,7 +19,7 @@ export const parseSteemConnectCallback = (callbackData) => {
   const expiration = moment.utc().add(ttl, 'seconds').toISOString()
 
   // return a normalized SteemConnect data object.
-  return { name: 'steem', secret: token, meta: { username, ttl }, expiration }
+  return { name: 'steem', access_token: token, meta: { username, ttl }, expiration }
 }
 
 export const login = (state) => {

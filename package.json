@@ -13,6 +13,7 @@
   "dependencies": {
     "@steemit/libcrypto": "^1.0.1",
     "@steemit/steem-js": "^0.7.1",
+    "axios": "^0.18.0",
     "date-fns": "^1.29.0",
     "debounce": "^1.1.0",
     "dsteem": "^0.9.0",

@@ -2,6 +2,10 @@
 export const someGetter = (state) => {}
  */
 
+export const serverURL = (state) => {
+  return state.serverURL
+}
+
 export const appName = (state) => {
   return state.appName
 }

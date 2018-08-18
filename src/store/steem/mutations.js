@@ -8,11 +8,11 @@ export const createClient = (state, info) => {
 }
 
 export const account = (state, info) => {
-  state.client.setAccessToken(info.secret)
+  state.client.setAccessToken(info.access_token)
   state.username = info.meta.username
   localStorage.setItem('username', info.meta.username)
-  state.secret = info.secret
-  localStorage.setItem('secret', info.secret)
+  state.access_token = info.access_token
+  localStorage.setItem('access_token', info.access_token)
   state.expires = info.expiration
   localStorage.setItem('expires', info.expiration)
 }
@@ -21,8 +21,8 @@ export const logout = (state) => {
   state.account = null
   state.username = undefined
   localStorage.removeItem('username')
-  state.secret = undefined
-  localStorage.removeItem('secret')
+  state.access_token = undefined
+  localStorage.removeItem('access_token')
   state.expires = undefined
   localStorage.removeItem('expires')
   state.json_metadata = undefined

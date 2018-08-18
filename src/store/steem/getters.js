@@ -7,7 +7,7 @@ export const client = (state) => {
 }
 
 export const loggedIn = (state) => {
-  return state.secret != null
+  return state.access_token != null
 }
 
 export const avatar = (state) => {
@@ -16,4 +16,8 @@ export const avatar = (state) => {
 
 export const username = (state) => {
   return state.username
+}
+
+export const accessToken = (state) => {
+  return state.access_token
 }

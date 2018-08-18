@@ -11,7 +11,7 @@
       <div v-if="$q.platform.is.desktop" class="desktop"
         v-on:click="showquestion(blog)"
       >
-        <img :src="image(blog)"/>
+        <img :src="image(blog)" v-bind:style="{ maxHeight: height }"/>
         <h2>{{blog.title}}</h2>
         <span class="author">
           by {{blog.author}}
@@ -87,8 +87,8 @@ export default {
 <style lang="stylus" scoped>
 
   .desktop img
-    height: 15rem;
     width: auto;
+    max-width: 50%;
     margin: auto;
     float: left;
     margin-right: 1rem;
