@@ -7,8 +7,6 @@
 
 export default {
   name: 'PageMyTopics',
-  data: {
-  },
   mounted () {
     let username = this.$store.getters['steem/username']
     let accessToken = this.$store.getters['steem/accessToken']
