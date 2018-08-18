@@ -1,5 +1,6 @@
 export default {
   serverURL: '',
   appName: '',
-  topics: {}
+  topics: null,
+  favouriteTopics: null
 }

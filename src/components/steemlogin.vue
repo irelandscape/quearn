@@ -43,7 +43,7 @@
                 <q-item-side icon="message" />
                 <q-item-main :label="$t('mycomments')" />
               </q-item>
-              <q-item @click.native="openURL('https://github.com/quasarframework/')">
+              <q-item @click.native="myTopics">
                 <q-item-side icon="assignment" />
                 <q-item-main :label="$t('mytopics')" />
               </q-item>
@@ -116,6 +116,9 @@ export default {
     },
     logout: function () {
       this.$store.commit('steem/logout')
+    },
+    myTopics: function () {
+      this.$router.push('my_topics')
     }
   }
 }

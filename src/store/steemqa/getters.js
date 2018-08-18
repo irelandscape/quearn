@@ -13,3 +13,7 @@ export const appName = (state) => {
 export const topics = (state) => {
   return state.topics
 }
+
+export const favouriteTopics = (state) => {
+  return state.favouriteTopics
+}

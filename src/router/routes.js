@@ -36,6 +36,11 @@ export default [
         name: 'question',
         component: () => import('pages/question'),
         props: true
+      },
+      {
+        path: 'my_topics',
+        name: 'my_topics',
+        component: () => import('pages/my_topics')
       }
     ]
   },
