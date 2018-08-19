@@ -7,10 +7,7 @@
           {{blog.title}}
             <div slot="subtitle">by {{ blog.author }}</div>
         </q-toolbar-title>
-        <q-btn
-          size="lg"
-          to="/"
-        >
+        <q-btn size="lg" to="/" >
           <q-icon name="close" outlined>
             <q-tooltip>Back</q-tooltip>
           </q-icon>

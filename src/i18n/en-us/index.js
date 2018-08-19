@@ -10,7 +10,7 @@ export default {
   login: 'Login',
   logout: 'Logout',
   myaccount: 'My account',
-  myanwsers: 'My answers',
+  myanswers: 'My answers',
   mycomments: 'My comments',
   myquestions: 'My questions',
   mytopics: 'My topics',

@@ -11,7 +11,18 @@ export const topics = (state, topics) => {
 }
 
 export const favouriteTopics = (state, topics) => {
-  state.favouriteTopics = topics
+  state.favouriteTopics = {}
+  for (let topic of topics) {
+    state.favouriteTopics[topic.topic] = topic
+  }
+}
+
+export const addFavouriteTopic = (state, topic) => {
+  state.favouriteTopics[topic.topic] = topic
+}
+
+export const removeFavouriteTopic = (state, id) => {
+  delete state.favouriteTopics[id]
 }
 
 export const serverURL = (state, serverURL) => {
