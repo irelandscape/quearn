@@ -68,7 +68,13 @@ export default {
   },
   computed: {
     appName () {
-      return this.$store.getters['steemqa/appName']
+      let config = this.$store.getters['steemqa/config']
+
+      if (config) {
+        return config.appName
+      } else {
+        return ''
+      }
     }
   },
   methods: {

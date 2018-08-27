@@ -44,11 +44,10 @@ export default {
     swiper,
     swiperSlide
   },
-  mounted () {
+  created () {
     const client = new Client('https://api.steemit.com')
     this.query.limit = 10
     client.database.getDiscussions(this.filter, this.query).then(response => {
-      console.log(response)
       this.blogs = response
     })
   }

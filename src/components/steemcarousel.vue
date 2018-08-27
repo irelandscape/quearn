@@ -62,7 +62,7 @@ export default {
       if (metadata.image) {
         return metadata.image[0]
       } else {
-        return ''
+        return '/assets/atom.jpg'
       }
     },
     showquestion (blog) {

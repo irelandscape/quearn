@@ -21,3 +21,7 @@ export const username = (state) => {
 export const accessToken = (state) => {
   return state.access_token
 }
+
+export const votingWeight = (state) => {
+  return state.votingWeight
+}

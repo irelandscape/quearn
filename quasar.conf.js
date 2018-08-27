@@ -4,9 +4,10 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
-      'stemqa',
+      'steemqa',
       'i18n',
-      'steemfilters'
+      'steemfilters',
+      'vuelidate'
     ],
     css: [
       'app.styl'
@@ -76,6 +77,8 @@ module.exports = function (ctx) {
         'QCarouselSlide',
         'QCarouselControl',
         'QCheckbox',
+        'QDialog',
+        'QSlider'
       ],
       directives: [
         'Ripple'

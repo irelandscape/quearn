@@ -16,7 +16,13 @@ export default {
   mytopics: 'My topics',
   newquestion: 'New question',
   questionrequirement: 'Must finish with a question mark!',
+  postingnewquestion: 'Posting new question...',
+  postingfailed: 'Failed to post question!',
   search: 'Search',
   submit: 'Submit',
-  subtopicsavailable: 'Sub-topics available'
+  subtopicsavailable: 'Sub-topics available',
+  upvote: 'Upvote',
+  voting: 'Voting...',
+  votingfailed: 'Voting failed!',
+  votingweight: 'Voting weight'
 }

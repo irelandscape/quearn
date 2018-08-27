@@ -33,3 +33,8 @@ export const metadata = (state, info) => {
   state.json_metadata = info
   localStorage.setItem('json_metadata', info)
 }
+
+export const votingWeight = (state, weight) => {
+  state.votingWeight = weight
+  localStorage.setItem('votingWeight', weight)
+}

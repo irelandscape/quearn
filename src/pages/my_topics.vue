@@ -57,10 +57,10 @@ export default {
     let username = this.$store.getters['steem/username']
     let accessToken = this.$store.getters['steem/accessToken']
     let topics = this.$store.getters['steemqa/topics']
-    let favouriteTopics = this.$store.getters['steemqa/favouriteTopics']
+    let favouriteTopics = this.$store.getters['steemqa/favouriteTopicsById']
 
     if (favouriteTopics === null) {
-      this.$store.dispatch('steemqa/favouriteTopics',
+      this.$store.dispatch('steemqa/favouriteTopicsById',
         {
           username,
           accessToken
@@ -80,9 +80,9 @@ export default {
   methods: {
     updateTopics: function () {
       let topics = this.$store.getters['steemqa/topics']
-      let favouriteTopics = this.$store.getters['steemqa/favouriteTopics']
+      let favouriteTopics = this.$store.getters['steemqa/favouriteTopicsById']
 
-      if (topics == null || favouriteTopics == null) {
+      if (topics === null || favouriteTopics === null) {
         return
       }
 
@@ -117,8 +117,8 @@ export default {
       this.topics = myTopics
 
       this.mytopics = []
-      for (let id in favouriteTopics) {
-        this.mytopics.push(favouriteTopics[id].topic.toString())
+      for (let topic of favouriteTopics) {
+        this.mytopics.push(topic[1].topic.toString())
       }
     },
     checkFavouriteTopic: function (id) {

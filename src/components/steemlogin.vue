@@ -84,7 +84,7 @@ export default {
     this.$store.commit('steem/createClient', {
       app: 'steemqa-io',
       callbackURL: 'http://localhost:8080/auth/callback',
-      accessToken: '',
+      accessToken: this.$store.getters['steem/accessToken'],
       scope: ['vote', 'comment']
     })
   },

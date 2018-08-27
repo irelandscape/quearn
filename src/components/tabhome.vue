@@ -1,15 +1,15 @@
 <template>
-  <q-tab-pane name="tab-home">
+  <q-tab-pane name="tab-home" keep-alive >
     <steemcarousel
       filter="trending"
-      :query="{tag: 'steemstem'}"
+      :query="{tag: $store.getters['steemqa/config'].tag}"
     >
     </steemcarousel>
     <div class="content">
       <h2>{{ $t('latestquestions') }}</h2>
       <steemcardswiper
         filter="created"
-        :query="{tag: 'steemstem'}"
+        :query="{tag: $store.getters['steemqa/config'].tag}"
       >
       </steemcardswiper>
     </div>

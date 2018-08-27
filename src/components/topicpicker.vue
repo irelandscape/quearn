@@ -1,9 +1,9 @@
 <template>
   <div>
     <q-field icon="label" label="Tag 1" >
-      <q-select :options="primaryTopics" value="primaryTopic" v-model="primaryTopic"/>
-      <q-select :options="secondaryTopics" value="secondaryTopic" v-model="secondaryTopic"/>
-      <q-select :options="ternaryTopics" value="ternaryTopic" v-model="ternaryTopic"/>
+      <q-select :options="primaryTopics()" value="primaryTopic" v-model="primaryTopic" @input="primaryChanged"/>
+      <q-select :options="secondaryTopics()" value="secondaryTopic" v-model="secondaryTopic" @input="secondaryChanged"/>
+      <q-select :options="ternaryTopics()" value="ternaryTopic" v-model="ternaryTopic"/>
     </q-field>
   </div>
 </template>
@@ -18,7 +18,13 @@ export default {
       ternaryTopic: ''
     }
   },
-  computed: {
+  methods: {
+    primaryChanged: function () {
+      this.secondaryTopic = ''
+    },
+    secondaryChanged: function () {
+      this.ternaryTopic = ''
+    },
     primaryTopics: function () {
       let topics = [{
         label: this.$tc('choosetopic'),
@@ -26,56 +32,59 @@ export default {
         icon: 'school'
       }]
 
-      for (let topic in this.$store.getters['steemqa/topics']) {
+      for (let topic of this.$store.getters['steemqa/topics']) {
+        if (topic.parent) {
+          continue
+        }
         topics.push({
-          label: topic,
-          value: topic
+          label: topic.topic,
+          value: topic.id
         })
       }
 
       return topics
     },
     secondaryTopics: function () {
-      if (this.primaryTopic.length === 0) {
-        return []
+      let topics = []
+
+      for (let topic of this.$store.getters['steemqa/topics']) {
+        if (topic.parent !== this.primaryTopic) {
+          continue
+        }
+        topics.push({
+          label: topic.topic,
+          value: topic.id
+        })
       }
 
-      let topics = [{
-        label: this.$tc('subtopicsavailable'),
-        value: '',
-        leftInverted: true
-      }]
-
-      for (let topic in this.$store.getters['steemqa/topics'][this.primaryTopic]) {
-        topics.push({
-          label: topic,
-          value: topic
+      if (topics.length) {
+        topics.unshift({
+          label: this.$tc('subtopicsavailable'),
+          value: '',
+          leftInverted: true
         })
       }
 
       return topics
     },
     ternaryTopics: function () {
-      if (this.primaryTopic.length === 0 || this.secondaryTopic.length === 0) {
-        return []
-      }
+      let topics = []
 
-      let secondaryTopic = this.$store.getters['steemqa/topics'][this.primaryTopic][this.secondaryTopic]
-
-      if (!secondaryTopic || secondaryTopic.length === 0) {
-        return []
-      }
-
-      let topics = [{
-        label: this.$tc('subtopicsavailable'),
-        value: '',
-        leftInverted: true
-      }]
-
-      for (let topic of secondaryTopic) {
+      for (let topic of this.$store.getters['steemqa/topics']) {
+        if (topic.parent !== this.secondaryTopic) {
+          continue
+        }
         topics.push({
-          label: topic,
-          value: topic
+          label: topic.topic,
+          value: topic.id
+        })
+      }
+
+      if (topics.length) {
+        topics.unshift({
+          label: this.$tc('subtopicsavailable'),
+          value: '',
+          leftInverted: true
         })
       }
 
