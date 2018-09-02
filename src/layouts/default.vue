@@ -49,6 +49,7 @@
 
     <q-page-container>
       <router-view />
+      <editpostdialog />
     </q-page-container>
   </q-layout>
 </template>
@@ -58,6 +59,7 @@ import { openURL } from 'quasar'
 import Steemlogin from 'components/steemlogin'
 import Pagemain from 'pages/main'
 import Pagequestion from 'pages/question'
+import Editpostdialog from 'components/editpostdialog'
 
 export default {
   name: 'LayoutDefault',
@@ -86,7 +88,8 @@ export default {
   components: {
     Steemlogin,
     Pagemain,
-    Pagequestion
+    Pagequestion,
+    Editpostdialog
   }
 }
 </script>

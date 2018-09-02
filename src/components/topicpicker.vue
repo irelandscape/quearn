@@ -1,9 +1,9 @@
 <template>
   <div>
     <q-field icon="label" label="Tag 1" >
-      <q-select :options="primaryTopics()" value="primaryTopic" v-model="primaryTopic" @input="primaryChanged"/>
-      <q-select :options="secondaryTopics()" value="secondaryTopic" v-model="secondaryTopic" @input="secondaryChanged"/>
-      <q-select :options="ternaryTopics()" value="ternaryTopic" v-model="ternaryTopic"/>
+      <q-select :options="primaryTopics()" v-model="primaryTopic" @input="primaryChanged"/>
+      <q-select :options="secondaryTopics()" v-model="secondaryTopic" @input="secondaryChanged"/>
+      <q-select :options="ternaryTopics()" v-model="ternaryTopic"/>
     </q-field>
   </div>
 </template>
@@ -11,6 +11,9 @@
 <script>
 export default {
   name: 'topicpicker',
+  props: {
+    tags: null
+  },
   data: function () {
     return {
       primaryTopic: '',
@@ -18,7 +21,39 @@ export default {
       ternaryTopic: ''
     }
   },
+  watch: {
+    tags: function () {
+      this.setTopics()
+    }
+  },
+  mounted: function () {
+    this.setTopics()
+  },
   methods: {
+    selectTopicToTag: function () {
+      let topic = ''
+      if (this.ternaryTopic !== '') {
+        topic = this.$store.getters['steemqa/topicStr'](this.ternaryTopic)
+      } else if (this.secondaryTopic !== '') {
+        topic = this.$store.getters['steemqa/topicStr'](this.secondaryTopic)
+      } else if (this.primaryTopic !== '') {
+        topic = this.$store.getters['steemqa/topicStr'](this.primaryTopic)
+      }
+
+      return topic.replace(' ', '-').toLowerCase()
+    },
+    setTopics: function () {
+      let topics = this.$store.getters['steemqa/topicsFromTags'](this.tags)
+      if (topics.primary) {
+        this.primaryTopic = topics.primary.id
+      }
+      if (topics.secondary) {
+        this.secondaryTopic = topics.secondary.id
+      }
+      if (topics.ternary) {
+        this.ternaryTopic = topics.ternary.id
+      }
+    },
     primaryChanged: function () {
       this.secondaryTopic = ''
     },

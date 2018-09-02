@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default ({ store }) => {
-  store.commit('steemqa/serverURL', 'http://localhost:8000')
+  store.commit('steemqa/serverURL', 'http://192.168.192.54:8000')
   axios.get(store.getters['steemqa/serverURL'] + '/configs').then(
     function (response) {
       store.commit('steemqa/config', response.data[0])

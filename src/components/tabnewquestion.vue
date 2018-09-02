@@ -27,7 +27,7 @@
     <q-field
       icon="notes"
       label="Description"
-      helper="Use this field to elaborate on your question."
+      :helper="$t('questionelaborate')"
     >
       <q-input
         type="textarea"

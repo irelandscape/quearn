@@ -1,7 +1,6 @@
 <template>
   <span>
     <q-btn
-      round
       icon="keyboard_arrow_up"
       size="xs"
       :color="btnColor()"
@@ -106,4 +105,9 @@ export default {
 <style lang="stylus">
   .modal-body
     padding: 2rem;
+  .q-btn
+    color: #666666;
+    margin-right: 0.2rem;
+    padding-top: 0;
+    padding-bottom: 0;
 </style>

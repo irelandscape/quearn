@@ -24,7 +24,7 @@
         </q-card-title>
       </div>
       <q-card-main class="tight">
-        <steemblogctrl :blog="blog" />
+        <steemblogctrl :blog="blog" :condensed=true />
       </q-card-main>
     </q-card>
   </div>
@@ -53,7 +53,12 @@ export default {
       if (this.metadata.image) {
         return this.metadata.image[0]
       } else {
-        return '/assets/atom.jpg'
+        let images = this.blog.body.match('https?://.*?\\.(?:png|jpe?g|gif)')
+        if (images.length > 0) {
+          return images[0]
+        } else {
+          return '/assets/atom.jpg'
+        }
       }
     },
     topic: function () {
@@ -120,13 +125,6 @@ export default {
     clip-path: circle(0.75rem at center);
     width: auto;
     margin-right: 1rem;
-
-  .q-card-main
-    padding-top: 0;
-    padding-bottom: 0;
-
-  .q-card-container
-    padding-bottom: 0;
 
   .topic
     font-weight: bold;
