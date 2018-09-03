@@ -8,8 +8,7 @@
     <div class="content">
       <h2>{{ $t('latestquestions') }}</h2>
       <steemcardswiper
-        filter="created"
-        :query="{tag: $store.getters['steemqa/config'].tag}"
+        ordering="created"
       >
       </steemcardswiper>
     </div>

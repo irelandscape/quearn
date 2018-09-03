@@ -1,9 +1,9 @@
 <template>
   <swiper :options="swiperOption()">
     <swiper-slide
-      v-for="blog in blogs" :key="blog.id"
+      v-for="question in questions" :key="question.id"
     >
-      <steemcard :blog="blog"></steemcard>
+      <steemcard :question="question"></steemcard>
     </swiper-slide>
   </swiper>
 </template>
@@ -12,17 +12,16 @@
 import Steemcard from 'components/steemcard'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import { Client } from 'dsteem'
+import axios from 'axios'
 
 export default {
   name: 'Steemcardswiper',
   props: {
-    filter: String,
-    query: Object
+    ordering: String
   },
   data () {
     return {
-      blogs: []
+      questions: []
     }
   },
   methods: {
@@ -45,10 +44,19 @@ export default {
     swiperSlide
   },
   created () {
-    const client = new Client('https://api.steemit.com')
-    this.query.limit = 10
-    client.database.getDiscussions(this.filter, this.query).then(response => {
-      this.blogs = response
+    console.log('HERE')
+    axios.get(
+      this.$store.getters['steemqa/serverURL'] + '/questions/?ordering=' + this.ordering,
+      {
+        params: {
+          username: this.$store.getters['steem/username'],
+          access_token: this.$store.getters['steem/accessToken']
+        }
+      }
+    ).then((response) => {
+      this.questions = response.data
+    }).catch(function (error) {
+      console.log(error)
     })
   }
 }

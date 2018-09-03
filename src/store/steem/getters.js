@@ -6,6 +6,10 @@ export const client = (state) => {
   return state.client
 }
 
+export const dsteem = (state) => {
+  return state.dsteem
+}
+
 export const loggedIn = (state) => {
   return state.access_token != null
 }

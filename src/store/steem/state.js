@@ -1,5 +1,6 @@
 export default {
   client: null,
+  dsteem: null,
   config: null,
   username: localStorage.getItem('username') || null,
   access_token: localStorage.getItem('access_token') || null,

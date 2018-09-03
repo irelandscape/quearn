@@ -1,7 +1,8 @@
 // imports.
-import client from '@steemit/steem-js'
+import { Client } from 'dsteem'
 
 // main application bootstrap (before router init methods).
-export default (resources) => {
-  client.config.uri = process.env.STEEM_API || 'https://api.steemit.com'
+export default ({ store }) => {
+  let dsteem = new Client('https://api.steemit.com')
+  store.commit('steem/dsteem', dsteem)
 }

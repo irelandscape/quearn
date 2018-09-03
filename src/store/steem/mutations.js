@@ -7,6 +7,10 @@ export const createClient = (state, info) => {
   state.client = sdk.Initialize(info)
 }
 
+export const dsteem = (state, client) => {
+  state.dsteem = client
+}
+
 export const account = (state, info) => {
   state.client.setAccessToken(info.access_token)
   state.username = info.meta.username

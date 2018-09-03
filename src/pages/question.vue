@@ -3,7 +3,7 @@
     <q-toolbar
       color="primary"
     >
-        <q-toolbar-title>
+        <q-toolbar-title v-if="blog">
           {{blog.title}}
             <div slot="subtitle">by {{ blog.author }}
               <div>
@@ -23,31 +23,37 @@
           </q-icon>
         </q-btn>
     </q-toolbar>
-    <div class="blog">
+    <div v-if="blog" class="blog">
       <div v-html="getBlogBody()" />
       <steemblogctrl
         :blog="blog"
         :condensed=false
       />
+      <hr/>
       <q-btn
         class="q-mt-md q-mb-md"
         :label = "$t('answerthisquestion')"
         color = "secondary"
+        @click = "editanswer=true"
+        v-if = "editanswer === false"
       />
+      <editanswer v-if="editanswer" class="q-mt-md"/>
     </div>
   </q-page>
 </template>
 
 <script>
 import Steemblogctrl from 'components/steemblogctrl'
+import Editanswer from 'components/editanswer'
 
 export default {
   name: 'PageQuestion',
   components: {
-    Steemblogctrl
+    Steemblogctrl,
+    Editanswer
   },
   props: {
-    blog: Object,
+    blog: null,
     blogBody: {
       type: String,
       default: null
@@ -55,6 +61,7 @@ export default {
   },
   data () {
     return {
+      editanswer: false
     }
   },
   methods: {

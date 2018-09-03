@@ -8,7 +8,7 @@
           <img :src="image" v-on:click="showquestion" />
         </q-card-media>
         <q-card-title>
-          <span v-on:click="showquestion">{{blog.title}}</span>
+          <span v-on:click="showquestion">{{title}}</span>
           <div slot="subtitle">
             <q-chip square color="secondary" dense>
               {{topic}}
@@ -16,15 +16,15 @@
             <img :src="avatar()" />
             <div>
               <div class="author">
-                {{blog.author}}
+                {{author}}
               </div>
-              <timeago :datetime="blog.created" :auto-update="60"></timeago>
+              <timeago :datetime="created" :auto-update="60"></timeago>
             </div>
           </div>
         </q-card-title>
       </div>
       <q-card-main class="tight">
-        <steemblogctrl :blog="blog" :condensed=true />
+        <steemblogctrl v-if="blog" :blog="blog" :condensed=true />
       </q-card-main>
     </q-card>
   </div>
@@ -40,21 +40,25 @@ export default {
     Steemblogctrl
   },
   props: {
-    blog: Object
+    question: Object
   },
   data: function () {
     return {
+      blog: null,
       metadata: null,
       blog_html: ''
     }
   },
   computed: {
     image: function () {
+      if (!this.blog) {
+        return ''
+      }
       if (this.metadata.image) {
         return this.metadata.image[0]
       } else {
         let images = this.blog.body.match('https?://.*?\\.(?:png|jpe?g|gif)')
-        if (images.length > 0) {
+        if (images !== null && images.length > 0) {
           return images[0]
         } else {
           return '/assets/atom.jpg'
@@ -62,15 +66,35 @@ export default {
       }
     },
     topic: function () {
-      return this.metadata.tags[1]
+      if (this.blog) {
+        return this.metadata.tags[1]
+      } else {
+        return ''
+      }
+    },
+    created: function () {
+      if (this.blog) {
+        return this.blog.created
+      } else {
+        return ''
+      }
+    },
+    title: function () {
+      if (this.blog) {
+        return this.blog.title
+      } else {
+        return ''
+      }
+    },
+    author: function () {
+      if (this.blog) {
+        return this.blog.author
+      } else {
+        return ''
+      }
     }
   },
-  methods: {
-    /*
-    rendermd: function (str) {
-      let Remarkable = require('remarkable')
-      let md = new Remarkable({
-        html: true,
+  methods: { /* rendermd: function (str) { let Remarkable = require('remarkable') let md = new Remarkable({ html: true,
         linkify: true
       })
       this.blogBody = md.render(str)
@@ -78,7 +102,11 @@ export default {
     },
     */
     avatar () {
-      return 'https://steemitimages.com/u/' + this.blog.author + '/avatar'
+      if (this.blog) {
+        return 'https://steemitimages.com/u/' + this.blog.author + '/avatar'
+      } else {
+        return ''
+      }
     },
     showquestion () {
       this.$router.push({
@@ -91,7 +119,19 @@ export default {
     }
   },
   created () {
-    this.metadata = JSON.parse(this.blog.json_metadata)
+    let dsteem = this.$store.getters['steem/dsteem']
+    dsteem.database.call('get_content',
+      [this.question.author, this.question.permlink]
+    ).then(response => {
+      this.blog = response
+      this.metadata = JSON.parse(this.blog.json_metadata)
+    }).catch(function (err) {
+      this.$q.notify({
+        message: this.$tc('editfailure'),
+        detail: err.error_description,
+        type: 'negative'
+      })
+    })
   }
 }
 </script>
