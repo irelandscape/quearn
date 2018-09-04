@@ -37,7 +37,11 @@
         @click = "editanswer=true"
         v-if = "editanswer === false"
       />
-      <editanswer v-if="editanswer" class="q-mt-md"/>
+      <editanswer
+        v-if="editanswer"
+        class="q-mt-md"
+        :tags="tags"
+      />
     </div>
   </q-page>
 </template>

@@ -7,6 +7,16 @@
       :max-height=5
       stack-label="Compose your answer"
     />
+    <topicpicker :tags="tags" />
+    <q-field icon="label" label="Tag 2" >
+      <q-input type="text" value="" v-model="answer.tag2"/>
+    </q-field>
+    <q-field icon="label" label="Tag 3" >
+      <q-input type="text" value="" v-model="answer.tag3"/>
+    </q-field>
+    <q-field icon="label" label="Tag 4" >
+      <q-input type="text" value="" v-model="answer.tag4"/>
+    </q-field>
     <q-btn-group class="q-mt-md">
       <q-btn
         color="secondary"
@@ -28,6 +38,7 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators'
+import topicpicker from 'components/topicpicker'
 
 var debounce = require('debounce')
 
@@ -40,6 +51,12 @@ export default {
         body: ''
       }
     }
+  },
+  props: {
+    tags: null
+  },
+  components: {
+    topicpicker
   },
   validations: {
     form: {
