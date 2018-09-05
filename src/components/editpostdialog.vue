@@ -10,7 +10,7 @@
     prevent-close
     position='right'
   >
-    <div slot="body">
+    <div slot="body" class="mydialog">
       <q-field
         icon="title"
         :helper="$t('questionrequirement')"
@@ -150,3 +150,8 @@ export default {
 }
 
 </script>
+
+<style lang="stylus" scoped>
+  .mydialog
+    width: 25rem;
+</style>

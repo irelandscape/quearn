@@ -34,7 +34,9 @@ export default {
     border: 0;
 
   h2
-    font-size: 1.7rem;
+    font-size: 1.2rem;
+    color: #333333;
+    margin-left: 1.2rem;
 
   .content
     padding: 1rem;

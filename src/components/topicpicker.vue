@@ -43,6 +43,9 @@ export default {
       return topic.replace(' ', '-').toLowerCase()
     },
     setTopics: function () {
+      if (!this.tags) {
+        return
+      }
       let topics = this.$store.getters['steemqa/topicsFromTags'](this.tags)
       if (topics.primary) {
         this.primaryTopic = topics.primary.id

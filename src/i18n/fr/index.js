@@ -10,6 +10,8 @@ export default {
   edit: 'Editeur',
   editfailure: 'Erreur durant mise a jour!',
   editsuccessful: 'Mise a jour reussie',
+  failedtogetanswers: 'Erreur durant recuperation des reponses',
+  failedtogetanswerfromsteem: 'Reponse non-retrouvee depuis Steem!',
   home: 'Acceuil',
   login: 'Se connecter',
   logout: 'Se deconnecter',
@@ -21,7 +23,8 @@ export default {
   newquestion: 'Nouvelle question',
   questionrequirement: 'Doit finir avec un point d\'interrogation!',
   postingnewquestion: 'Nouvelle question submission en cours...',
-  postingfailed: 'Erreur durant soumission de la nouvelle question!',
+  postingsuccess: 'Soumission de votre contribution reussie',
+  postingfailed: 'Erreur durant soumission de votre contribution!',
   questionelaborate: 'Utilisez ce champs pour elaborer votre question.',
   search: 'Rechercher',
   submit: 'Envoyer',
@@ -31,5 +34,6 @@ export default {
   upvote: 'Vote',
   voting: 'Vote en cours...',
   votingfailed: 'Erreur durant soumission du vote!',
-  votingweight: 'Poid du vote'
+  votingweight: 'Poid du vote',
+  youranswer: 'Votre reponse'
 }

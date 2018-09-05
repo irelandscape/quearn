@@ -44,7 +44,6 @@ export default {
     swiperSlide
   },
   created () {
-    console.log('HERE')
     axios.get(
       this.$store.getters['steemqa/serverURL'] + '/questions/?ordering=' + this.ordering,
       {

@@ -10,6 +10,8 @@ export default {
   edit: 'Edit',
   editfailure: 'Failed to edit!',
   editsuccessful: 'Successfully edited',
+  failedtogetanswers: 'Failed to get answers',
+  failedtogetanswerfromsteem: 'Failed to get answer from Steem!',
   home: 'Home',
   latestquestions: 'Latest questions',
   login: 'Login',
@@ -22,7 +24,8 @@ export default {
   newquestion: 'New question',
   questionrequirement: 'Must finish with a question mark!',
   postingnewquestion: 'Posting new question...',
-  postingfailed: 'Failed to post question!',
+  postingsuccess: 'Post successfully submitted',
+  postingfailed: 'Post failed to be submitted!',
   questionelaborate: 'Use this field to elaborate on your question.',
   search: 'Search',
   submit: 'Submit',
@@ -32,5 +35,6 @@ export default {
   upvote: 'Upvote',
   voting: 'Voting...',
   votingfailed: 'Voting failed!',
-  votingweight: 'Voting weight'
+  votingweight: 'Voting weight',
+  youranswer: 'Your Answer'
 }

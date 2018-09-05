@@ -62,7 +62,12 @@ export default {
       if (metadata.image) {
         return metadata.image[0]
       } else {
-        return '/assets/atom.jpg'
+        let images = blog.body.match('https?://.*?\\.(?:png|jpe?g|gif)')
+        if (images !== null && images.length > 0) {
+          return images[0]
+        } else {
+          return '/assets/atom.jpg'
+        }
       }
     },
     showquestion (blog) {

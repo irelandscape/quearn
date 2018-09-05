@@ -82,6 +82,7 @@ export default {
     submit () {
     },
     cancel () {
+      this.$emit('answercompleted')
     }
   }
 }

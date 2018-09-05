@@ -3,23 +3,17 @@
     <q-card
       v-bind:class="{ inlinecard: $q.platform.is.desktop }"
     >
-      <div class="fixedheight">
+      <div>
         <q-card-media overlay-position="bottom">
           <img :src="image" v-on:click="showquestion" />
         </q-card-media>
         <q-card-title>
           <span v-on:click="showquestion">{{title}}</span>
           <div slot="subtitle">
-            <q-chip square color="secondary" dense>
-              {{topic}}
-            </q-chip><br/>
-            <img :src="avatar()" />
-            <div>
-              <div class="author">
-                {{author}}
-              </div>
-              <timeago :datetime="created" :auto-update="60"></timeago>
-            </div>
+            <postheader
+              :blog="blog"
+              :topic="topic"
+            />
           </div>
         </q-card-title>
       </div>
@@ -33,11 +27,13 @@
 <script>
 
 import Steemblogctrl from 'components/steemblogctrl'
+import Postheader from 'components/postheader'
 
 export default {
   name: 'Steemcard',
   components: {
-    Steemblogctrl
+    Steemblogctrl,
+    Postheader
   },
   props: {
     question: Object
@@ -136,7 +132,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
   .content h2
     margin: 0;
     margin-bottom: 1rem;
@@ -148,26 +144,14 @@ export default {
     cursor: pointer;
 
   .q-card-title
-    height: 3rem;
+    margin-top: 1rem;
+    height: 4rem;
     line-height: 1rem;
     cursor: pointer;
     overflow: hidden;
 
   .q-card-subtitle
     margin-top: 0.5rem;
-
-  .author
-    color: black;
-
-  .q-card-subtitle img
-    float: left;
-    height: 1.5rem;
-    clip-path: circle(0.75rem at center);
-    width: auto;
-    margin-right: 1rem;
-
-  .topic
-    font-weight: bold;
 
   .card h1, .card h2, .card h3, .card h4, .card h5
     font-size: 1rem;
@@ -179,9 +163,7 @@ export default {
 
   .q-card-main .tight
     padding-top: 0
-    padding-bottom: 0
 
-  .q-chip
-    position: absolute;
-    right: 1rem;
+  .q-card-container
+    padding-top: 0
 </style>

@@ -37,24 +37,42 @@
         @click = "editanswer=true"
         v-if = "editanswer === false"
       />
-      <editanswer
-        v-if="editanswer"
-        class="q-mt-md"
-        :tags="tags"
-      />
+      <div v-if="editanswer">
+        <h3>{{$t('youranswer')}}:</h3>
+        <editblog
+          class="q-mt-md"
+          :isquestion=false
+          :question_title=this.blog.title
+          :question_author=this.blog.author
+          :question_permlink=this.blog.permlink
+          :tags="tags"
+          @editcompleted="onAnswerCompleted"
+        />
+      </div>
+
+      <q-list>
+        <answer v-for="(answer, index) in answers"
+          :key="answer.id"
+          :answer="answer"
+          :opened="index === 0"
+        />
+      </q-list>
     </div>
   </q-page>
 </template>
 
 <script>
 import Steemblogctrl from 'components/steemblogctrl'
-import Editanswer from 'components/editanswer'
+import Editblog from 'components/editblog'
+import Answer from 'components/answer'
+import axios from 'axios'
 
 export default {
   name: 'PageQuestion',
   components: {
     Steemblogctrl,
-    Editanswer
+    Editblog,
+    Answer
   },
   props: {
     blog: null,
@@ -65,10 +83,23 @@ export default {
   },
   data () {
     return {
-      editanswer: false
+      editanswer: false,
+      answers: []
+    }
+  },
+  computed: {
+    tags: function () {
+      let tags = JSON.parse(this.blog.json_metadata).tags
+      return tags.filter((elem) => {
+        return elem !== this.$store.getters['steemqa/config'].tag
+      })
     }
   },
   methods: {
+    isFirst: function (index) {
+      console.log(index)
+      return index === 0
+    },
     getBlogBody: function () {
       if (this.blogBody) {
         return this.blogBody
@@ -80,26 +111,50 @@ export default {
         })
         return md.render(this.blog.body)
       }
+    },
+    onAnswerCompleted: function () {
+      this.editanswer = false
+    }
+  },
+  watch: {
+    blog: function () {
     }
   },
   mounted () {
     if (!this.blog) {
       this.$router.push('/')
+      return
     }
-  },
-  computed: {
-    tags: function () {
-      let tags = JSON.parse(this.blog.json_metadata).tags
-      return tags.filter((elem) => {
-        return elem !== this.$store.getters['steemqa/config'].tag
+
+    /* Get answers */
+    axios.get(
+      this.$store.getters['steemqa/serverURL'] + '/answers/',
+      {
+        params: {
+          username: this.$store.getters['steem/username'],
+          access_token: this.$store.getters['steem/accessToken'],
+          question_author: this.blog.author,
+          question_permlink: this.blog.permlink
+        }
+      }
+    ).then((response) => {
+      this.answers = response.data
+    }).catch((err) => {
+      this.$q.notify({
+        message: this.$tc('failedtogetanswers'),
+        detail: err.error_description,
+        type: 'negative'
       })
-    }
+    })
   }
 }
 </script>
 
 <style lang="stylus" scoped>
   @import "../assets/css/blog.styl"
+
+  .q-list
+    padding: 0
 
   .q-chip
     margin-top: 0.5rem;
