@@ -4,7 +4,7 @@
       {{topic}}
     </q-chip>
     <img :src="avatar()" />
-    <div>
+    <div style="display: inline-block;">
       <div class="author">
         {{blog.author}}
       </div>
@@ -37,7 +37,6 @@ export default {
 
 <style lang="stylus" scoped>
   img
-    float: left;
     height: 1.5rem;
     clip-path: circle(0.75rem at center);
     width: auto;

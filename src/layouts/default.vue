@@ -61,9 +61,9 @@
           <q-item-side icon="assignment" />
           <q-item-main :label="$t('mytopics')" />
         </q-item>
-        <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
+        <q-item @click.native="openURL('https://discord.gg/KtYAr7c')">
           <q-item-side icon="chat" />
-          <q-item-main label="Discord Chat Channel" sublabel="https://discord.gg/5TDhbDg" />
+          <q-item-main label="Discord Channel" sublabel="https://discord.gg/KtYAr7c" />
         </q-item>
         <q-item @click.native="logout()">
           <q-item-side icon="exit_to_app" />
