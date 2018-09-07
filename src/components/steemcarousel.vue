@@ -36,7 +36,7 @@
 
 <script>
 import { easing } from 'quasar'
-import { Client } from 'dsteem'
+import axios from 'axios'
 
 export default {
   name: 'Steemcarousel',
@@ -70,20 +70,45 @@ export default {
         }
       }
     },
-    showquestion (blog) {
+    showquestion: function (blog) {
       this.$router.push({
         name: 'question',
         params: {
           blog: blog
         }
       })
+    },
+    getQuestionFromSteem (question) {
+      let dsteem = this.$store.getters['steem/dsteem']
+      dsteem.database.call('get_content',
+        [question.author, question.permlink]
+      ).then(response => {
+        this.blogs.push(response)
+      }).catch(function (error) {
+        console.log(error)
+      })
     }
   },
   mounted () {
-    const client = new Client('https://api.steemit.com')
-    this.query.limit = 5
-    client.database.getDiscussions(this.filter, this.query).then(response => {
-      this.blogs = response
+    let d = new Date()
+    d.setDate(d.getDate() - this.$store.getters['steemqa/config'].carousel_history)
+    d = encodeURIComponent(d.toISOString())
+    axios.get(
+      this.$store.getters['steemqa/serverURL'] + '/questions/?ordering=-net_votes&created_gte=' + d + '&limit=' +
+        this.$store.getters['steemqa/config'].carousel_slide_count,
+      {
+        params: {
+          username: this.$store.getters['steem/username'],
+          access_token: this.$store.getters['steem/accessToken']
+        }
+      }
+    ).then((questions) => {
+      console.log(questions)
+      for (let question of questions.data.results) {
+        this.getQuestionFromSteem(question)
+      }
+    }).catch(function (error) {
+      console.log(error)
     })
   }
 }

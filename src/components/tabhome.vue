@@ -8,7 +8,7 @@
     <div class="content">
       <h2>{{ $t('latestquestions') }}</h2>
       <steemcardswiper
-        ordering="created"
+        ordering="-created"
       >
       </steemcardswiper>
     </div>
