@@ -11,17 +11,25 @@
       </q-item-main>
     </template>
 
-    <div v-if="blog" v-html="getBlogBody()" />
+    <div v-if="blog">
+      <div v-html="getBlogBody()" />
+      <steemblogctrl
+        :blog="blog"
+        :condensed=false
+      />
+    </div>
     <hr/>
   </q-collapsible>
 </template>
 
 <script>
+import Steemblogctrl from 'components/steemblogctrl'
 import Postheader from 'components/postheader'
 
 export default {
   name: 'Answer',
   components: {
+    Steemblogctrl,
     Postheader
   },
   props: {
