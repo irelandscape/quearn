@@ -2,6 +2,8 @@
   <div>
     <q-card
       v-bind:class="{ inlinecard: $q.platform.is.desktop }"
+      color="white"
+      class="q-pa-xs"
     >
       <div>
         <q-card-media overlay-position="bottom">
@@ -132,38 +134,36 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-  .content h2
-    margin: 0;
-    margin-bottom: 1rem;
+<style lang="stylus" scoped>
 
-  .q-card-media img
+  >>> .q-card-media img
     height: 10rem;
     width: auto;
     margin: auto;
     cursor: pointer;
 
-  .q-card-title
+  >>> .q-card-title
     margin-top: 1rem;
     height: 4rem;
     line-height: 1rem;
     cursor: pointer;
     overflow: hidden;
+    color: #333333;
 
-  .q-card-subtitle
+  >>> .q-card-subtitle
     margin-top: 0.5rem;
 
-  .card h1, .card h2, .card h3, .card h4, .card h5
+  >>> .card h1, .card h2, .card h3, .card h4, .card h5
     font-size: 1rem;
     font-weight: bold;
 
-  .card img
+  >>> .card img
     width: 0
     height: 0
 
-  .q-card-main .tight
+  >>> .q-card-main .tight
     padding-top: 0
 
-  .q-card-container
+  >>> .q-card-container
     padding-top: 0
 </style>

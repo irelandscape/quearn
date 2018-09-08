@@ -3,4 +3,9 @@ export default ({ Vue }) => {
     if (!value) return ''
     return parseFloat(value).toFixed(2)
   })
+
+  Vue.filter('timestamp', function (value) {
+    let d = new Date(value)
+    return d.toLocaleString()
+  })
 }

@@ -33,7 +33,7 @@ export default {
             clickable: true
           },
           slidesPerView: window.innerWidth / 300,
-          spaceBetween: 10
+          spaceBetween: 0
         }
       }
     }
@@ -62,4 +62,6 @@ export default {
 </script>
 
 <style lang="stylus">
+  .swiper-slide
+    padding: 0.2rem;
 </style>

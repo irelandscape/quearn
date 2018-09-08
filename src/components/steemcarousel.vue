@@ -137,7 +137,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" >
+<style lang="stylus" scoped>
 
   .desktop img
     width: auto;

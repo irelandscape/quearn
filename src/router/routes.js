@@ -38,6 +38,12 @@ export default [
         props: true
       },
       {
+        path: 'userquestions',
+        name: 'userquestions',
+        component: () => import('pages/userquestions'),
+        props: true
+      },
+      {
         path: 'my_topics',
         name: 'my_topics',
         component: () => import('pages/my_topics')

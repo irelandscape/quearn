@@ -51,6 +51,12 @@
         @click="submit"
         :disabled="$v.$invalid"
       />
+      <q-btn
+        color="primary"
+        icon="cancel"
+        :label="$t('cancel')"
+        @click="cancel"
+      />
     </q-field>
     <strong>Preview</strong>
     <div class="blog" v-html="compiledMarkdown"></div>
@@ -224,6 +230,9 @@ export default {
         this.$q.loading.hide()
         this.$emit('editcompleted')
       })
+    },
+    cancel () {
+      this.$emit('editcompleted')
     }
   },
   computed: {

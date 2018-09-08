@@ -43,7 +43,7 @@
           <q-item-side icon="bookmark" />
           <q-item-main :label="$tc('bookmark', 2)" />
         </q-item>
-        <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
+        <q-item @click.native="myQuestions">
           <q-item-side icon="contact_support" />
           <q-item-main :label="$t('myquestions')" />
         </q-item>
@@ -108,6 +108,9 @@ export default {
     openURL,
     showquestion: function () {
       console.log('hello')
+    },
+    myQuestions: function () {
+      this.$router.push('userquestions')
     }
   },
   components: {
@@ -121,6 +124,8 @@ export default {
 
 <style lang="stylus">
   @import '~variables'
+  body
+    background: #eeeeee;
   .q-tabs-bar
     color orange
     margin-bottom: 1px;

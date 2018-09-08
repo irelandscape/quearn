@@ -1,7 +1,12 @@
 <template>
   <div class="steemblogctrl">
     <div>
-      <q-btn :label="blog.pending_payout_value | sbd" flat size="md"/>
+      <q-btn
+        icon="attach_money"
+        :label="blog.pending_payout_value | sbd"
+        flat size="md"
+        class="tight"
+      />
       <q-btn icon="keyboard_arrow_up" flat size="md" title="upvotes">
         {{blog.active_votes.length}}
       </q-btn>
@@ -23,6 +28,13 @@
         @click="startEdit()">
         <q-tooltip>Edit</q-tooltip>
       </q-btn>
+      <q-btn
+        icon="question_answer"
+        size="xs"
+        title="answers"
+        disabled
+        :label="answer_count"
+      />
     </div>
   </div>
 </template>
@@ -41,7 +53,8 @@ export default {
   },
   props: {
     blog: null,
-    condensed: false
+    condensed: false,
+    answer_count: null
   },
   methods: {
     startEdit: function () {
@@ -61,4 +74,6 @@ export default {
     padding-top: 0;
     padding-bottom: 0;
 
+  .tight .on-left
+    margin-right: 0;
 </style>
