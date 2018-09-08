@@ -19,15 +19,34 @@
         <div>
           <timeago :datetime="blog.created" :auto-update="60"></timeago>
         </div>
+        <q-btn-group>
+          <q-btn icon="attach_money"
+            :label="blog.pending_payout_value | sbd"
+            size="md"
+            disabled
+            class="tight"
+          />
+          <q-btn icon="question_answer"
+            size="md"
+            title="answers"
+            disabled
+            :label="blog.answer_count"
+          />
+        </q-btn-group>
       </div>
       <div v-else class="mobile"
         v-on:click="showquestion(blog)"
       >
-        <img :src="image(blog)"/>
         <h2>{{blog.title}}</h2>
         <span class="author">
           by {{blog.author}},
           <timeago :datetime="blog.created" :auto-update="60"></timeago>
+          <q-btn-group>
+            <q-btn
+              :label="blog.pending_payout_value | sbd"
+              flat size="md"
+            />
+          </q-btn-group>
         </span>
       </div>
     </q-carousel-slide>
@@ -83,6 +102,11 @@ export default {
       dsteem.database.call('get_content',
         [question.author, question.permlink]
       ).then(response => {
+        if (question.answer_count !== null) {
+          response.answer_count = question.answer_count
+        } else {
+          response.answer_count = 0
+        }
         this.blogs.push(response)
       }).catch(function (error) {
         console.log(error)
@@ -103,7 +127,6 @@ export default {
         }
       }
     ).then((questions) => {
-      console.log(questions)
       for (let question of questions.data.results) {
         this.getQuestionFromSteem(question)
       }
@@ -114,7 +137,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus" >
 
   .desktop img
     width: auto;
@@ -144,8 +167,17 @@ export default {
   .author
     color: #ffa500;
     font-style: italic;
+    color: grey;
 
   time
-    color: grey;
     font-style: italic;
+    color: grey;
+
+  .q-btn
+    padding-left: 0
+    color: white;
+
+  .tight .on-left
+    margin-right: 0;
+
 </style>
