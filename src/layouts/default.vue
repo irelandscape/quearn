@@ -48,7 +48,7 @@
           <q-item-main :label="$t('myquestions')" />
         </q-item>
 
-        <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
+        <q-item @click.native="myAnswers">
           <q-item-side icon="check_circle" />
           <q-item-main :label="$t('myanswers')" />
         </q-item>
@@ -111,6 +111,9 @@ export default {
     },
     myQuestions: function () {
       this.$router.push('userquestions')
+    },
+    myAnswers: function () {
+      this.$router.push('useranswers')
     }
   },
   components: {

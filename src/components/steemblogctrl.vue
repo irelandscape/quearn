@@ -29,6 +29,7 @@
         <q-tooltip>Edit</q-tooltip>
       </q-btn>
       <q-btn
+        v-if="is_question"
         icon="question_answer"
         size="xs"
         title="answers"
@@ -54,7 +55,11 @@ export default {
   props: {
     blog: null,
     condensed: false,
-    answer_count: null
+    answer_count: null,
+    is_question: {
+      type: Boolean,
+      default: true
+    }
   },
   methods: {
     startEdit: function () {

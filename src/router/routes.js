@@ -38,9 +38,21 @@ export default [
         props: true
       },
       {
+        path: 'answer',
+        name: 'answer',
+        component: () => import('pages/answer'),
+        props: true
+      },
+      {
         path: 'userquestions',
         name: 'userquestions',
         component: () => import('pages/userquestions'),
+        props: true
+      },
+      {
+        path: 'useranswers',
+        name: 'useranswers',
+        component: () => import('pages/useranswers'),
         props: true
       },
       {
