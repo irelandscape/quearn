@@ -11,7 +11,7 @@
         {{blog.active_votes.length}}
       </q-btn>
     </div>
-    <div>
+    <q-btn-group>
       <steemvote
         :blog='blog'
       />
@@ -33,10 +33,16 @@
         icon="question_answer"
         size="xs"
         title="answers"
-        disabled
         :label="answer_count"
       />
-    </div>
+      <q-btn
+        icon="comment"
+        size="xs"
+        title="comments"
+        :label="blog.children"
+        @click="showComments()"
+      />
+    </q-btn-group>
   </div>
 </template>
 
@@ -45,10 +51,6 @@ import Steemvote from 'components/steemvote'
 
 export default {
   name: 'Steemblogctrl',
-  data () {
-    return {
-    }
-  },
   components: {
     Steemvote
   },
@@ -64,6 +66,9 @@ export default {
   methods: {
     startEdit: function () {
       this.$root.$emit('edit_post', this.blog)
+    },
+    showComments: function () {
+      this.$root.$emit('show_comments')
     }
   }
 }

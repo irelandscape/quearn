@@ -8,7 +8,12 @@
       <div class="author">
         {{blog.author}}
       </div>
-      <timeago :datetime="blog.created" :auto-update="60"></timeago>
+      <div class="timestamp">
+        <span v-if="fulldate">
+          {{blog.created | timestamp}},
+        </span>
+        <timeago :datetime="blog.created" :auto-update="60"></timeago>
+      </div>
     </div>
   </div>
 </template>
@@ -18,19 +23,16 @@ export default {
   name: 'Postheader',
   props: {
     blog: null,
-    metadata: null,
-    topic: null
+    topic: null,
+    fulldate: {
+      type: Boolean,
+      default: false
+    }
   },
   methods: {
     avatar () {
       return 'https://steemitimages.com/u/' + this.blog.author + '/avatar'
     }
-  },
-  mounted () {
-    if (!this.blog) {
-      return
-    }
-    this.metadata = JSON.parse(this.blog.json_metadata)
   }
 }
 </script>
@@ -45,7 +47,12 @@ export default {
   .author
     color: black;
 
-  time
+  .timestamp
+    margin-top: 0.5rem;
+    color: grey;
     font-size: 0.8rem;
-    color: #666666;
+
+  time
+    margin-top: 1rem;
+
 </style>

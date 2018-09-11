@@ -92,13 +92,7 @@ export default {
       }
     }
   },
-  methods: { /* rendermd: function (str) { let Remarkable = require('remarkable') let md = new Remarkable({ html: true,
-        linkify: true
-      })
-      this.blogBody = md.render(str)
-      return this.blogBody
-    },
-    */
+  methods: {
     avatar () {
       if (this.blog) {
         return 'https://steemitimages.com/u/' + this.blog.author + '/avatar'

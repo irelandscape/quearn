@@ -52,6 +52,12 @@
         />
       </div>
 
+      <comments
+        v-if="showcomments"
+        :parentAuthor=this.blog.author
+        :parentPermlink=this.blog.permlink
+      />
+
       <q-list>
         <answer v-for="(answer, index) in answers"
           :key="answer.id"
@@ -67,6 +73,7 @@
 import Steemblogctrl from 'components/steemblogctrl'
 import Editblog from 'components/editblog'
 import Answer from 'components/answer'
+import Comments from 'components/comments'
 import axios from 'axios'
 
 export default {
@@ -74,7 +81,8 @@ export default {
   components: {
     Steemblogctrl,
     Editblog,
-    Answer
+    Answer,
+    Comments
   },
   props: {
     blog: null,
@@ -86,7 +94,8 @@ export default {
   data () {
     return {
       editanswer: false,
-      answers: []
+      answers: [],
+      showcomments: false
     }
   },
   computed: {
@@ -123,6 +132,10 @@ export default {
     }
   },
   mounted () {
+    this.$root.$on('show_comments', () => {
+      this.showcomments = !this.showcomments
+    })
+
     if (!this.blog) {
       this.$router.push('/')
       return

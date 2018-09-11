@@ -18,3 +18,15 @@ export function editPost (client, username, config, permlink, title, tags, body)
     }
   )
 }
+
+export function editComment (client, parentAuthor, parentPermlink, config, username, permlink, body) {
+  return client.comment(
+    parentAuthor,
+    parentPermlink,
+    username,
+    permlink,
+    '',
+    body,
+    {}
+  )
+}

@@ -12,6 +12,7 @@
   >
     <div slot="body" class="mydialog">
       <q-field
+        v-if="!info.iscomment"
         icon="title"
         :helper="$t('questionrequirement')"
       >
@@ -21,19 +22,21 @@
           :error="$v.blog.title.$error"
         />
       </q-field>
-      <topicpicker ref="topicpicker"
-        :tags="tags"
-      />
+      <div v-if="!info.iscomment">
+        <topicpicker ref="topicpicker"
+          :tags="tags"
+        />
 
-      <q-field icon="label" label="Tag 2" >
-        <q-input type="text" value="" v-model="blog.tag2"/>
-      </q-field>
-      <q-field icon="label" label="Tag 3" >
-        <q-input type="text" value="" v-model="blog.tag3"/>
-      </q-field>
-      <q-field icon="label" label="Tag 4" >
-        <q-input type="text" value="" v-model="blog.tag4"/>
-      </q-field>
+        <q-field icon="label" label="Tag 2" >
+          <q-input type="text" value="" v-model="blog.tag2"/>
+        </q-field>
+        <q-field icon="label" label="Tag 3" >
+          <q-input type="text" value="" v-model="blog.tag3"/>
+        </q-field>
+        <q-field icon="label" label="Tag 4" >
+          <q-input type="text" value="" v-model="blog.tag4"/>
+        </q-field>
+      </div>
 
       <q-field
         icon="notes"
@@ -61,33 +64,45 @@ export default {
   data () {
     return {
       editpost: false,
-      blog: null
+      blog: null,
+      info: {
+        iscomment: false,
+        parentAuthor: '',
+        parentPermlink: ''
+      }
     }
   },
   components: {
     topicpicker
   },
-  validations: {
-    blog: {
-      title: {
+  validations () {
+    let blog = {
+      blog: {
+        body: {
+          required
+        }
+      }
+    }
+    if (!this.info.iscomment) {
+      blog.blog['title'] = {
         required,
         maxLength: maxLength(128),
         mustBeQuestion
-      },
-      body: {
-        required
       }
     }
+
+    return blog
   },
   mounted: function () {
     this.$root.$on('edit_post', this.onEditPost)
   },
   methods: {
-    onEditPost: function (blog) {
+    onEditPost: function (blog, info = null) {
       this.blog = blog
       this.originalTitle = this.blog.title
       this.originalBody = this.blog.body
       this.editpost = true
+      this.info = info
     },
     cancelEdit: function () {
       this.blog.title = this.originalTitle
@@ -101,44 +116,70 @@ export default {
         this.editpost = true
       }
 
-      let tags = []
-      tags.push(this.$refs.topicpicker.selectTopicToTag())
-      if (this.blog.tag2) {
-        tags.push(this.blog.tag2)
-      }
-      if (this.blog.tag3) {
-        tags.push(this.blog.tag3)
-      }
-      if (this.blog.tag4) {
-        tags.push(this.blog.tag4)
-      }
+      if (!this.info.iscomment) {
+        let tags = []
+        tags.push(this.$refs.topicpicker.selectTopicToTag())
+        if (this.blog.tag2) {
+          tags.push(this.blog.tag2)
+        }
+        if (this.blog.tag3) {
+          tags.push(this.blog.tag3)
+        }
+        if (this.blog.tag4) {
+          tags.push(this.blog.tag4)
+        }
 
-      this.$q.loading.show({
-        message: this.$tc('updating')
-      })
+        this.$q.loading.show({
+          message: this.$tc('updating')
+        })
 
-      steem.editPost(this.$store.getters['steem/client'],
-        this.$store.getters['steem/username'],
-        this.$store.getters['steemqa/config'],
-        this.blog.permlink,
-        this.blog.title,
-        tags,
-        this.blog.body).then(() => {
-        this.$q.loading.hide()
-        this.$q.notify({
-          message: this.$t('editsuccessfull'),
-          type: 'positive'
+        steem.editPost(this.$store.getters['steem/client'],
+          this.$store.getters['steem/username'],
+          this.$store.getters['steemqa/config'],
+          this.blog.permlink,
+          this.blog.title,
+          tags,
+          this.blog.body).then(() => {
+          this.$q.loading.hide()
+          this.$q.notify({
+            message: this.$t('editsuccessfull'),
+            type: 'positive'
+          })
+        }).catch((err) => {
+          this.$q.notify({
+            message: this.$tc('editfailure'),
+            detail: err.error_description,
+            type: 'negative'
+          })
+          this.blog.title = this.originalTitle
+          this.blog.body = this.originalBody
+          this.$q.loading.hide()
         })
-      }).catch((err) => {
-        this.$q.notify({
-          message: this.$tc('editfailure'),
-          detail: err.error_description,
-          type: 'negative'
+      } else {
+        console.log(this.blog)
+        steem.editComment(this.$store.getters['steem/client'],
+          this.info.parentAuthor,
+          this.info.parentPermlink,
+          this.$store.getters['steemqa/config'],
+          this.$store.getters['steem/username'],
+          this.blog.permlink,
+          this.blog.body).then(() => {
+          this.$q.loading.hide()
+          this.$q.notify({
+            message: this.$t('editsuccessfull'),
+            type: 'positive'
+          })
+        }).catch((err) => {
+          this.$q.notify({
+            message: this.$tc('editfailure'),
+            detail: err.error_description,
+            type: 'negative'
+          })
+          this.blog.title = this.originalTitle
+          this.blog.body = this.originalBody
+          this.$q.loading.hide()
         })
-        this.blog.title = this.originalTitle
-        this.blog.body = this.originalBody
-        this.$q.loading.hide()
-      })
+      }
     }
   },
   computed: {

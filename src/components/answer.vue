@@ -52,8 +52,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.answer.id)
-    console.log(this.answer.permlink)
     let dsteem = this.$store.getters['steem/dsteem']
     dsteem.database.call('get_content',
       [this.answer.author, this.answer.permlink]
