@@ -34,7 +34,8 @@ export default {
   props: {
     blog: null,
     parentAuthor: '',
-    parentPermlink: ''
+    parentPermlink: '',
+    caller: null
   },
   methods: {
     startEdit: function () {
@@ -42,7 +43,8 @@ export default {
         this.blog, {
           iscomment: true,
           parentAuthor: this.parentAuthor,
-          parentPermlink: this.parentPermlink
+          parentPermlink: this.parentPermlink,
+          caller: this.caller
         })
     },
     isAuthor: function () {

@@ -66,6 +66,7 @@ export default {
       editpost: false,
       blog: null,
       info: {
+        caller: null,
         iscomment: false,
         parentAuthor: '',
         parentPermlink: ''
@@ -97,9 +98,11 @@ export default {
     this.$root.$on('edit_post', this.onEditPost)
   },
   methods: {
-    onEditPost: function (blog, info = null) {
+    onEditPost: function (blog, info = {iscomment: false}) {
       this.blog = blog
-      this.originalTitle = this.blog.title
+      if (!info.iscomment) {
+        this.originalTitle = this.blog.title
+      }
       this.originalBody = this.blog.body
       this.editpost = true
       this.info = info
@@ -107,6 +110,7 @@ export default {
     cancelEdit: function () {
       this.blog.title = this.originalTitle
       this.blog.body = this.originalBody
+      this.$root.$emit('commentsuccess', this.info.caller, this.blog)
     },
     validateEdit: function () {
       this.$v.blog.$touch()
@@ -156,7 +160,6 @@ export default {
           this.$q.loading.hide()
         })
       } else {
-        console.log(this.blog)
         steem.editComment(this.$store.getters['steem/client'],
           this.info.parentAuthor,
           this.info.parentPermlink,
@@ -169,6 +172,7 @@ export default {
             message: this.$t('editsuccessfull'),
             type: 'positive'
           })
+          this.$root.$emit('commentsuccess', this.info.caller, this.blog)
         }).catch((err) => {
           this.$q.notify({
             message: this.$tc('editfailure'),

@@ -31,6 +31,18 @@
         :blog="blog"
         :condensed=false
       />
+      <q-btn
+        :label = "$t('writeacomment')"
+        icon="add_comment"
+        @click = "writecomment=!writecomment"
+        v-if="!writecomment"
+      />
+      <writecomment
+        :parentAuthor=this.blog.author
+        :parentPermlink=this.blog.permlink
+        :caller=this
+        v-if="writecomment"
+      />
       <hr/>
       <q-btn
         class="q-mt-md q-mb-md"
@@ -74,6 +86,7 @@ import Steemblogctrl from 'components/steemblogctrl'
 import Editblog from 'components/editblog'
 import Answer from 'components/answer'
 import Comments from 'components/comments'
+import Writecomment from 'components/writecomment'
 import axios from 'axios'
 
 export default {
@@ -82,7 +95,8 @@ export default {
     Steemblogctrl,
     Editblog,
     Answer,
-    Comments
+    Comments,
+    Writecomment
   },
   props: {
     blog: null,
@@ -94,6 +108,7 @@ export default {
   data () {
     return {
       editanswer: false,
+      writecomment: false,
       answers: [],
       showcomments: false
     }
@@ -160,6 +175,12 @@ export default {
         detail: err.error_description,
         type: 'negative'
       })
+    })
+
+    this.$root.$on('commentsuccess', function (caller, blog) {
+      if (caller) {
+        caller.writecomment = false
+      }
     })
   }
 }

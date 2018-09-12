@@ -28,6 +28,7 @@ export default {
   postingsuccess: 'Soumission de votre contribution reussie',
   postingfailed: 'Erreur durant soumission de votre contribution!',
   questionelaborate: 'Utilisez ce champs pour elaborer votre question.',
+  reply: 'Repondre',
   search: 'Rechercher',
   submit: 'Envoyer',
   subtopicsavailable: 'Sous-sujets disponible',
@@ -37,5 +38,6 @@ export default {
   voting: 'Vote en cours...',
   votingfailed: 'Erreur durant soumission du vote!',
   votingweight: 'Poid du vote',
+  writeacomment: 'Ecrivez un commentaire',
   youranswer: 'Votre reponse'
 }

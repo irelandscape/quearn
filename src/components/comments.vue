@@ -17,12 +17,24 @@
               :blog="blog"
               :parentAuthor="parentAuthor"
               :parentPermlink="parentPermlink"
+              :caller=this
               @show_comments="showComments"
             />
             <comments
               v-if="showcomments"
               :parentAuthor="blog.author"
               :parentPermlink="blog.permlink"
+            />
+            <q-btn
+              :label = "$t('reply')"
+              icon="add_comment"
+              @click = "blog.writecomment=!blog.writecomment"
+              v-if="!blog.writecomment"
+            />
+            <writecomment
+              :parentAuthor="blog.author"
+              :parentPermlink="blog.permlink"
+              v-if="blog.writecomment"
             />
         </q-card-main>
       </q-card>
@@ -34,6 +46,7 @@
 
 import Postheader from 'components/postheader'
 import Steemcommentctrl from 'components/steemcommentctrl'
+import Writecomment from 'components/writecomment'
 
 export default {
   name: 'comments',
@@ -49,7 +62,8 @@ export default {
   },
   components: {
     Steemcommentctrl,
-    Postheader
+    Postheader,
+    Writecomment
   },
   methods: {
     getBlogBody: function (blog) {
@@ -69,6 +83,9 @@ export default {
     dsteem.database.call('get_content_replies',
       [this.parentAuthor, this.parentPermlink]
     ).then(response => {
+      for (let r of response) {
+        r.writecomment = false
+      }
       this.blogs = response
     }).catch(function (err) {
       this.$q.notify({
@@ -76,6 +93,11 @@ export default {
         detail: err.error_description,
         type: 'negative'
       })
+    })
+
+    this.$root.$on('commentsuccess', function (caller, blog) {
+      console.log('hello')
+      blog.writecomment = false
     })
   }
 }

@@ -29,6 +29,7 @@ export default {
   postingsuccess: 'Post successfully submitted',
   postingfailed: 'Post failed to be submitted!',
   questionelaborate: 'Use this field to elaborate on your question.',
+  reply: 'Reply',
   search: 'Search',
   submit: 'Submit',
   subtopicsavailable: 'Sub-topics available',
@@ -38,5 +39,6 @@ export default {
   voting: 'Voting...',
   votingfailed: 'Voting failed!',
   votingweight: 'Voting weight',
+  writeacomment: 'Write a comment',
   youranswer: 'Your Answer'
 }
