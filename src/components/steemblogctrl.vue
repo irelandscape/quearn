@@ -68,7 +68,7 @@ export default {
       this.$root.$emit('edit_post', this.blog)
     },
     showComments: function () {
-      this.$root.$emit('show_comments')
+      this.$emit('showComments')
     }
   }
 }

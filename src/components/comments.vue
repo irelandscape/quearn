@@ -81,29 +81,31 @@ export default {
     },
     onCommentCompleted: function (blog) {
       blog.writecomment = false
+    },
+    getComments: function () {
+      let dsteem = this.$store.getters['steem/dsteem']
+      dsteem.database.call('get_content_replies',
+        [this.parentAuthor, this.parentPermlink]
+      ).then(response => {
+        for (let r of response) {
+          r.writecomment = false
+        }
+        this.blogs = response
+      }).catch(function (err) {
+        this.$q.notify({
+          message: this.$tc('failedtogetcomments'),
+          detail: err.error_description,
+          type: 'negative'
+        })
+      })
     }
   },
   mounted () {
-    let dsteem = this.$store.getters['steem/dsteem']
-    dsteem.database.call('get_content_replies',
-      [this.parentAuthor, this.parentPermlink]
-    ).then(response => {
-      for (let r of response) {
-        r.writecomment = false
-      }
-      this.blogs = response
-    }).catch(function (err) {
-      this.$q.notify({
-        message: this.$tc('failedtogetcomments'),
-        detail: err.error_description,
-        type: 'negative'
-      })
-    })
-
     this.$root.$on('commentsuccess', function (caller, blog) {
-      console.log('hello')
       blog.writecomment = false
+      this.getComments()
     })
+    this.getComments()
   }
 }
 </script>

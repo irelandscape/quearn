@@ -30,6 +30,7 @@
       <steemblogctrl
         :blog="blog"
         :condensed=false
+        @showComments="showComments"
       />
       <q-btn
         :label = "$t('writeacomment')"
@@ -77,6 +78,7 @@
           :key="answer.id"
           :answer="answer"
           :opened="index === 0"
+          :inheritAttrs=false
         />
       </q-list>
     </div>
@@ -144,6 +146,9 @@ export default {
     },
     onCommentCompleted: function (context) {
       context.writecomment = false
+    },
+    showComments: function () {
+      this.showcomments = !this.showcomments
     }
   },
   watch: {
@@ -151,10 +156,6 @@ export default {
     }
   },
   mounted () {
-    this.$root.$on('show_comments', () => {
-      this.showcomments = !this.showcomments
-    })
-
     if (!this.blog) {
       this.$router.push('/')
       return

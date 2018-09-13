@@ -16,8 +16,30 @@
       <steemblogctrl
         :blog="blog"
         :condensed=false
+        @showComments="showComments"
       />
     </div>
+    <q-btn
+      :label = "$t('writeacomment')"
+      icon="add_comment"
+      @click = "writecomment=!writecomment"
+      v-if="!writecomment"
+    />
+    <writecomment
+      :parentAuthor=blog.author
+      :parentPermlink=blog.permlink
+      v-if="writecomment"
+      :callback="onCommentCompleted"
+      :callbackContext=this
+      :title="$tc('yourcomment')"
+    />
+
+    <comments
+      v-if="showcomments"
+      :parentAuthor=this.blog.author
+      :parentPermlink=this.blog.permlink
+    />
+
     <hr/>
   </q-collapsible>
 </template>
@@ -25,12 +47,16 @@
 <script>
 import Steemblogctrl from 'components/steemblogctrl'
 import Postheader from 'components/postheader'
+import Writecomment from 'components/writecomment'
+import Comments from 'components/comments'
 
 export default {
   name: 'Answer',
   components: {
     Steemblogctrl,
-    Postheader
+    Postheader,
+    Comments,
+    Writecomment
   },
   props: {
     answer: null,
@@ -38,7 +64,9 @@ export default {
   },
   data () {
     return {
-      blog: null
+      blog: null,
+      writecomment: false,
+      showcomments: false
     }
   },
   methods: {
@@ -49,6 +77,12 @@ export default {
         linkify: true
       })
       return md.render(this.blog.body)
+    },
+    onCommentCompleted: function (context) {
+      context.writecomment = false
+    },
+    showComments: function () {
+      this.showcomments = !this.showcomments
     }
   },
   mounted () {
