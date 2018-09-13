@@ -17,7 +17,6 @@
               :blog="blog"
               :parentAuthor="parentAuthor"
               :parentPermlink="parentPermlink"
-              :caller=this
               @show_comments="showComments"
             />
             <comments
@@ -34,7 +33,10 @@
             <writecomment
               :parentAuthor="blog.author"
               :parentPermlink="blog.permlink"
+              :callback="onCommentCompleted"
+              :callbackContext="blog"
               v-if="blog.writecomment"
+              :title="$tc('youranswer')"
             />
         </q-card-main>
       </q-card>
@@ -76,6 +78,9 @@ export default {
     },
     showComments: function () {
       this.showcomments = !this.showcomments
+    },
+    onCommentCompleted: function (blog) {
+      blog.writecomment = false
     }
   },
   mounted () {

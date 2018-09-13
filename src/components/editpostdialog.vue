@@ -4,7 +4,7 @@
     v-model="editpost"
     @cancel="cancelEdit()"
     @ok="validateEdit()"
-    :title="$tc('edit')"
+    :title="title()"
     ok='Submit'
     :cancel=true
     prevent-close
@@ -66,7 +66,9 @@ export default {
       editpost: false,
       blog: null,
       info: {
-        caller: null,
+        title: this.$tc('edit'),
+        callback: null,
+        callbackContext: null,
         iscomment: false,
         parentAuthor: '',
         parentPermlink: ''
@@ -110,7 +112,7 @@ export default {
     cancelEdit: function () {
       this.blog.title = this.originalTitle
       this.blog.body = this.originalBody
-      this.$root.$emit('commentsuccess', this.info.caller, this.blog)
+      this.info.callback(this.info.callbackContext)
     },
     validateEdit: function () {
       this.$v.blog.$touch()
@@ -172,7 +174,7 @@ export default {
             message: this.$t('editsuccessfull'),
             type: 'positive'
           })
-          this.$root.$emit('commentsuccess', this.info.caller, this.blog)
+          this.info.callback(this.info.callbackContext)
         }).catch((err) => {
           this.$q.notify({
             message: this.$tc('editfailure'),
@@ -184,6 +186,9 @@ export default {
           this.$q.loading.hide()
         })
       }
+    },
+    title: function () {
+      return this.info.title
     }
   },
   computed: {

@@ -40,5 +40,6 @@ export default {
   votingfailed: 'Voting failed!',
   votingweight: 'Voting weight',
   writeacomment: 'Write a comment',
-  youranswer: 'Your Answer'
+  youranswer: 'Your Answer',
+  yourcomment: 'Your comment'
 }

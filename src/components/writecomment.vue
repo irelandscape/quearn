@@ -19,7 +19,9 @@ export default {
     },
     parentAuthor: '',
     parentPermlink: '',
-    caller: null
+    callback: null,
+    callbackContext: null,
+    title: ''
   },
   computed: {
     compiledMarkdown: function () {
@@ -34,10 +36,12 @@ export default {
   mounted () {
     this.$root.$emit('edit_post',
       this.blog, {
-        caller: this.caller,
+        callback: this.callback,
+        callbackContext: this.callbackContext,
         iscomment: true,
         parentAuthor: this.parentAuthor,
-        parentPermlink: this.parentPermlink
+        parentPermlink: this.parentPermlink,
+        title: this.title
       })
   }
 }

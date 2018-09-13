@@ -40,8 +40,10 @@
       <writecomment
         :parentAuthor=this.blog.author
         :parentPermlink=this.blog.permlink
-        :caller=this
         v-if="writecomment"
+        :callback="onCommentCompleted"
+        :callbackContext=this
+        :title="$tc('yourcomment')"
       />
       <hr/>
       <q-btn
@@ -123,7 +125,6 @@ export default {
   },
   methods: {
     isFirst: function (index) {
-      console.log(index)
       return index === 0
     },
     getBlogBody: function () {
@@ -140,6 +141,9 @@ export default {
     },
     onAnswerCompleted: function () {
       this.editanswer = false
+    },
+    onCommentCompleted: function (context) {
+      context.writecomment = false
     }
   },
   watch: {

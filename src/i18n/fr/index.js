@@ -39,5 +39,6 @@ export default {
   votingfailed: 'Erreur durant soumission du vote!',
   votingweight: 'Poid du vote',
   writeacomment: 'Ecrivez un commentaire',
-  youranswer: 'Votre reponse'
+  youranswer: 'Votre reponse',
+  yourcomment: 'Votre commentaire'
 }
