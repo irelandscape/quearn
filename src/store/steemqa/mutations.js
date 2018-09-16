@@ -6,6 +6,23 @@ export const config = (state, config) => {
   state.config = config
 }
 
+export const bookmarks = (state, bookmarks) => {
+  state.bookmarksByQuestion = {}
+  for (let bookmark of bookmarks) {
+    state.bookmarksByQuestion[bookmark.question] = bookmark
+  }
+}
+
+export const addBookmark = (state, bookmark) => {
+  state.bookmarksByQuestion[bookmark.question] = bookmark
+  state.bookmarksByQuestion = {...state.bookmarksByQuestion}
+}
+
+export const removeBookmark = (state, bookmark) => {
+  delete state.bookmarksByQuestion[bookmark.question]
+  state.bookmarksByQuestion = {...state.bookmarksByQuestion}
+}
+
 export const topics = (state, topics) => {
   state.topics = topics
 }

@@ -10,6 +10,14 @@ export const config = (state) => {
   return state.config
 }
 
+export const bookmark = (state) => (questionId) => {
+  return state.bookmarksByQuestion[questionId]
+}
+
+export const bookmarksByQuestion = (state) => {
+  return state.bookmarksByQuestion
+}
+
 export const topics = (state) => {
   return state.topics
 }

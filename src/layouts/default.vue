@@ -39,9 +39,9 @@
           <q-item-side icon="account_box" />
           <q-item-main :label="$tc('myaccount')" />
         </q-item>
-        <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
+        <q-item @click.native="myBookmarks">
           <q-item-side icon="bookmark" />
-          <q-item-main :label="$tc('bookmark', 2)" />
+          <q-item-main :label="$tc('mybookmarks')" />
         </q-item>
         <q-item @click.native="myQuestions">
           <q-item-side icon="contact_support" />
@@ -108,6 +108,9 @@ export default {
     openURL,
     showquestion: function () {
       console.log('hello')
+    },
+    myBookmarks: function () {
+      this.$router.push('bookmarks')
     },
     myQuestions: function () {
       this.$router.push('userquestions')

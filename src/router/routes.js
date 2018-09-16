@@ -44,6 +44,11 @@ export default [
         props: true
       },
       {
+        path: 'bookmarks',
+        name: 'bookmarks',
+        component: () => import('pages/bookmarks')
+      },
+      {
         path: 'userquestions',
         name: 'userquestions',
         component: () => import('pages/userquestions'),

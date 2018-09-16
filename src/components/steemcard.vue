@@ -20,7 +20,11 @@
         </q-card-title>
       </div>
       <q-card-main class="tight">
-        <steemblogctrl v-if="blog" :blog="blog" :condensed=true />
+        <steemblogctrl v-if="blog"
+          :blog="blog"
+          :question="question"
+          :condensed=true
+        />
       </q-card-main>
     </q-card>
   </div>
@@ -105,7 +109,8 @@ export default {
         name: 'question',
         params: {
           blog: this.blog,
-          blogBody: this.blogBody
+          blogBody: this.blogBody,
+          question: this.question
         }
       })
     }

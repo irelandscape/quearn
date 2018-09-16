@@ -43,7 +43,6 @@
         <steemblogctrl v-if="answer.blog"
           :blog="answer.blog"
           :condensed=false
-          :is_question=false
         />
         <q-spinner-gears v-else />
       </div>

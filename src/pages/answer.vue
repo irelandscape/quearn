@@ -30,7 +30,6 @@
       <steemblogctrl
         :blog="blog"
         :condensed=false
-        :is_question=false
       />
       <hr/>
       <q-btn

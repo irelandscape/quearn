@@ -4,7 +4,7 @@
       color="primary"
     >
       <q-toolbar-title>
-        {{ $t('myquestions') }}
+        {{ $t('mybookmarks') }}
       </q-toolbar-title>
       <q-btn size="lg" to="/" >
         <q-icon name="close" outlined>
@@ -42,11 +42,19 @@
         />
         <steemblogctrl v-if="question.blog"
           :blog="question.blog"
-          :condensed=false
+          :condensed=true
           :answer_count="question.answer_count"
           :question="question"
+          @showComments="showComments"
         />
         <q-spinner-gears v-else />
+
+        <comments
+          v-if="showcomments"
+          :parentAuthor="question.blog.author"
+          :parentPermlink="question.blog.permlink"
+        />
+
       </div>
     </div>
   </q-page>
@@ -55,18 +63,25 @@
 <script>
 import Steemblogctrl from 'components/steemblogctrl'
 import axios from 'axios'
+import sortedIndexBy from 'lodash'
+import Comments from 'components/comments'
 
 export default {
   name: 'Userquestions',
   components: {
-    Steemblogctrl
+    Steemblogctrl,
+    Comments
   },
   data: function () {
     return {
-      questions: []
+      questions: [],
+      showcomments: false
     }
   },
   methods: {
+    showComments: function () {
+      this.showcomments = !this.showcomments
+    },
     showquestion (blog, question) {
       this.$router.push({
         name: 'question',
@@ -130,22 +145,28 @@ export default {
     }
   },
   mounted () {
-    axios.get(
-      this.$store.getters['steemqa/serverURL'] + '/questions/?author=' + encodeURIComponent(this.$store.getters['steem/username']) + '&ordering=-created',
-      {
-        params: {
-          username: this.$store.getters['steem/username'],
-          access_token: this.$store.getters['steem/accessToken']
+    for (let questionId in this.$store.getters['steemqa/bookmarksByQuestion']) {
+      let bookmark = this.$store.getters['steemqa/bookmarksByQuestion'][questionId]
+      axios.get(
+        this.$store.getters['steemqa/serverURL'] + '/questions/' + bookmark.question + '/',
+        {
+          params: {
+            username: this.$store.getters['steem/username'],
+            access_token: this.$store.getters['steem/accessToken']
+          }
         }
-      }
-    ).then((questions) => {
-      for (let question of questions.data) {
-        this.getQuestionFromSteem(question)
-        this.questions.push(question)
-      }
-    }).catch(function (error) {
-      console.log(error)
-    })
+      ).then((question) => {
+        this.getQuestionFromSteem(question.data)
+        this.questions.splice(sortedIndexBy(this.questions,
+          question.data,
+          function (o) { return new Date(o.created) }
+        ),
+        0,
+        question.data)
+      }).catch(function (error) {
+        console.log(error)
+      })
+    }
   }
 }
 </script>

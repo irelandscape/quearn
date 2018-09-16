@@ -11,38 +11,40 @@
         {{blog.active_votes.length}}
       </q-btn>
     </div>
-    <q-btn-group>
-      <steemvote
-        :blog='blog'
-      />
-      <q-btn v-if="condensed" icon="format_quote" size="xs">
-        <q-tooltip>Overview</q-tooltip>
-      </q-btn>
-      <q-btn icon="subdirectory_arrow_right" size="xs">
-        <q-tooltip>Resteem</q-tooltip>
-      </q-btn>
-      <q-btn
-        v-if="!condensed"
-        icon="edit"
-        size="xs"
-        @click="startEdit()">
-        <q-tooltip>Edit</q-tooltip>
-      </q-btn>
-      <q-btn
-        v-if="is_question"
-        icon="question_answer"
-        size="xs"
-        title="answers"
-        :label="answer_count"
-      />
-      <q-btn
-        icon="comment"
-        size="xs"
-        title="comments"
-        :label="blog.children"
-        @click="showComments()"
-      />
-    </q-btn-group>
+    <steemvote
+      :blog='blog'
+    />
+    <q-btn icon="subdirectory_arrow_right" size="xs">
+      <q-tooltip>Resteem</q-tooltip>
+    </q-btn>
+    <q-btn
+      v-if="!condensed"
+      icon="edit"
+      size="xs"
+      @click="startEdit()">
+      <q-tooltip>Edit</q-tooltip>
+    </q-btn>
+    <q-btn
+      v-if="question"
+      icon="question_answer"
+      size="xs"
+      title="answers"
+      :label="answer_count"
+    />
+    <q-btn
+      icon="bookmark"
+      size="xs"
+      title="bookmark"
+      :color="bookmarkcolor"
+      @click="toggleBookmark()"
+    />
+    <q-btn
+      icon="comment"
+      size="xs"
+      title="comments"
+      :label="blog.children"
+      @click="showComments()"
+    />
   </div>
 </template>
 
@@ -58,10 +60,7 @@ export default {
     blog: null,
     condensed: false,
     answer_count: null,
-    is_question: {
-      type: Boolean,
-      default: true
-    }
+    question: null
   },
   methods: {
     startEdit: function () {
@@ -69,6 +68,33 @@ export default {
     },
     showComments: function () {
       this.$emit('showComments')
+    },
+    toggleBookmark: function () {
+      let bookmark = this.$store.getters['steemqa/bookmark'](this.question.id)
+      if (bookmark) {
+        this.$store.dispatch('steemqa/removeBookmark', {
+          vue: this,
+          bookmark,
+          username: this.$store.getters['steem/username'],
+          accessToken: this.$store.getters['steem/accessToken']
+        })
+      } else {
+        this.$store.dispatch('steemqa/addBookmark', {
+          vue: this,
+          question: this.question,
+          username: this.$store.getters['steem/username'],
+          accessToken: this.$store.getters['steem/accessToken']
+        })
+      }
+    }
+  },
+  computed: {
+    bookmarkcolor () {
+      if (this.$store.getters['steemqa/bookmark'](this.question.id)) {
+        return 'secondary'
+      } else {
+        return ''
+      }
     }
   }
 }

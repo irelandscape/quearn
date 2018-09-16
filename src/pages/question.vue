@@ -30,6 +30,7 @@
       <steemblogctrl
         :blog="blog"
         :condensed=false
+        :question="question"
         @showComments="showComments"
       />
       <q-btn
@@ -104,6 +105,7 @@ export default {
   },
   props: {
     blog: null,
+    question: null,
     blogBody: {
       type: String,
       default: null

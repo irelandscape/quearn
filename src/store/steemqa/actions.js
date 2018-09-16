@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Loading, Notify } from 'quasar'
 
 export const favouriteTopicsById = (state, payload) => {
   return axios.get(
@@ -49,4 +50,63 @@ export const removeTopic = (state, payload) => {
       })
     }
   }
+}
+
+export const addBookmark = (state, params) => {
+  Loading.show({
+    message: params.vue.$tc('addingbookmark')
+  })
+
+  axios.post(
+    state.getters.serverURL + '/bookmarks/',
+    {
+      question: params.question.id,
+      username: params.username,
+      access_token: params.accessToken
+    }
+  ).then((response) => {
+    state.commit('addBookmark', response.data)
+    Loading.hide()
+    Notify.create({
+      message: params.vue.$tc('success'),
+      type: 'positive'
+    })
+  }).catch((err) => {
+    Notify.create({
+      message: params.vue.$tc('error'),
+      detail: err.error_description,
+      type: 'negative'
+    })
+    Loading.hide()
+  })
+}
+
+export const removeBookmark = (state, params) => {
+  Loading.show({
+    message: params.vue.$tc('removingbookmark')
+  })
+
+  axios.delete(
+    state.getters.serverURL + '/bookmarks/' + params.bookmark.id + '/',
+    {
+      params: {
+        username: params.username,
+        access_token: params.accessToken
+      }
+    }
+  ).then((response) => {
+    state.commit('removeBookmark', params.bookmark)
+    Loading.hide()
+    Notify.create({
+      message: params.vue.$tc('success'),
+      type: 'positive'
+    })
+  }).catch((err) => {
+    Notify.create({
+      message: params.vue.$tc('error'),
+      detail: err.error_description,
+      type: 'negative'
+    })
+    Loading.hide()
+  })
 }
