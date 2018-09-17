@@ -26,6 +26,9 @@
           :condensed=true
         />
       </q-card-main>
+      <q-inner-loading :visible="!blog">
+        <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
+      </q-inner-loading>
     </q-card>
   </div>
 </template>
@@ -122,9 +125,9 @@ export default {
     ).then(response => {
       this.blog = response
       this.metadata = JSON.parse(this.blog.json_metadata)
-    }).catch(function (err) {
+    }).catch((err) => {
       this.$q.notify({
-        message: this.$tc('editfailure'),
+        message: this.$tc('failedtogetquestions'),
         detail: err.error_description,
         type: 'negative'
       })

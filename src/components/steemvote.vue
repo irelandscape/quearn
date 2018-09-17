@@ -102,7 +102,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .modal-body
     padding: 2rem;
   .q-btn

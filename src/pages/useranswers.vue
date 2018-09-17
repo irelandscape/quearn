@@ -1,17 +1,19 @@
 <template>
   <q-page>
-    <q-toolbar
-      color="primary"
-    >
-      <q-toolbar-title>
-        {{ $t('myanswers') }}
-      </q-toolbar-title>
-      <q-btn size="lg" to="/" >
-        <q-icon name="close" outlined>
-          <q-tooltip>Back</q-tooltip>
-        </q-icon>
-      </q-btn>
-    </q-toolbar>
+    <q-layout-header>
+      <q-toolbar
+        color="primary"
+      >
+        <q-toolbar-title>
+          {{ $t('myanswers') }}
+        </q-toolbar-title>
+        <q-btn size="lg" to="/" >
+          <q-icon name="close" outlined>
+            <q-tooltip>Back</q-tooltip>
+          </q-icon>
+        </q-btn>
+      </q-toolbar>
+    </q-layout-header>
 
     <div v-for="answer in answers"
       :key="answer.id"
@@ -149,6 +151,9 @@ export default {
 
 <style lang="stylus" scoped>
   @import "../assets/css/blog.styl"
+
+  .q-toolbar-title
+    white-space: normal;
 
   .timestamp
     margin-top: 0.5rem;

@@ -6,11 +6,38 @@
     >
     </steemcarousel>
     <div class="content">
-      <h2>{{ $t('latestquestions') }}</h2>
-      <steemcardswiper
-        ordering="-created"
+      <q-chip
+        square
+        color="black"
+        icon="access_time"
       >
-      </steemcardswiper>
+        {{ $tc('latestquestions') }}
+      </q-chip>
+      <steemcardswiper
+        :filters="{ordering: '-created'}"
+      />
+
+      <q-chip
+        square
+        color="black"
+        icon="star"
+      >
+        {{ $tc('topratedquestions') }}
+      </q-chip>
+      <steemcardswiper
+        :filters="{ordering: '-net_votes'}"
+      />
+
+      <q-chip
+        square
+        color="black"
+        icon="priority_high"
+      >
+        {{ $tc('mostwantedanswers') }}
+      </q-chip>
+      <steemcardswiper
+        :filters="{ordering: '-net_votes', answer_count: 0}"
+      />
     </div>
   </q-tab-pane>
 </template>
@@ -40,4 +67,7 @@ export default {
 
   .content
     padding: 1rem;
+
+  .swiper-container
+    margin-bottom: 1rem;
 </style>

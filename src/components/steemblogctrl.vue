@@ -100,9 +100,10 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .steemblogctrl
     color: #999999;
+    height: 5rem;
 
   .q-btn
     color: #666666;

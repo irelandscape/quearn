@@ -1,17 +1,19 @@
 <template>
   <q-page>
-    <q-toolbar
-      color="primary"
-    >
-      <q-toolbar-title>
-        {{ $t('mybookmarks') }}
-      </q-toolbar-title>
-      <q-btn size="lg" to="/" >
-        <q-icon name="close" outlined>
-          <q-tooltip>Back</q-tooltip>
-        </q-icon>
-      </q-btn>
-    </q-toolbar>
+    <q-layout-header>
+      <q-toolbar
+        color="primary"
+      >
+        <q-toolbar-title>
+          {{ $t('mybookmarks') }}
+        </q-toolbar-title>
+        <q-btn size="lg" to="/" >
+          <q-icon name="close" outlined>
+            <q-tooltip>Back</q-tooltip>
+          </q-icon>
+        </q-btn>
+      </q-toolbar>
+    </q-layout-header>
 
     <div v-for="question in questions"
       :key="question.id"
@@ -190,4 +192,7 @@ export default {
   img
     max-height: 20rem;
     margin: auto;
+
+  .q-toolbar-title
+    white-space: normal;
 </style>

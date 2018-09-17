@@ -1,5 +1,8 @@
 <template>
-  <swiper :options="swiperOption()">
+  <swiper
+    :options="swiperOption()"
+    @reachEnd="onLastSlide()"
+  >
     <swiper-slide
       v-for="question in questions" :key="question.id"
     >
@@ -17,7 +20,7 @@ import axios from 'axios'
 export default {
   name: 'Steemcardswiper',
   props: {
-    ordering: String
+    filters: {}
   },
   data () {
     return {
@@ -33,9 +36,64 @@ export default {
             clickable: true
           },
           slidesPerView: window.innerWidth / 300,
-          spaceBetween: 0
+          spaceBetween: 5
+        }
+      } else {
+        return {
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          },
+          slidesPerView: 1,
+          spaceBetween: 5
         }
       }
+    },
+    filtersToParams: function () {
+      let data = Object.entries(this.filters)
+      data = data.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+      return data.join('&')
+    },
+    onLastSlide: function () {
+      let config = this.$store.getters['steemqa/config']
+
+      axios.get(
+        this.$store.getters['steemqa/serverURL'] +
+          '/questions/?' +
+          this.filtersToParams() +
+          '&limit=' + config.initial_slides_count +
+          '&offset=' + this.questions.length,
+        {
+          params: {
+            username: this.$store.getters['steem/username'],
+            access_token: this.$store.getters['steem/accessToken']
+          }
+        }
+      ).then((response) => {
+        this.questions = this.questions.concat(response.data.results)
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    getQuestions: function () {
+      this.questions = []
+      let config = this.$store.getters['steemqa/config']
+      axios.get(
+        this.$store.getters['steemqa/serverURL'] +
+          '/questions/?' +
+          this.filtersToParams() +
+          '&limit=' + config.initial_slides_count,
+        {
+          params: {
+            username: this.$store.getters['steem/username'],
+            access_token: this.$store.getters['steem/accessToken']
+          }
+        }
+      ).then((response) => {
+        this.questions = response.data.results
+      }).catch(function (error) {
+        console.log(error)
+      })
     }
   },
   components: {
@@ -43,25 +101,16 @@ export default {
     swiper,
     swiperSlide
   },
-  created () {
-    axios.get(
-      this.$store.getters['steemqa/serverURL'] + '/questions/?ordering=' + this.ordering,
-      {
-        params: {
-          username: this.$store.getters['steem/username'],
-          access_token: this.$store.getters['steem/accessToken']
-        }
-      }
-    ).then((response) => {
-      this.questions = response.data
-    }).catch(function (error) {
-      console.log(error)
-    })
+  mounted () {
+    this.getQuestions()
+  },
+  watch: {
+    filters: function () {
+      this.getQuestions()
+    }
   }
 }
 </script>
 
 <style lang="stylus">
-  .swiper-slide
-    padding: 0.2rem;
 </style>

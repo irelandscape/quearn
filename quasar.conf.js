@@ -82,7 +82,8 @@ module.exports = function (ctx) {
         'QDialog',
         'QSlider',
         'QCollapsible',
-        'QSpinnerGears'
+        'QSpinnerGears',
+        'QInnerLoading'
       ],
       directives: [
         'Ripple'
