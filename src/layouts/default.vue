@@ -35,10 +35,6 @@
         inset-delimiter
       >
         <q-list-header>Menu</q-list-header>
-        <q-item @click.native="openURL('http://quasar-framework.org')">
-          <q-item-side icon="account_box" />
-          <q-item-main :label="$tc('myaccount')" />
-        </q-item>
         <q-item @click.native="myBookmarks">
           <q-item-side icon="bookmark" />
           <q-item-main :label="$tc('mybookmarks')" />
