@@ -4,6 +4,7 @@
           <q-chip
             :avatar="avatar"
             color="primary"
+            square
             @click="rightDrawerOpen = !rightDrawerOpen"
           >
             {{username}}
@@ -128,4 +129,7 @@ export default {
   @import '~variables'
   .q-drawer-container
     color $primary
+
+  .q-chip
+    background: none !important;
 </style>
