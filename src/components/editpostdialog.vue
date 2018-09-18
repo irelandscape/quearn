@@ -55,7 +55,7 @@
 <script>
 import { required, maxLength } from 'vuelidate/lib/validators'
 import topicpicker from 'components/topicpicker'
-import * as steem from 'components/steem'
+import * as steem from 'components/utils/steem'
 
 const mustBeQuestion = (value) => value.trim().slice(-1) === '?'
 

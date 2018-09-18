@@ -32,6 +32,7 @@
       :label="answer_count"
     />
     <q-btn
+      v-if="question"
       icon="bookmark"
       size="xs"
       title="bookmark"

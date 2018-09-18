@@ -39,6 +39,7 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import topicpicker from 'components/topicpicker'
+import { md2html } from 'components/utils/markdown'
 
 var debounce = require('debounce')
 
@@ -67,12 +68,7 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-      let Remarkable = require('remarkable')
-      let md = new Remarkable({
-        html: true,
-        linkify: true
-      })
-      return md.render(this.answer)
+      return md2html(blog.body, this.$store.getters['steemqa/xss'])
     }
   },
   methods: {

@@ -49,6 +49,7 @@
 import Postheader from 'components/postheader'
 import Steemcommentctrl from 'components/steemcommentctrl'
 import Writecomment from 'components/writecomment'
+import { md2html } from 'components/utils/markdown'
 
 export default {
   name: 'comments',
@@ -69,12 +70,7 @@ export default {
   },
   methods: {
     getBlogBody: function (blog) {
-      let Remarkable = require('remarkable')
-      let md = new Remarkable('full', {
-        html: true,
-        linkify: true
-      })
-      return md.render(blog.body)
+      return md2html(blog.body, this.$store.getters['steemqa/xss'])
     },
     showComments: function () {
       this.showcomments = !this.showcomments

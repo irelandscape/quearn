@@ -62,6 +62,7 @@ import Steemblogctrl from 'components/steemblogctrl'
 import Editblog from 'components/editblog'
 import Answer from 'components/answer'
 import axios from 'axios'
+import { md2html } from 'components/utils/markdown'
 
 export default {
   name: 'PageAnswer',
@@ -99,12 +100,7 @@ export default {
       if (this.blogBody) {
         return this.blogBody
       } else {
-        let Remarkable = require('remarkable')
-        let md = new Remarkable('full', {
-          html: true,
-          linkify: true
-        })
-        return md.render(this.blog.body)
+        return md2html(this.blog.body, this.$store.getters['steemqa/xss'])
       }
     },
     onAnswerCompleted: function () {

@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { md2html } from 'components/utils/markdown'
+
 export default {
   name: 'Writecomment',
   props: {
@@ -25,12 +27,7 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-      let Remarkable = require('remarkable')
-      let md = new Remarkable({
-        html: true,
-        linkify: true
-      })
-      return md.render(this.blog.body)
+      return md2html(this.blog.body, this.$store.getters['steemqa/xss'])
     }
   },
   mounted () {

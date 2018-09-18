@@ -41,6 +41,7 @@ export default {
   success: 'Operation reussie',
   subtopicsavailable: 'Sous-sujets disponible',
   title: 'Titre',
+  topanswers: 'Meilleures reponses',
   topratedquestions: 'Meilleures questions',
   updating: 'Mise a jour en cours...',
   upvote: 'Vote',

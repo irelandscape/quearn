@@ -67,6 +67,7 @@
 import topicpicker from 'components/topicpicker'
 import axios from 'axios'
 import { required, maxLength } from 'vuelidate/lib/validators'
+import { md2html } from 'components/utils/markdown'
 
 var debounce = require('debounce')
 
@@ -237,12 +238,7 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-      let Remarkable = require('remarkable')
-      let md = new Remarkable({
-        html: true,
-        linkify: true
-      })
-      return md.render(this.input)
+      return md2html(this.input, this.$store.getters['steemqa/xss'])
     }
   }
 }

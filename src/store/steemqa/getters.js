@@ -10,6 +10,10 @@ export const config = (state) => {
   return state.config
 }
 
+export const xss = (state) => {
+  return state.xss
+}
+
 export const bookmark = (state) => (questionId) => {
   return state.bookmarksByQuestion[questionId]
 }

@@ -3,6 +3,8 @@ import { Notify } from 'quasar'
 
 export default ({ store, Vue }) => {
   // store.commit('steemqa/serverURL', 'http://127.0.0.1:8000')
+  let xss = require('xss')
+  store.commit('steemqa/xss', new xss.FilterXSS())
   store.commit('steemqa/serverURL', 'http://192.168.192.54:8000')
   axios.get(store.getters['steemqa/serverURL'] + '/configs/').then(
     function (response) {

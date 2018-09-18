@@ -11,23 +11,23 @@ export default [
           {
             path: '',
             name: 'home',
-            component: () => import('components/tabhome'),
+            component: () => import('../components/tabs/tabhome'),
             props: true
           },
           {
             path: 'newquestion',
             name: 'newquestion',
-            component: () => import('components/tabnewquestion')
+            component: () => import('../components/tabs/tabnewquestion')
           },
           {
             path: 'search',
             name: 'search',
-            component: () => import('components/tabsearch')
+            component: () => import('../components/tabs/tabsearch')
           },
           {
             path: 'about',
             name: 'about',
-            component: () => import('components/tababout')
+            component: () => import('../components/tabs/tababout')
           }
         ]
       },

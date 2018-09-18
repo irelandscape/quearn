@@ -6,6 +6,10 @@ export const config = (state, config) => {
   state.config = config
 }
 
+export const xss = (state, xss) => {
+  state.xss = xss
+}
+
 export const bookmarks = (state, bookmarks) => {
   state.bookmarksByQuestion = {}
   for (let bookmark of bookmarks) {

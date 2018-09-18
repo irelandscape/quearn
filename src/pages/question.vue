@@ -95,6 +95,7 @@ import Answer from 'components/answer'
 import Comments from 'components/comments'
 import Writecomment from 'components/writecomment'
 import axios from 'axios'
+import { md2html } from 'components/utils/markdown'
 
 export default {
   name: 'PageQuestion',
@@ -137,12 +138,7 @@ export default {
       if (this.blogBody) {
         return this.blogBody
       } else {
-        let Remarkable = require('remarkable')
-        let md = new Remarkable('full', {
-          html: true,
-          linkify: true
-        })
-        return md.render(this.blog.body)
+        return md2html(this.blog.body, this.$store.getters['steemqa/xss'])
       }
     },
     onAnswerCompleted: function () {

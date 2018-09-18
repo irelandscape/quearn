@@ -55,6 +55,7 @@
 <script>
 import Steemblogctrl from 'components/steemblogctrl'
 import axios from 'axios'
+import { md2html } from 'components/utils/markdown'
 
 export default {
   name: 'Useranswers',
@@ -120,12 +121,7 @@ export default {
       })
     },
     getBlogBody: function (blog) {
-      let Remarkable = require('remarkable')
-      let md = new Remarkable('full', {
-        html: true,
-        linkify: true
-      })
-      return md.render(blog.body)
+      return md2html(blog.body, this.$store.getters['steemqa/xss'])
     }
   },
   mounted () {

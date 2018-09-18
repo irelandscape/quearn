@@ -41,6 +41,7 @@ export default {
   success: 'Success',
   subtopicsavailable: 'Sub-topics available',
   title: 'Title',
+  topanswers: 'Best answers',
   topratedquestions: 'Best rated questions',
   updating: 'Updating...',
   upvote: 'Upvote',
