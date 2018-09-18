@@ -24,6 +24,7 @@
           :blog="blog"
           :question="question"
           :condensed=true
+          :answer_count="question.answer_count"
         />
       </q-card-main>
       <q-inner-loading :visible="!blog">

@@ -106,7 +106,6 @@ export default {
         .then(response => {
           this.$store.getters['steem/client'].me((err, res) => {
             if (err == null) {
-              console.log(res.account)
               this.$store.commit('steem/metadata', res.account.json_metadata)
             } else {
               console.log(err)

@@ -208,7 +208,7 @@ export default {
         ).then((response) => {
           this.$q.loading.hide()
           this.$q.notify({
-            message: this.$tc('postingsusccess'),
+            message: this.$tc('postingsuccess'),
             type: 'positive'
           })
           this.$emit('editcompleted')

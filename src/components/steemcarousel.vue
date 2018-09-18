@@ -102,7 +102,8 @@ export default {
       dsteem.database.call('get_content',
         [question.author, question.permlink]
       ).then(response => {
-        if (question.answer_count !== null) {
+        console.log(question.answer_count)
+        if (question.answer_count) {
           response.answer_count = question.answer_count
         } else {
           response.answer_count = 0
@@ -178,6 +179,9 @@ export default {
     color: white;
 
   .tight .on-left
+    margin-right: 0;
+
+  >>> .on-left
     margin-right: 0;
 
 </style>

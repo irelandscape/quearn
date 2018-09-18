@@ -6,6 +6,7 @@ export default {
   addingbookmark: 'Ajout aux question favorites...',
   answerthisquestion: 'Repondre a cette question',
   bookmark: 'Favoris',
+  cancel: 'Annuler',
   choosetopic: 'Veuillez choisir un sujet',
   comments: 'Commentaires',
   content: 'Contenu',

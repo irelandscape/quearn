@@ -117,6 +117,9 @@ export default {
     },
     myAnswers: function () {
       this.$router.push('useranswers')
+    },
+    logout: function () {
+      this.$store.commit('steem/logout')
     }
   },
   components: {
