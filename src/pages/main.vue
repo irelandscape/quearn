@@ -21,11 +21,11 @@
       </q-route-tab>
 
       <q-route-tab
-        slot="title" icon="search"
-        name="tab-search"
-        to="search"
+        slot="title" icon="remove_red_eye"
+        name="tab-topics"
+        to="topics"
       >
-        {{ $t('search') }}
+        {{ $t('topics') }}
       </q-route-tab>
       <q-route-tab
         slot="title" icon="info"

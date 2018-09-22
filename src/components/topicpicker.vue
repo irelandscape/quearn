@@ -1,6 +1,11 @@
 <template>
   <div>
-    <q-field icon="label" label="Tag 1" >
+    <div v-if="horizontal">
+      <q-select :options="primaryTopics()" v-model="primaryTopic" @input="primaryChanged" color="amber" inverted-light />
+      <q-select :options="secondaryTopics()" v-model="secondaryTopic" @input="secondaryChanged" color="amber" inverted-light />
+      <q-select :options="ternaryTopics()" v-model="ternaryTopic" color="amber" inverted-light />
+    </div>
+    <q-field icon="label" label="Tag 1" v-else >
       <q-select :options="primaryTopics()" v-model="primaryTopic" @input="primaryChanged"/>
       <q-select :options="secondaryTopics()" v-model="secondaryTopic" @input="secondaryChanged"/>
       <q-select :options="ternaryTopics()" v-model="ternaryTopic"/>
@@ -12,7 +17,11 @@
 export default {
   name: 'topicpicker',
   props: {
-    tags: null
+    tags: null,
+    horizontal: {
+      type: Boolean,
+      default: false
+    }
   },
   data: function () {
     return {
@@ -133,4 +142,13 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-</script>
+
+>>>.q-select
+  width: 32%;
+  border: 1px solid #333333;
+  float: left;
+  height: 1.5rem;
+  margin-right: 0.1rem;
+  font-size: 0.8rem;
+
+</style>

@@ -54,7 +54,7 @@
           <q-item-main :label="$t('mycomments')" />
         </q-item>
         <q-item @click.native="myTopics">
-          <q-item-side icon="assignment" />
+          <q-item-side icon="remove_red_eye" />
           <q-item-main :label="$t('mytopics')" />
         </q-item>
         <q-item @click.native="openURL('https://discord.gg/KtYAr7c')">

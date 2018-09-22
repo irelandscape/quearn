@@ -165,8 +165,9 @@ export default {
     height: 0
 
   >>> .q-card-main .tight
-    padding-top: 0
+    padding: 0
 
   >>> .q-card-container
     padding-top: 0
+    padding-bottom: 0
 </style>

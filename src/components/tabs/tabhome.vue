@@ -13,6 +13,7 @@
       >
         {{ $tc('latestquestions') }}
       </q-chip>
+      <span class="swipe">swipe &gt;&gt;&gt;</span>
       <steemcardswiper
         :filters="{ordering: '-created'}"
       />
@@ -24,6 +25,7 @@
       >
         {{ $tc('topratedquestions') }}
       </q-chip>
+      <span class="swipe">swipe &gt;&gt;&gt;</span>
       <steemcardswiper
         :filters="{ordering: '-net_votes'}"
       />
@@ -34,7 +36,9 @@
         icon="priority_high"
       >
         {{ $tc('mostwantedanswers') }}
+        <span class="swipe">swipe &gt;&gt;&gt;</span>
       </q-chip>
+      <span class="swipe">swipe &gt;&gt;&gt;</span>
       <steemcardswiper
         :filters="{ordering: '-net_votes', answer_count: 0}"
       />
@@ -70,4 +74,9 @@ export default {
 
   .swiper-container
     margin-bottom: 1rem;
+
+  .swipe
+    margin-left: 3rem;
+    color: #999999;
+    float: right;
 </style>

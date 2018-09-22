@@ -20,9 +20,9 @@ export default [
             component: () => import('../components/tabs/tabnewquestion')
           },
           {
-            path: 'search',
-            name: 'search',
-            component: () => import('../components/tabs/tabsearch')
+            path: 'topics',
+            name: 'topics',
+            component: () => import('../components/tabs/tabtopics')
           },
           {
             path: 'about',
