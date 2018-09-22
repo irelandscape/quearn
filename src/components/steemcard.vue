@@ -1,37 +1,32 @@
 <template>
-  <div>
-    <q-card
-      v-bind:class="{ inlinecard: $q.platform.is.desktop }"
-      color="white"
-      class="q-pa-xs"
-    >
-      <div>
-        <q-card-media overlay-position="bottom">
-          <img :src="image" v-on:click="showquestion" />
-        </q-card-media>
-        <q-card-title>
-          <span v-on:click="showquestion">{{title}}</span>
-          <div slot="subtitle">
-            <postheader
-              :blog="blog"
-              :topic="topic"
-            />
-          </div>
-        </q-card-title>
-      </div>
-      <q-card-main class="tight">
-        <steemblogctrl v-if="blog"
-          :blog="blog"
-          :question="question"
-          :condensed=true
-          :answer_count="question.answer_count"
-        />
-      </q-card-main>
-      <q-inner-loading :visible="!blog">
-        <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
-      </q-inner-loading>
-    </q-card>
-  </div>
+  <q-card
+    v-bind:class="{ inlinecard: $q.platform.is.desktop }"
+    color="white"
+    class="q-pa-xs"
+  >
+    <div>
+      <q-card-media overlay-position="bottom">
+        <img :src="image" v-on:click="showquestion" />
+      </q-card-media>
+      <q-card-title>
+        <span v-on:click="showquestion">{{title}}</span>
+        <div slot="subtitle">
+          <postheader
+            :blog="blog"
+            :topic="topic"
+          />
+        </div>
+      </q-card-title>
+    </div>
+    <q-card-main class="tight">
+      <steemblogctrl v-if="blog"
+        :blog="blog"
+        :question="question"
+        :condensed=true
+        :answer_count="question.answer_count"
+      />
+    </q-card-main>
+  </q-card>
 </template>
 
 <script>

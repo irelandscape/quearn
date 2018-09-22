@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="blog shadow-1">
     <q-field
       v-if="isquestion"
       icon="title"
@@ -246,10 +246,6 @@ export default {
 
 <style lang="stylus" scoped>
   @import "../assets/css/blog.styl"
-
-  .blog
-    background: #eeeeee;
-    border: 1px solid grey;
 
   .boxed
     border: 1px solid grey;

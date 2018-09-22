@@ -7,6 +7,7 @@
         <topicpicker
           ref="topicpicker"
           :horizontal=true
+          @on_topic_changed="onTopicChanged"
         />
         <div style="clear: both;" />
         <q-btn-group style="clear: both;">
@@ -76,6 +77,10 @@ export default {
           answer_count: 0
         }
       }
+    },
+    onTopicChanged: function (topic) {
+      this.filters['topic'] = topic
+      this.filters = {...this.filters}
     }
   }
 }

@@ -1,30 +1,28 @@
 <template>
   <q-page>
-    <q-layout-header>
-      <q-toolbar
-        color="primary"
-      >
-        <q-toolbar-title v-if="blog">
-          {{blog.title}}
-            <div slot="subtitle">by {{ blog.author }}
-              <div>
-                <q-chip
-                  v-for="tag in tags"
-                  :key="tag"
-                  square color="secondary"
-                  dense>
-                  {{tag}}
-                </q-chip>
-              </div>
+    <q-toolbar
+      color="primary"
+    >
+      <q-toolbar-title v-if="blog">
+        {{blog.title}}
+          <div slot="subtitle">by {{ blog.author }}
+            <div>
+              <q-chip
+                v-for="tag in tags"
+                :key="tag"
+                square color="secondary"
+                dense>
+                {{tag}}
+              </q-chip>
             </div>
-        </q-toolbar-title>
-        <q-btn size="lg" to="/" >
-          <q-icon name="close" outlined>
-            <q-tooltip>Back</q-tooltip>
-          </q-icon>
-        </q-btn>
-      </q-toolbar>
-    </q-layout-header>
+          </div>
+      </q-toolbar-title>
+      <q-btn size="lg" to="/" >
+        <q-icon name="close" outlined>
+          <q-tooltip>Back</q-tooltip>
+        </q-icon>
+      </q-btn>
+    </q-toolbar>
     <div v-if="blog"
      class="blog shadow-1"
     >
@@ -151,6 +149,14 @@ export default {
     margin-top: 0.5rem;
     margin-right: 0.5rem;
 
+  .q-toolbar
+    position: fixed;
+    top: 50px;
+    z-index: 1;
+
   .q-toolbar-title
     white-space: normal;
+
+  .blog
+    margin-top: 80px;
 </style>

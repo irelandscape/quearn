@@ -102,7 +102,6 @@ export default {
       dsteem.database.call('get_content',
         [question.author, question.permlink]
       ).then(response => {
-        console.log(question.answer_count)
         if (question.answer_count) {
           response.answer_count = question.answer_count
         } else {

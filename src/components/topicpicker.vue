@@ -3,12 +3,12 @@
     <div v-if="horizontal">
       <q-select :options="primaryTopics()" v-model="primaryTopic" @input="primaryChanged" color="amber" inverted-light />
       <q-select :options="secondaryTopics()" v-model="secondaryTopic" @input="secondaryChanged" color="amber" inverted-light />
-      <q-select :options="ternaryTopics()" v-model="ternaryTopic" color="amber" inverted-light />
+      <q-select :options="ternaryTopics()" v-model="ternaryTopic" color="amber" inverted-light @input="ternaryChanged "/>
     </div>
     <q-field icon="label" label="Tag 1" v-else >
       <q-select :options="primaryTopics()" v-model="primaryTopic" @input="primaryChanged"/>
       <q-select :options="secondaryTopics()" v-model="secondaryTopic" @input="secondaryChanged"/>
-      <q-select :options="ternaryTopics()" v-model="ternaryTopic"/>
+      <q-select :options="ternaryTopics()" v-model="ternaryTopic" @input="ternaryChanged"/>
     </q-field>
   </div>
 </template>
@@ -68,9 +68,14 @@ export default {
     },
     primaryChanged: function () {
       this.secondaryTopic = ''
+      this.$emit('on_topic_changed', this.primaryTopic)
     },
     secondaryChanged: function () {
       this.ternaryTopic = ''
+      this.$emit('on_topic_changed', this.secondaryTopic)
+    },
+    ternaryChanged: function () {
+      this.$emit('on_topic_changed', this.ternaryTopic)
     },
     primaryTopics: function () {
       let topics = [{

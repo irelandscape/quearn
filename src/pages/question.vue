@@ -1,6 +1,5 @@
 <template>
   <q-page>
-    <q-layout-header>
       <q-toolbar
         color="primary"
       >
@@ -24,7 +23,6 @@
           </q-icon>
         </q-btn>
       </q-toolbar>
-    </q-layout-header>
     <div v-if="blog"
      class="blog shadow-1"
     >
@@ -201,6 +199,14 @@ export default {
     margin-top: 0.5rem;
     margin-right: 0.5rem;
 
+  .q-toolbar
+    position: fixed;
+    top: 50px;
+    z-index: 1;
+
   .q-toolbar-title
     white-space: normal
+
+  .blog
+    margin-top: 80px;
 </style>

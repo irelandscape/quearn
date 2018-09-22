@@ -1,19 +1,17 @@
 <template>
   <q-page>
-    <q-layout-header>
-      <q-toolbar
-        color="primary"
-      >
-        <q-toolbar-title>
-          {{ $t('myanswers') }}
-        </q-toolbar-title>
-        <q-btn size="lg" to="/" >
-          <q-icon name="close" outlined>
-            <q-tooltip>Back</q-tooltip>
-          </q-icon>
-        </q-btn>
-      </q-toolbar>
-    </q-layout-header>
+    <q-toolbar
+      color="primary"
+    >
+      <q-toolbar-title>
+        {{ $t('myanswers') }}
+      </q-toolbar-title>
+      <q-btn size="lg" to="/" >
+        <q-icon name="close" outlined>
+          <q-tooltip>Back</q-tooltip>
+        </q-icon>
+      </q-btn>
+    </q-toolbar>
 
     <div v-for="answer in answers"
       :key="answer.id"
@@ -167,4 +165,12 @@ export default {
   img
     max-height: 20rem;
     margin: auto;
+
+  .q-toolbar
+    position: fixed;
+    top: 50px;
+    z-index: 1;
+
+  .blog
+    margin-top: 80px;
 </style>
