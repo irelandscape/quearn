@@ -42,11 +42,11 @@ export default {
     selectTopicToTag: function () {
       let topic = ''
       if (this.ternaryTopic !== '') {
-        topic = this.$store.getters['steemqa/topicStr'](this.ternaryTopic)
+        topic = this.$store.getters['quearn/topicStr'](this.ternaryTopic)
       } else if (this.secondaryTopic !== '') {
-        topic = this.$store.getters['steemqa/topicStr'](this.secondaryTopic)
+        topic = this.$store.getters['quearn/topicStr'](this.secondaryTopic)
       } else if (this.primaryTopic !== '') {
-        topic = this.$store.getters['steemqa/topicStr'](this.primaryTopic)
+        topic = this.$store.getters['quearn/topicStr'](this.primaryTopic)
       }
 
       return topic.replace(' ', '-').toLowerCase()
@@ -55,7 +55,7 @@ export default {
       if (!this.tags) {
         return
       }
-      let topics = this.$store.getters['steemqa/topicsFromTags'](this.tags)
+      let topics = this.$store.getters['quearn/topicsFromTags'](this.tags)
       if (topics.primary) {
         this.primaryTopic = topics.primary.id
       }
@@ -79,7 +79,7 @@ export default {
         icon: 'school'
       }]
 
-      for (let topic of this.$store.getters['steemqa/topics']) {
+      for (let topic of this.$store.getters['quearn/topics']) {
         if (topic.parent) {
           continue
         }
@@ -94,7 +94,7 @@ export default {
     secondaryTopics: function () {
       let topics = []
 
-      for (let topic of this.$store.getters['steemqa/topics']) {
+      for (let topic of this.$store.getters['quearn/topics']) {
         if (topic.parent !== this.primaryTopic) {
           continue
         }
@@ -117,7 +117,7 @@ export default {
     ternaryTopics: function () {
       let topics = []
 
-      for (let topic of this.$store.getters['steemqa/topics']) {
+      for (let topic of this.$store.getters['quearn/topics']) {
         if (topic.parent !== this.secondaryTopic) {
           continue
         }

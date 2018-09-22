@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     getBlogBody: function () {
-      return md2html(this.blog.body, this.$store.getters['steemqa/xss'])
+      return md2html(this.blog.body, this.$store.getters['quearn/xss'])
     },
     onCommentCompleted: function (context) {
       context.writecomment = false

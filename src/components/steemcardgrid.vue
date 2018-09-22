@@ -34,9 +34,9 @@ export default {
     },
     getQuestions: function () {
       this.questions = []
-      let config = this.$store.getters['steemqa/config']
+      let config = this.$store.getters['quearn/config']
       axios.get(
-        this.$store.getters['steemqa/serverURL'] +
+        this.$store.getters['quearn/serverURL'] +
           '/questions/?' +
           this.filtersToParams() +
           '&limit=' + config.initial_grid_batch_size,

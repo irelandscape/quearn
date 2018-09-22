@@ -140,13 +140,13 @@ export default {
 
       let tag1 = ''
       if (this.$refs.topicpicker.ternaryTopic !== '') {
-        tag1 = this.topicStr(this.$store.getters['steemqa/topics'],
+        tag1 = this.topicStr(this.$store.getters['quearn/topics'],
           this.$refs.topicpicker.ternaryTopic)
       } else if (this.$refs.topicpicker.secondaryTopic !== '') {
-        tag1 = this.topicStr(this.$store.getters['steemqa/topics'],
+        tag1 = this.topicStr(this.$store.getters['quearn/topics'],
           this.$refs.topicpicker.secondaryTopic)
       } else if (this.$refs.topicpicker.primaryTopic !== '') {
-        tag1 = this.topicStr(this.$store.getters['steemqa/topics'],
+        tag1 = this.topicStr(this.$store.getters['quearn/topics'],
           this.$refs.topicpicker.primaryTopic)
       }
 
@@ -155,7 +155,7 @@ export default {
       }
 
       let permlink = this.permlink(this.form.title)
-      let tags = [this.$store.getters['steemqa/config'].tag]
+      let tags = [this.$store.getters['quearn/config'].tag]
       tags.push(tag1)
       if (this.form.tag2) {
         tags.push(this.form.tag2)
@@ -173,7 +173,7 @@ export default {
 
       this.$store.getters['steem/client'].comment(
         '',
-        this.$store.getters['steemqa/config'].tag,
+        this.$store.getters['quearn/config'].tag,
         this.$store.getters['steem/username'],
         permlink,
         this.form.title,
@@ -182,7 +182,7 @@ export default {
           tags: tags
         }
       ).then(() => {
-        let url = this.$store.getters['steemqa/serverURL']
+        let url = this.$store.getters['quearn/serverURL']
         if (this.isquestion) {
           url += '/newquestion'
         } else {
@@ -238,7 +238,7 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-      return md2html(this.input, this.$store.getters['steemqa/xss'])
+      return md2html(this.input, this.$store.getters['quearn/xss'])
     }
   }
 }

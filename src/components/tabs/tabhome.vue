@@ -2,7 +2,7 @@
   <q-tab-pane name="tab-home" keep-alive >
     <steemcarousel
       filter="trending"
-      :query="{tag: $store.getters['steemqa/config'].tag}"
+      :query="{tag: $store.getters['quearn/config'].tag}"
     >
     </steemcarousel>
     <div class="content">

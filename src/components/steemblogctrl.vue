@@ -71,16 +71,16 @@ export default {
       this.$emit('showComments')
     },
     toggleBookmark: function () {
-      let bookmark = this.$store.getters['steemqa/bookmark'](this.question.id)
+      let bookmark = this.$store.getters['quearn/bookmark'](this.question.id)
       if (bookmark) {
-        this.$store.dispatch('steemqa/removeBookmark', {
+        this.$store.dispatch('quearn/removeBookmark', {
           vue: this,
           bookmark,
           username: this.$store.getters['steem/username'],
           accessToken: this.$store.getters['steem/accessToken']
         })
       } else {
-        this.$store.dispatch('steemqa/addBookmark', {
+        this.$store.dispatch('quearn/addBookmark', {
           vue: this,
           question: this.question,
           username: this.$store.getters['steem/username'],
@@ -91,7 +91,7 @@ export default {
   },
   computed: {
     bookmarkcolor () {
-      if (this.$store.getters['steemqa/bookmark'](this.question.id)) {
+      if (this.$store.getters['quearn/bookmark'](this.question.id)) {
         return 'secondary'
       } else {
         return ''

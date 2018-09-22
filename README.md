@@ -43,10 +43,10 @@ On the server side a SteemQA service scrapes the Steem blockchain for new questi
 These questions and answers are searched based on the presence of specific tags.
 
 Posts must have two tags present to be considered by SteemQA.
-The first tag must be *steemqa*, the second tag must be the topic related to the question or answer.
+The first tag must be *quearn*, the second tag must be the topic related to the question or answer.
 For example:
 ```
-steemqa programming
+quearn programming
 ```
 
 Furthermore, all question posts must have a title terminating with a question mark (?) character.
@@ -69,7 +69,7 @@ A SteemQA client-side application is provided for:
 
 ## Running the development server
 ```
-$ cd steemqa
+$ cd quearn
 $ npm install
 $ npm install -g vue-cli
 $ npm install -g quasar-cli

@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 // we first import the module
 import steem from './steem'
-import steemqa from './steemqa'
+import quearn from './quearn'
 
 Vue.use(Vuex)
 
@@ -11,7 +11,7 @@ const store = new Vuex.Store({
   modules: {
     // then we reference it
     steem,
-    steemqa
+    quearn
   }
 })
 

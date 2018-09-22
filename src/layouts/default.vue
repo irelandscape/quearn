@@ -91,7 +91,7 @@ export default {
   },
   computed: {
     appName () {
-      let config = this.$store.getters['steemqa/config']
+      let config = this.$store.getters['quearn/config']
 
       if (config) {
         return config.appName

@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-      return md2html(blog.body, this.$store.getters['steemqa/xss'])
+      return md2html(blog.body, this.$store.getters['quearn/xss'])
     }
   },
   methods: {

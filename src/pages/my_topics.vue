@@ -56,11 +56,11 @@ export default {
   mounted () {
     let username = this.$store.getters['steem/username']
     let accessToken = this.$store.getters['steem/accessToken']
-    let topics = this.$store.getters['steemqa/topics']
-    let favouriteTopics = this.$store.getters['steemqa/favouriteTopicsById']
+    let topics = this.$store.getters['quearn/topics']
+    let favouriteTopics = this.$store.getters['quearn/favouriteTopicsById']
 
     if (favouriteTopics === null) {
-      this.$store.dispatch('steemqa/favouriteTopicsById',
+      this.$store.dispatch('quearn/favouriteTopicsById',
         {
           username,
           accessToken
@@ -71,7 +71,7 @@ export default {
     }
 
     if (topics === null) {
-      this.$store.dispatch('steemqa/topics')
+      this.$store.dispatch('quearn/topics')
         .then(response => {
           this.updateTopics()
         })
@@ -79,8 +79,8 @@ export default {
   },
   methods: {
     updateTopics: function () {
-      let topics = this.$store.getters['steemqa/topics']
-      let favouriteTopics = this.$store.getters['steemqa/favouriteTopicsById']
+      let topics = this.$store.getters['quearn/topics']
+      let favouriteTopics = this.$store.getters['quearn/favouriteTopicsById']
 
       if (topics === null || favouriteTopics === null) {
         return
@@ -126,11 +126,11 @@ export default {
       let accessToken = this.$store.getters['steem/accessToken']
 
       if (this.mytopics.includes(id)) {
-        this.$store.dispatch('steemqa/addTopic', {
+        this.$store.dispatch('quearn/addTopic', {
           id, username, accessToken
         })
       } else {
-        this.$store.dispatch('steemqa/removeTopic', {
+        this.$store.dispatch('quearn/removeTopic', {
           id, username, accessToken
         })
       }

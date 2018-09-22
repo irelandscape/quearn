@@ -96,15 +96,15 @@ export default {
     tags (question) {
       let t = []
 
-      if (question.tag1 !== this.$store.getters['steemqa/config'].tag) {
+      if (question.tag1 !== this.$store.getters['quearn/config'].tag) {
         t.push(question.tag1)
-      } else if (question.tag2 !== this.$store.getters['steemqa/config'].tag) {
+      } else if (question.tag2 !== this.$store.getters['quearn/config'].tag) {
         t.push(question.tag2)
-      } else if (question.tag3 !== this.$store.getters['steemqa/config'].tag) {
+      } else if (question.tag3 !== this.$store.getters['quearn/config'].tag) {
         t.push(question.tag3)
-      } else if (question.tag4 !== this.$store.getters['steemqa/config'].tag) {
+      } else if (question.tag4 !== this.$store.getters['quearn/config'].tag) {
         t.push(question.tag4)
-      } else if (question.tag5 !== this.$store.getters['steemqa/config'].tag) {
+      } else if (question.tag5 !== this.$store.getters['quearn/config'].tag) {
         t.push(question.tag5)
       }
 
@@ -124,12 +124,12 @@ export default {
       })
     },
     getBlogBody: function (blog) {
-      return md2html(blog.body, this.$store.getters['steemqa/xss'])
+      return md2html(blog.body, this.$store.getters['quearn/xss'])
     }
   },
   mounted () {
     axios.get(
-      this.$store.getters['steemqa/serverURL'] + '/questions/?author=' + encodeURIComponent(this.$store.getters['steem/username']) + '&ordering=-created',
+      this.$store.getters['quearn/serverURL'] + '/questions/?author=' + encodeURIComponent(this.$store.getters['steem/username']) + '&ordering=-created',
       {
         params: {
           username: this.$store.getters['steem/username'],

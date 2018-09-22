@@ -141,7 +141,7 @@ export default {
 
         steem.editPost(this.$store.getters['steem/client'],
           this.$store.getters['steem/username'],
-          this.$store.getters['steemqa/config'],
+          this.$store.getters['quearn/config'],
           this.blog.permlink,
           this.blog.title,
           tags,
@@ -165,7 +165,7 @@ export default {
         steem.editComment(this.$store.getters['steem/client'],
           this.info.parentAuthor,
           this.info.parentPermlink,
-          this.$store.getters['steemqa/config'],
+          this.$store.getters['quearn/config'],
           this.$store.getters['steem/username'],
           this.blog.permlink,
           this.blog.body).then(() => {

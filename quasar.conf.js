@@ -5,7 +5,7 @@ module.exports = function (ctx) {
     // app plugins (/src/plugins)
     plugins: [
       'steem',
-      'steemqa',
+      'quearn',
       'i18n',
       'steemfilters',
       'vuelidate'

@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     getBlogBody: function (blog) {
-      return md2html(blog.body, this.$store.getters['steemqa/xss'])
+      return md2html(blog.body, this.$store.getters['quearn/xss'])
     },
     showComments: function () {
       this.showcomments = !this.showcomments

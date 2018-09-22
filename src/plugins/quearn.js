@@ -2,21 +2,21 @@ import axios from 'axios'
 import { Notify } from 'quasar'
 
 export default ({ store, Vue }) => {
-  // store.commit('steemqa/serverURL', 'http://127.0.0.1:8000')
+  // store.commit('quearn/serverURL', 'http://127.0.0.1:8000')
   let xss = require('xss')
-  store.commit('steemqa/xss', new xss.FilterXSS())
-  store.commit('steemqa/serverURL', 'http://192.168.192.54:8000')
-  axios.get(store.getters['steemqa/serverURL'] + '/configs/').then(
+  store.commit('quearn/xss', new xss.FilterXSS())
+  store.commit('quearn/serverURL', 'http://192.168.192.54:8000')
+  axios.get(store.getters['quearn/serverURL'] + '/configs/').then(
     function (response) {
-      store.commit('steemqa/config', response.data[0])
+      store.commit('quearn/config', response.data[0])
     }).catch(
     function (error) {
       console.log(error)
       Notify.create('Failed to contact API Server')
     })
-  axios.get(store.getters['steemqa/serverURL'] + '/topics/').then(
+  axios.get(store.getters['quearn/serverURL'] + '/topics/').then(
     function (response) {
-      store.commit('steemqa/topics', response.data)
+      store.commit('quearn/topics', response.data)
     }).catch(
     function (error) {
       console.log(error)
@@ -24,7 +24,7 @@ export default ({ store, Vue }) => {
     })
 
   if (store.getters['steem/username']) {
-    axios.get(store.getters['steemqa/serverURL'] + '/bookmarks/',
+    axios.get(store.getters['quearn/serverURL'] + '/bookmarks/',
       {
         params: {
           username: store.getters['steem/username'],
@@ -32,7 +32,7 @@ export default ({ store, Vue }) => {
         }
       }
     ).then(function (response) {
-      store.commit('steemqa/bookmarks', response.data)
+      store.commit('quearn/bookmarks', response.data)
     }).catch(function (error) {
       console.log(error)
       Notify.create('Failed to contact API Server')

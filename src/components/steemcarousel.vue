@@ -116,11 +116,11 @@ export default {
   },
   mounted () {
     let d = new Date()
-    d.setDate(d.getDate() - this.$store.getters['steemqa/config'].carousel_history)
+    d.setDate(d.getDate() - this.$store.getters['quearn/config'].carousel_history)
     d = encodeURIComponent(d.toISOString())
     axios.get(
-      this.$store.getters['steemqa/serverURL'] + '/questions/?ordering=-net_votes&created_gte=' + d + '&limit=' +
-        this.$store.getters['steemqa/config'].carousel_slide_count,
+      this.$store.getters['quearn/serverURL'] + '/questions/?ordering=-net_votes&created_gte=' + d + '&limit=' +
+        this.$store.getters['quearn/config'].carousel_slide_count,
       {
         params: {
           username: this.$store.getters['steem/username'],

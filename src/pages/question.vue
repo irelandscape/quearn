@@ -126,7 +126,7 @@ export default {
     tags: function () {
       let tags = JSON.parse(this.blog.json_metadata).tags
       return tags.filter((elem) => {
-        return elem !== this.$store.getters['steemqa/config'].tag
+        return elem !== this.$store.getters['quearn/config'].tag
       })
     }
   },
@@ -138,7 +138,7 @@ export default {
       if (this.blogBody) {
         return this.blogBody
       } else {
-        return md2html(this.blog.body, this.$store.getters['steemqa/xss'])
+        return md2html(this.blog.body, this.$store.getters['quearn/xss'])
       }
     },
     onAnswerCompleted: function () {
@@ -163,7 +163,7 @@ export default {
 
     /* Get answers */
     axios.get(
-      this.$store.getters['steemqa/serverURL'] + '/answers/',
+      this.$store.getters['quearn/serverURL'] + '/answers/',
       {
         params: {
           username: this.$store.getters['steem/username'],
