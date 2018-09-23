@@ -7,7 +7,7 @@
         <q-icon name="message" outlined />
         {{ $tc('mytopics') }}
       </q-toolbar-title>
-      <q-btn size="lg" to="/" >
+      <q-btn size="lg" @click="$router.go(-1)" >
         <q-icon name="close" outlined>
           <q-tooltip>Back</q-tooltip>
         </q-icon>

@@ -83,7 +83,8 @@ export default {
     tags: null,
     question_title: '',
     question_author: '',
-    question_permlink: ''
+    question_permlink: '',
+    emit_editcompleted: true
   },
   data: function () {
     return {
@@ -211,7 +212,11 @@ export default {
             message: this.$tc('postingsuccess'),
             type: 'positive'
           })
-          this.$emit('editcompleted')
+          if (this.emit_editcompleted) {
+            this.$emit('editcompleted')
+          } else {
+            this.$router.push('/')
+          }
         }).catch((err) => {
           this.$q.notify({
             message: this.$tc('postingfailed'),
@@ -219,7 +224,11 @@ export default {
             type: 'negative'
           })
           this.$q.loading.hide()
-          this.$emit('editcompleted')
+          if (this.emit_editcompleted) {
+            this.$emit('editcompleted')
+          } else {
+            this.$router.push('/')
+          }
         })
         this.$q.loading.hide()
       }).catch((err) => {
@@ -229,11 +238,19 @@ export default {
           type: 'negative'
         })
         this.$q.loading.hide()
-        this.$emit('editcompleted')
+        if (this.emit_editcompleted) {
+          this.$emit('editcompleted')
+        } else {
+          this.$router.push('/')
+        }
       })
     },
     cancel () {
-      this.$emit('editcompleted')
+      if (this.emit_editcompleted) {
+        this.$emit('editcompleted')
+      } else {
+        this.$router.push('/')
+      }
     }
   },
   computed: {
