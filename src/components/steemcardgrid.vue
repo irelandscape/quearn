@@ -5,6 +5,14 @@
       :question="question"
       class="gridcard"
     />
+    <q-btn
+      :label="nomoreresults ? $tc('nomoreresults') : $tc('nextresults')"
+      icon="skip_next"
+      class="full-width q-mb-md"
+      color="black"
+      @click="getQuestions(reset=false)"
+      :disable="nomoreresults"
+    />
   </div>
 </template>
 
@@ -23,7 +31,8 @@ export default {
   },
   data () {
     return {
-      questions: []
+      questions: [],
+      nomoreresults: false
     }
   },
   methods: {
@@ -32,14 +41,18 @@ export default {
       data = data.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
       return data.join('&')
     },
-    getQuestions: function () {
-      this.questions = []
+    getQuestions: function (reset = true) {
+      if (reset) {
+        this.questions = []
+        this.nomoreresults = false
+      }
       let config = this.$store.getters['quearn/config']
       axios.get(
         this.$store.getters['quearn/serverURL'] +
           '/questions/?' +
           this.filtersToParams() +
-          '&limit=' + config.initial_grid_batch_size,
+          '&limit=' + config.initial_grid_batch_size +
+          '&offset=' + this.questions.length,
         {
           params: {
             username: this.$store.getters['steem/username'],
@@ -47,7 +60,10 @@ export default {
           }
         }
       ).then((response) => {
-        this.questions = response.data.results
+        this.questions = this.questions.concat(response.data.results)
+        if (response.data.results.length < config.initial_grid_batch_size) {
+          this.nomoreresults = true
+        }
       }).catch(function (error) {
         console.log(error)
       })
