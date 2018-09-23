@@ -67,8 +67,8 @@ export default {
       }
     },
     topic: function () {
-      if (this.blog) {
-        return this.metadata.tags[1]
+      if (this.question) {
+        return this.$store.getters['quearn/topicStr'](this.question.topic)
       } else {
         return ''
       }
