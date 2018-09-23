@@ -250,4 +250,7 @@ export default {
   .boxed
     border: 1px solid grey;
     padding: 0.2rem;
+
+  .q-btn
+    margin-right: 2rem;
 </style>
