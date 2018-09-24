@@ -38,7 +38,6 @@
         icon="priority_high"
       >
         {{ $tc('mostwantedanswers') }}
-        <span class="swipe">swipe &gt;&gt;&gt;</span>
       </q-chip>
       <span class="swipe">swipe &gt;&gt;&gt;</span>
       <steemcardswiper
