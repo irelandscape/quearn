@@ -1,5 +1,7 @@
 <template>
-  <q-tab-pane name="tab-home" keep-alive >
+  <q-tab-pane
+    v-if="$store.getters['quearn/config']"
+    name="tab-home" keep-alive >
     <steemcarousel
       filter="trending"
       :query="{tag: $store.getters['quearn/config'].tag}"

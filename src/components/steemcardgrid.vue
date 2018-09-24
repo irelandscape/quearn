@@ -60,8 +60,8 @@ export default {
           }
         }
       ).then((response) => {
-        this.questions = this.questions.concat(response.data.results)
-        if (response.data.results.length < config.initial_grid_batch_size) {
+        this.questions = this.questions.concat(response.data)
+        if (response.data.length < config.initial_grid_batch_size) {
           this.nomoreresults = true
         }
       }).catch(function (error) {

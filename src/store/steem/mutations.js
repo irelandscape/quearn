@@ -1,9 +1,9 @@
-import sdk from 'sc2-sdk'
 /*
 export const someMutation = (state) => {}
  */
 
 export const createClient = (state, info) => {
+  let sdk = require('sc2-sdk/lib/browser.js')
   state.client = sdk.Initialize(info)
 }
 
