@@ -64,19 +64,21 @@ export default {
     onSortBtnClicked: function (category) {
       this.category = category
       if (category === 'latest') {
-        this.filters = {
-          ordering: '-created'
+        this.filters.ordering = '-created'
+        if (this.filters.answer_count !== undefined) {
+          delete this.filters.answer_count
         }
       } else if (category === 'best') {
-        this.filters = {
-          ordering: '-net_votes'
+        this.filters.ordering = '-net_votes'
+        if (this.filters.answer_count !== undefined) {
+          delete this.filters.answer_count
         }
       } else if (category === 'unanswered') {
-        this.filters = {
-          ordering: '-net_votes',
-          answer_count: 0
-        }
+        this.filters.ordering = '-net_votes'
+        this.filters.answer_count = 0
       }
+      console.log(this.filters)
+      this.filters = {...this.filters}
     },
     onTopicChanged: function (topic) {
       this.filters['topic'] = topic

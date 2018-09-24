@@ -55,7 +55,7 @@ export default {
       if (!this.blog) {
         return ''
       }
-      if (this.metadata.image) {
+      if (this.metadata && this.metadata.image) {
         return this.metadata.image[0]
       } else {
         let images = this.blog.body.match('https?://.*?\\.(?:png|jpe?g|gif)')
@@ -96,13 +96,6 @@ export default {
     }
   },
   methods: {
-    avatar () {
-      if (this.blog) {
-        return 'https://steemitimages.com/u/' + this.blog.author + '/avatar'
-      } else {
-        return ''
-      }
-    },
     showquestion () {
       this.$router.push({
         name: 'question',

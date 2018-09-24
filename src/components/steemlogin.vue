@@ -30,8 +30,10 @@ export default {
   props: {
   },
   mounted: function () {
+    this.$root.$on('login', () => this.login())
+
     this.$store.commit('steem/createClient', {
-      app: 'quearn-io',
+      app: 'steemqa-io',
       callbackURL: 'http://localhost:8080/auth/callback',
       accessToken: this.$store.getters['steem/accessToken'],
       scope: ['vote', 'comment']

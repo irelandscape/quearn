@@ -35,6 +35,7 @@ export default {
   newquestion: 'New question',
   nomoreresults: 'No more results',
   questionrequirement: 'Must finish with a question mark!',
+  pleaseloginorsignup: 'Please login or sign up to Steem.',
   postingnewquestion: 'Posting new question...',
   postingsuccess: 'Post successfully submitted',
   postingfailed: 'Post failed to be submitted!',
@@ -56,6 +57,7 @@ export default {
   votingfailed: 'Voting failed!',
   votingweight: 'Voting weight',
   writeacomment: 'Write a comment',
+  youmustbeloggedin: 'You must be logged in to contribute content.',
   youranswer: 'Your Answer',
   yourcomment: 'Your comment'
 }

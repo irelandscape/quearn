@@ -13,12 +13,16 @@
     </div>
     <steemvote
       :blog='blog'
+      v-if="this.$store.getters['steem/loggedIn']"
     />
-    <q-btn icon="subdirectory_arrow_right" size="xs">
+    <q-btn
+      v-if="this.$store.getters['steem/loggedIn']"
+      icon="subdirectory_arrow_right" size="xs"
+    >
       <q-tooltip>Resteem</q-tooltip>
     </q-btn>
     <q-btn
-      v-if="!condensed"
+      v-if="this.$store.getters['steem/loggedIn'] && !condensed"
       icon="edit"
       size="xs"
       @click="startEdit()">
@@ -32,7 +36,7 @@
       :label="answer_count"
     />
     <q-btn
-      v-if="question"
+      v-if="question && this.$store.getters['steem/loggedIn']"
       icon="bookmark"
       size="xs"
       title="bookmark"
@@ -40,6 +44,7 @@
       @click="toggleBookmark()"
     />
     <q-btn
+      v-if="this.$store.getters['steem/loggedIn']"
       icon="comment"
       size="xs"
       title="comments"
@@ -112,6 +117,7 @@ export default {
     padding-top: 0;
     padding-bottom: 0;
 
-  .tight .on-left
+  >>> .tight .on-left
     margin-right: 0;
+
 </style>

@@ -55,4 +55,8 @@ export default {
   time
     margin-top: 1rem;
 
+  >>> .q-chip-main
+    max-width: 5rem;
+    white-space: normal;
+
 </style>

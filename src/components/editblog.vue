@@ -38,6 +38,7 @@
         :value="input" @input="update"
         v-model="form.body"
         class="boxed"
+        :max-height=200
       />
     </q-field>
 

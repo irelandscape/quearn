@@ -35,25 +35,35 @@
         inset-delimiter
       >
         <q-list-header>Menu</q-list-header>
-        <q-item @click.native="myBookmarks">
+        <q-item @click.native="myBookmarks"
+          v-if="this.$store.getters['steem/loggedIn']"
+        >
           <q-item-side icon="bookmark" />
           <q-item-main :label="$tc('mybookmarks')" />
         </q-item>
-        <q-item @click.native="myQuestions">
+        <q-item @click.native="myQuestions"
+          v-if="this.$store.getters['steem/loggedIn']"
+        >
           <q-item-side icon="contact_support" />
           <q-item-main :label="$t('myquestions')" />
         </q-item>
 
-        <q-item @click.native="myAnswers">
+        <q-item @click.native="myAnswers"
+          v-if="this.$store.getters['steem/loggedIn']"
+        >
           <q-item-side icon="check_circle" />
           <q-item-main :label="$t('myanswers')" />
         </q-item>
 
-        <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
+        <q-item @click.native="openURL('https://discord.gg/5TDhbDg')"
+          v-if="this.$store.getters['steem/loggedIn']"
+        >
           <q-item-side icon="message" />
           <q-item-main :label="$t('mycomments')" />
         </q-item>
-        <q-item @click.native="myTopics">
+        <q-item @click.native="myTopics"
+          v-if="this.$store.getters['steem/loggedIn']"
+        >
           <q-item-side icon="remove_red_eye" />
           <q-item-main :label="$t('mytopics')" />
         </q-item>
@@ -61,7 +71,9 @@
           <q-item-side icon="chat" />
           <q-item-main label="Discord Channel" sublabel="https://discord.gg/KtYAr7c" />
         </q-item>
-        <q-item @click.native="logout()">
+        <q-item @click.native="logout()"
+          v-if="this.$store.getters['steem/loggedIn']"
+        >
           <q-item-side icon="exit_to_app" />
           <q-item-main :label="$t('logout')" />
         </q-item>

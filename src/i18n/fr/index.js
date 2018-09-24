@@ -35,6 +35,7 @@ export default {
   newquestion: 'Nouvelle question',
   nomoreresults: 'Plus de resultat',
   questionrequirement: 'Doit finir avec un point d\'interrogation!',
+  pleaseloginorsignup: 'Veuillez vous connecter ou creer un nouveau compte Steem.',
   postingnewquestion: 'Nouvelle question submission en cours...',
   postingsuccess: 'Soumission de votre contribution reussie',
   postingfailed: 'Erreur durant soumission de votre contribution!',
@@ -56,6 +57,7 @@ export default {
   votingfailed: 'Erreur durant soumission du vote!',
   votingweight: 'Poid du vote',
   writeacomment: 'Ecrivez un commentaire',
+  youmustbeloggedin: 'Vous devez etre connecte pour soumettre des contributions.',
   youranswer: 'Votre reponse',
   yourcomment: 'Votre commentaire'
 }

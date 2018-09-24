@@ -2,10 +2,10 @@ import axios from 'axios'
 import { Notify } from 'quasar'
 
 export default ({ store, Vue }) => {
-  store.commit('quearn/serverURL', 'http://127.0.0.1:8000')
+  // store.commit('quearn/serverURL', 'http://127.0.0.1:8000')
   let xss = require('xss')
   store.commit('quearn/xss', new xss.FilterXSS())
-  // store.commit('quearn/serverURL', 'http://192.168.192.54:8000')
+  store.commit('quearn/serverURL', 'http://192.168.192.54:8000')
   axios.get(store.getters['quearn/serverURL'] + '/configs/').then(
     function (response) {
       store.commit('quearn/config', response.data[0])
