@@ -33,6 +33,44 @@
           no-wrap
         >
           <q-tooltip>More</q-tooltip>
+          <q-popover>
+              <q-btn-group flat>
+                <q-btn
+                  icon="keyboard_arrow_up"
+                  flat
+                  title="upvotes"
+                  no-wrap
+                >
+                  {{blog.active_votes.length}}
+                </q-btn>
+                <q-btn
+                  v-if="this.$store.getters['steem/loggedIn'] && !condensed"
+                  icon="edit"
+                  flat
+                  no-wrap
+                  @click="startEdit()">
+                  <q-tooltip>Edit</q-tooltip>
+                </q-btn>
+                <q-btn
+                  v-if="question && this.$store.getters['steem/loggedIn']"
+                  icon="bookmark"
+                  flat
+                  title="bookmark"
+                  no-wrap
+                  :color="bookmarkcolor"
+                  @click="toggleBookmark()"
+                />
+                <q-btn
+                  v-if="this.$store.getters['steem/loggedIn']"
+                  icon="comment"
+                  flat
+                  no-wrap
+                  title="comments"
+                  :label="blog.children"
+                  @click="showComments()"
+                />
+              </q-btn-group>
+          </q-popover>
         </q-btn>
       </div>
       <div class="col-4 right">
@@ -46,48 +84,6 @@
           <q-tooltip>Estimated payout</q-tooltip>
         </q-btn>
       </div>
-      <!--
-      <q-btn-group flat>
-        <q-btn
-          icon="keyboard_arrow_up"
-          flat
-          size="sm"
-          title="upvotes"
-          no-wrap
-        >
-          {{blog.active_votes.length}}
-        </q-btn>
-        <q-btn
-          v-if="this.$store.getters['steem/loggedIn'] && !condensed"
-          icon="edit"
-          flat
-          size="sm"
-          no-wrap
-          @click="startEdit()">
-          <q-tooltip>Edit</q-tooltip>
-        </q-btn>
-        <q-btn
-          v-if="question && this.$store.getters['steem/loggedIn']"
-          icon="bookmark"
-          flat
-          size="sm"
-          title="bookmark"
-          no-wrap
-          :color="bookmarkcolor"
-          @click="toggleBookmark()"
-        />
-        <q-btn
-          v-if="this.$store.getters['steem/loggedIn']"
-          icon="comment"
-          flat
-          no-wrap
-          size="sm"
-          title="comments"
-          :label="blog.children"
-          @click="showComments()"
-        />
-      </q-btn-group>
-      -->
     </div>
   </div>
 </template>
