@@ -35,6 +35,7 @@
       />
       <q-btn
         :label = "$t('writeacomment')"
+        flat
         icon="add_comment"
         @click = "writecomment=!writecomment"
         v-if="!writecomment"
@@ -47,42 +48,48 @@
         :callbackContext=this
         :title="$tc('yourcomment')"
       />
-      <hr/>
       <q-btn
         class="q-mt-md q-mb-md"
         :label = "$t('answerthisquestion')"
+        flat
         color = "secondary"
         @click = "editanswer=true"
+        @editcompleted="onAnswerCompleted"
         v-if = "editanswer === false"
       />
       <div v-if="editanswer">
-        <h3>{{$t('youranswer')}}:</h3>
-        <editblog
-          class="q-mt-md"
-          :isquestion=false
-          :question_title=this.blog.title
-          :question_author=this.blog.author
-          :question_permlink=this.blog.permlink
-          :tags="tags"
-          @editcompleted="onAnswerCompleted"
-        />
+        <h3 class="q-mt-sm q-mb-sm">{{$t('youranswer')}}:</h3>
+        <transition
+          appear
+          enter-active-class="animated bounceInLeft"
+          leave-active-class="animated bounceOutRight"
+        >
+          <editblog
+            class="q-mt-md"
+            :isquestion=false
+            :question_title=this.blog.title
+            :question_author=this.blog.author
+            :question_permlink=this.blog.permlink
+            :tags="tags"
+            @editcompleted="onAnswerCompleted"
+          />
+        </transition>
       </div>
 
       <comments
+        class="comments"
         v-if="showcomments"
         :parentAuthor=this.blog.author
         :parentPermlink=this.blog.permlink
       />
-
-      <q-list>
-        <answer v-for="(answer, index) in answers"
-          :key="answer.id"
-          :answer="answer"
-          :opened="index === 0"
-          :inheritAttrs=false
-        />
-      </q-list>
     </div>
+    <answer v-for="(answer, index) in answers"
+      class="blog answer shadow-1"
+      :key="answer.id"
+      :answer="answer"
+      :opened="index === 0"
+      :inheritAttrs=false
+    />
   </q-page>
 </template>
 
@@ -209,4 +216,10 @@ export default {
 
   .blog
     margin-top: 80px;
+
+  .answer
+    margin-top: 20px;
+
+  .comments
+    margin-left: -1rem;
 </style>

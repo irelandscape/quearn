@@ -84,7 +84,16 @@ export default {
 
 <style lang="stylus" scoped>
   .gridcard
-    width: 20rem;
+    width: 18rem;
     display: inline-block;
     margin: 0.3rem;
+
+  @media (max-width:500px) {
+    .gridcard {
+      width: 100%;
+    }
+  }
+
+  .mobile
+    width: 100%;
 </style>

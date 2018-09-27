@@ -1,15 +1,8 @@
 <template>
-  <q-collapsible
-    group="answers"
-    :opened="opened"
-  >
-    <template slot="header">
-      <q-item-main>
-        <postheader
-          :blog="blog"
-        />
-      </q-item-main>
-    </template>
+  <div>
+    <postheader
+      :blog="blog"
+    />
 
     <div v-if="blog">
       <div v-html="getBlogBody()" />
@@ -22,6 +15,7 @@
     <q-btn
       :label = "$t('writeacomment')"
       icon="add_comment"
+      flat
       @click = "writecomment=!writecomment"
       v-if="!writecomment"
     />
@@ -35,13 +29,12 @@
     />
 
     <comments
+      class="comments"
       v-if="showcomments"
       :parentAuthor=this.blog.author
       :parentPermlink=this.blog.permlink
     />
-
-    <hr/>
-  </q-collapsible>
+  </div>
 </template>
 
 <script>
@@ -101,4 +94,7 @@ export default {
 <style lang="stylus">
   .q-collapsible-opened .q-item
     background-color: #eeeeee;
+
+  .comments
+    margin-left: -1rem;
 </style>

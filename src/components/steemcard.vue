@@ -20,6 +20,7 @@
     </div>
     <q-card-main class="tight">
       <steemblogctrl v-if="blog"
+        class="q-mb-sm"
         :blog="blog"
         :question="question"
         :condensed=true
@@ -135,6 +136,8 @@ export default {
 
   >>> .q-card-title
     margin-top: 1rem;
+    font-weight: bold;
+    font-size: 0.8rem;
     height: 4rem;
     line-height: 1rem;
     cursor: pointer;

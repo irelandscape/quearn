@@ -150,7 +150,6 @@ export default {
 
 >>>.q-select
   width: 32%;
-  border: 1px solid #333333;
   float: left;
   height: 1.5rem;
   margin-right: 0.1rem;

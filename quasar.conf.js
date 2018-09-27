@@ -100,6 +100,8 @@ module.exports = function (ctx) {
     },
     // animations: 'all' --- includes all animations
     animations: [
+      'bounceInLeft',
+      'bounceOutRight'
     ],
     pwa: {
       // workboxPluginMode: 'InjectManifest',

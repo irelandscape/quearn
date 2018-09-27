@@ -3,41 +3,44 @@
     <div
       v-for="blog in blogs"
       :key="blog.id"
+      class="q-ml-lg"
     >
       <q-card class="q-mb-sm no-shadow">
         <q-card-title>
           <postheader
             :blog="blog"
             :fulldate=true
+            class="smaller"
           />
         </q-card-title>
         <q-card-main>
-            <div v-html="getBlogBody(blog)" />
-            <steemcommentctrl
-              :blog="blog"
-              :parentAuthor="parentAuthor"
-              :parentPermlink="parentPermlink"
-              @show_comments="showComments"
-            />
-            <comments
-              v-if="showcomments"
-              :parentAuthor="blog.author"
-              :parentPermlink="blog.permlink"
-            />
-            <q-btn
-              :label = "$t('reply')"
-              icon="add_comment"
-              @click = "blog.writecomment=!blog.writecomment"
-              v-if="!blog.writecomment"
-            />
-            <writecomment
-              :parentAuthor="blog.author"
-              :parentPermlink="blog.permlink"
-              :callback="onCommentCompleted"
-              :callbackContext="blog"
-              v-if="blog.writecomment"
-              :title="$tc('youranswer')"
-            />
+          <div v-html="getBlogBody(blog)" />
+          <q-btn
+            :label = "$t('reply')"
+            flat
+            size="sm"
+            @click = "blog.writecomment=!blog.writecomment"
+            v-if="!blog.writecomment"
+          />
+          <steemcommentctrl
+            :blog="blog"
+            :parentAuthor="parentAuthor"
+            :parentPermlink="parentPermlink"
+            @show_comments="showComments"
+          />
+          <writecomment
+            :parentAuthor="blog.author"
+            :parentPermlink="blog.permlink"
+            :callback="onCommentCompleted"
+            :callbackContext="blog"
+            v-if="blog.writecomment"
+            :title="$tc('youranswer')"
+          />
+          <comments
+            v-if="showcomments"
+            :parentAuthor="blog.author"
+            :parentPermlink="blog.permlink"
+          />
         </q-card-main>
       </q-card>
     </div>
@@ -107,12 +110,16 @@ export default {
 </script>
 
 <style lang="stylus">
-  .comments
-    margin: 1rem;
+  @import '~variables'
 
-  .q-card
-    border: 1px solid lightgrey
+  .comments
+    margin-left: 1rem;
+    color: rgba(0, 0, 0, 0.7);
 
   div.author
     line-height: 0rem;
+
+  .smaller
+    font-size: 80%;
+    line-height: 0.7rem;
 </style>

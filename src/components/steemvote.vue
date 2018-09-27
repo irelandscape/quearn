@@ -2,7 +2,8 @@
   <span>
     <q-btn
       icon="keyboard_arrow_up"
-      size="xs"
+      flat
+      dense
       :color="btnColor()"
       @click="voteDialogModel = true"
     >

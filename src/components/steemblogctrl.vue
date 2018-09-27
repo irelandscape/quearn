@@ -1,56 +1,94 @@
 <template>
   <div class="steemblogctrl">
-    <div>
-      <q-btn
-        icon="attach_money"
-        :label="blog.pending_payout_value | sbd"
-        flat size="md"
-        class="tight"
-      />
-      <q-btn icon="keyboard_arrow_up" flat size="md" title="upvotes">
-        {{blog.active_votes.length}}
-      </q-btn>
+    <div class="row">
+      <div class="col-8">
+        <steemvote
+          :blog='blog'
+          v-if="this.$store.getters['steem/loggedIn']"
+        />
+        <q-btn
+          v-if="question"
+          icon="question_answer"
+          flat
+          dense
+          title="answers"
+          :label="answer_count"
+          no-wrap
+        >
+          <q-tooltip>Answers</q-tooltip>
+        </q-btn>
+        <q-btn
+          v-if="this.$store.getters['steem/loggedIn']"
+          icon="subdirectory_arrow_right"
+          flat
+          dense
+          no-wrap
+        >
+          <q-tooltip>Resteem</q-tooltip>
+        </q-btn>
+        <q-btn
+          icon="more_horiz"
+          flat
+          dense
+          no-wrap
+        >
+          <q-tooltip>More</q-tooltip>
+        </q-btn>
+      </div>
+      <div class="col-4 right">
+        <q-btn
+          icon="attach_money"
+          :label="blog.pending_payout_value | sbd"
+          flat
+          class="tight"
+          no-wrap
+        >
+          <q-tooltip>Estimated payout</q-tooltip>
+        </q-btn>
+      </div>
+      <!--
+      <q-btn-group flat>
+        <q-btn
+          icon="keyboard_arrow_up"
+          flat
+          size="sm"
+          title="upvotes"
+          no-wrap
+        >
+          {{blog.active_votes.length}}
+        </q-btn>
+        <q-btn
+          v-if="this.$store.getters['steem/loggedIn'] && !condensed"
+          icon="edit"
+          flat
+          size="sm"
+          no-wrap
+          @click="startEdit()">
+          <q-tooltip>Edit</q-tooltip>
+        </q-btn>
+        <q-btn
+          v-if="question && this.$store.getters['steem/loggedIn']"
+          icon="bookmark"
+          flat
+          size="sm"
+          title="bookmark"
+          no-wrap
+          :color="bookmarkcolor"
+          @click="toggleBookmark()"
+        />
+        <q-btn
+          v-if="this.$store.getters['steem/loggedIn']"
+          icon="comment"
+          flat
+          no-wrap
+          size="sm"
+          title="comments"
+          :label="blog.children"
+          @click="showComments()"
+        />
+      </q-btn-group>
+      -->
     </div>
-    <steemvote
-      :blog='blog'
-      v-if="this.$store.getters['steem/loggedIn']"
-    />
-    <q-btn
-      v-if="this.$store.getters['steem/loggedIn']"
-      icon="subdirectory_arrow_right" size="xs"
-    >
-      <q-tooltip>Resteem</q-tooltip>
-    </q-btn>
-    <q-btn
-      v-if="this.$store.getters['steem/loggedIn'] && !condensed"
-      icon="edit"
-      size="xs"
-      @click="startEdit()">
-      <q-tooltip>Edit</q-tooltip>
-    </q-btn>
-    <q-btn
-      v-if="question"
-      icon="question_answer"
-      size="xs"
-      title="answers"
-      :label="answer_count"
-    />
-    <q-btn
-      v-if="question && this.$store.getters['steem/loggedIn']"
-      icon="bookmark"
-      size="xs"
-      title="bookmark"
-      :color="bookmarkcolor"
-      @click="toggleBookmark()"
-    />
-    <q-btn
-      v-if="this.$store.getters['steem/loggedIn']"
-      icon="comment"
-      size="xs"
-      title="comments"
-      :label="blog.children"
-      @click="showComments()"
-    />
   </div>
 </template>
 
@@ -109,15 +147,14 @@ export default {
 <style lang="stylus" scoped>
   .steemblogctrl
     color: #999999;
-    height: 5rem;
 
   .q-btn
     color: #666666;
-    margin-right: 0.2rem;
-    padding-top: 0;
-    padding-bottom: 0;
 
   >>> .tight .on-left
     margin-right: 0;
+
+  >>> .right
+    text-align: right;
 
 </style>

@@ -1,20 +1,22 @@
 <template>
   <div>
-    <q-btn-group>
+    <q-btn-group flat>
       <steemvote
         :blog='blog'
       />
       <q-btn
         v-if="isAuthor()"
         icon="edit"
-        size="xs"
+        flat
+        size="sm"
         @click="startEdit()">
         <q-tooltip>Edit</q-tooltip>
       </q-btn>
       <q-btn
         v-if="blog.children"
         icon="comment"
-        size="xs"
+        flat
+        size="sm"
         title="comments"
         :label="blog.children"
         @click="showComments()"

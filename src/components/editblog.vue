@@ -1,5 +1,5 @@
 <template>
-  <div class="blog shadow-1">
+  <div>
     <q-field
       v-if="isquestion"
       icon="title"
@@ -37,7 +37,6 @@
         type="textarea"
         :value="input" @input="update"
         v-model="form.body"
-        class="boxed"
         :max-height=200
       />
     </q-field>
@@ -48,6 +47,7 @@
       <q-btn
         color="primary"
         icon="send"
+        flat
         :label="$t('submit')"
         @click="submit"
         :disabled="$v.$invalid"
@@ -55,6 +55,7 @@
       <q-btn
         color="primary"
         icon="cancel"
+        flat
         :label="$t('cancel')"
         @click="cancel"
       />
@@ -80,12 +81,18 @@ export default {
     topicpicker
   },
   props: {
-    isquestion: false,
+    isquestion: {
+      type: Boolean,
+      default: false
+    },
     tags: null,
     question_title: '',
     question_author: '',
     question_permlink: '',
-    emit_editcompleted: true
+    emit_editcompleted: {
+      type: Boolean,
+      default: true
+    }
   },
   data: function () {
     return {
@@ -265,10 +272,4 @@ export default {
 <style lang="stylus" scoped>
   @import "../assets/css/blog.styl"
 
-  .boxed
-    border: 1px solid grey;
-    padding: 0.2rem;
-
-  .q-btn
-    margin-right: 2rem;
 </style>

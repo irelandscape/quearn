@@ -21,6 +21,7 @@
       <q-btn
         color="secondary"
         icon="send"
+        flat
         :label="$t('submit')"
         v-model="form.body"
         @click="submit"
@@ -28,6 +29,7 @@
       <q-btn
         color="secondary"
         icon="cancel"
+        flat
         :label="$t('cancel')"
         @click="cancel"
       />
