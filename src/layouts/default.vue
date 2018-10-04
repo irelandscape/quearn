@@ -55,21 +55,19 @@
           <q-item-main :label="$t('myanswers')" />
         </q-item>
 
-        <q-item @click.native="openURL('https://discord.gg/5TDhbDg')"
-          v-if="this.$store.getters['steem/loggedIn']"
-        >
-          <q-item-side icon="message" />
-          <q-item-main :label="$t('mycomments')" />
-        </q-item>
+        <!--
         <q-item @click.native="myTopics"
           v-if="this.$store.getters['steem/loggedIn']"
         >
           <q-item-side icon="remove_red_eye" />
           <q-item-main :label="$t('mytopics')" />
         </q-item>
-        <q-item @click.native="openURL('https://discord.gg/KtYAr7c')">
-          <q-item-side icon="chat" />
-          <q-item-main label="Discord Channel" sublabel="https://discord.gg/KtYAr7c" />
+        -->
+        <q-item @click.native="openURL('https://discord.gg/cTJaUGn')">
+          <q-item-side>
+            <img class="icon" src="/assets/Discord-Logo-White.svg" />
+          </q-item-side>
+          <q-item-main label="Discord Channel"/>
         </q-item>
         <q-item @click.native="logout()"
           v-if="this.$store.getters['steem/loggedIn']"
@@ -83,6 +81,7 @@
     <q-page-container>
       <router-view />
       <editpostdialog />
+      <confirmdialog />
     </q-page-container>
   </q-layout>
 </template>
@@ -93,6 +92,7 @@ import Steemlogin from 'components/steemlogin'
 import Pagemain from 'pages/main'
 import Pagequestion from 'pages/question'
 import Editpostdialog from 'components/editpostdialog'
+import Confirmdialog from 'components/confirmdialog'
 
 export default {
   name: 'LayoutDefault',
@@ -134,7 +134,8 @@ export default {
     Steemlogin,
     Pagemain,
     Pagequestion,
-    Editpostdialog
+    Editpostdialog,
+    Confirmdialog
   }
 }
 </script>
@@ -153,4 +154,9 @@ export default {
   .q-layout-drawer
     background-color: black;
     color: #999999;
+
+  img
+    width: 24px;
+    padding: 0;
+
 </style>

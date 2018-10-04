@@ -3,17 +3,19 @@
     <q-chip v-if="topic" small square color="secondary" dense class="float-right">
       {{topic}}
     </q-chip>
-    <img :src="avatar()" />
-    <div style="display: inline-block;">
-      <div class="author">
-        {{blog.author}}
+    <div>
+      <img :src="avatar()" class="avatar no-shadow"/>
+      <div style="display: inline-block;">
+        <div class="author">
+          {{blog.author}}
+        </div>
       </div>
-      <div class="timestamp">
-        <span v-if="fulldate">
-          {{blog.created | timestamp}},
-        </span>
-        <timeago :datetime="blog.created" :auto-update="60"></timeago>
-      </div>
+    </div>
+    <div class="timestamp">
+      <span v-if="fulldate">
+        {{blog.created | timestamp}},
+      </span>
+      <timeago :datetime="blog.created" :auto-update="60"></timeago>
     </div>
   </div>
 </template>
@@ -39,10 +41,11 @@ export default {
 
 <style lang="stylus" scoped>
   img
-    height: 1.5rem;
-    clip-path: circle(0.75rem at center);
+    height: 2rem;
+    float: left;
     width: auto;
     margin-right: 1rem;
+    border-radius: 0;
 
   .author
     color: black;

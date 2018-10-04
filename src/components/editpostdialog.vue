@@ -112,7 +112,9 @@ export default {
     cancelEdit: function () {
       this.blog.title = this.originalTitle
       this.blog.body = this.originalBody
-      this.info.callback(this.info.callbackContext)
+      if (this.info.callback) {
+        this.info.callback(this.info.callbackContext)
+      }
     },
     validateEdit: function () {
       this.$v.blog.$touch()

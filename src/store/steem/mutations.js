@@ -3,7 +3,7 @@ export const someMutation = (state) => {}
  */
 
 export const createClient = (state, info) => {
-  let sdk = require('sc2-sdk/lib/browser.js')
+  let sdk = require('steemconnect')
   state.client = sdk.Initialize(info)
 }
 

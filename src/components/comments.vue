@@ -14,7 +14,7 @@
           />
         </q-card-title>
         <q-card-main>
-          <div v-html="getBlogBody(blog)" />
+          <div class="comment" v-html="getBlogBody(blog)" />
           <q-btn
             :label = "$t('reply')"
             flat
@@ -122,4 +122,8 @@ export default {
   .smaller
     font-size: 80%;
     line-height: 0.7rem;
+
+  .comment img
+    max-height: 15rem;
+
 </style>

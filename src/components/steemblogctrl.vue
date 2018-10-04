@@ -1,7 +1,7 @@
 <template>
   <div class="steemblogctrl">
     <div class="row">
-      <div class="col-8">
+      <div class="col-9">
         <steemvote
           :blog='blog'
           v-if="this.$store.getters['steem/loggedIn']"
@@ -11,20 +11,22 @@
           icon="question_answer"
           flat
           dense
-          title="answers"
+          title="$tc('answers')"
           :label="answer_count"
           no-wrap
         >
-          <q-tooltip>Answers</q-tooltip>
+          <q-tooltip>{{$tc('answers')}}</q-tooltip>
         </q-btn>
         <q-btn
           v-if="this.$store.getters['steem/loggedIn']"
-          icon="subdirectory_arrow_right"
+          icon="comment"
           flat
-          dense
           no-wrap
+          title="comments"
+          :label="blog.children"
+          @click="showComments()"
         >
-          <q-tooltip>Resteem</q-tooltip>
+          <q-tooltip>{{$tc('comments')}}</q-tooltip>
         </q-btn>
         <q-btn
           icon="more_horiz"
@@ -32,16 +34,26 @@
           dense
           no-wrap
         >
-          <q-tooltip>More</q-tooltip>
+          <q-tooltip>{{$tc('more')}}</q-tooltip>
           <q-popover>
               <q-btn-group flat>
                 <q-btn
                   icon="keyboard_arrow_up"
                   flat
-                  title="upvotes"
+                  :title="$tc('upvote', 2)"
                   no-wrap
                 >
                   {{blog.active_votes.length}}
+                </q-btn>
+                <q-btn
+                  v-if="this.$store.getters['steem/loggedIn']"
+                  icon="subdirectory_arrow_right"
+                  flat
+                  dense
+                  no-wrap
+                  @click="resteem()"
+                >
+                  <q-tooltip>{{$tc('resteem')}}</q-tooltip>
                 </q-btn>
                 <q-btn
                   v-if="this.$store.getters['steem/loggedIn'] && !condensed"
@@ -49,31 +61,22 @@
                   flat
                   no-wrap
                   @click="startEdit()">
-                  <q-tooltip>Edit</q-tooltip>
+                  <q-tooltip>{{$tc('edit')}}</q-tooltip>
                 </q-btn>
                 <q-btn
                   v-if="question && this.$store.getters['steem/loggedIn']"
                   icon="bookmark"
                   flat
-                  title="bookmark"
+                  :title="$tc('bookmark')"
                   no-wrap
                   :color="bookmarkcolor"
                   @click="toggleBookmark()"
-                />
-                <q-btn
-                  v-if="this.$store.getters['steem/loggedIn']"
-                  icon="comment"
-                  flat
-                  no-wrap
-                  title="comments"
-                  :label="blog.children"
-                  @click="showComments()"
                 />
               </q-btn-group>
           </q-popover>
         </q-btn>
       </div>
-      <div class="col-4 right">
+      <div class="col-3 right">
         <q-btn
           icon="attach_money"
           :label="blog.pending_payout_value | sbd"
@@ -81,7 +84,7 @@
           class="tight"
           no-wrap
         >
-          <q-tooltip>Estimated payout</q-tooltip>
+          <q-tooltip>{{$tc('estimatedpayout')}}</q-tooltip>
         </q-btn>
       </div>
     </div>
@@ -103,6 +106,34 @@ export default {
     question: null
   },
   methods: {
+    resteem: function () {
+      this.$root.$emit('confirm_dialog',
+        this.$tc('resteem'),
+        this.$tc('confirmresteem'),
+        () => {
+          this.$q.loading.show({
+            message: this.$tc('resteeming')
+          })
+          this.$store.getters['steem/client'].reblog(
+            this.$store.getters['steem/username'],
+            this.blog.author,
+            this.blog.permlink
+          ).then(() => {
+            this.$q.loading.hide()
+            this.$q.notify({
+              message: this.$tc('resteemsuccess'),
+              type: 'positive'
+            })
+          }).catch((err) => {
+            this.$q.loading.hide()
+            this.$q.notify({
+              message: this.$tc('resteemfailed'),
+              detail: err.error_description,
+              type: 'negative'
+            })
+          })
+        })
+    },
     startEdit: function () {
       this.$root.$emit('edit_post', this.blog)
     },

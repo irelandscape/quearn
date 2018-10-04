@@ -10,12 +10,10 @@
       </q-card-media>
       <q-card-title>
         <span v-on:click="showquestion">{{title}}</span>
-        <div slot="subtitle">
-          <postheader
-            :blog="blog"
-            :topic="topic"
-          />
-        </div>
+        <postheader slot="subtitle"
+          :blog="blog"
+          :topic="topic"
+        />
       </q-card-title>
     </div>
     <q-card-main class="tight">
@@ -146,6 +144,7 @@ export default {
 
   >>> .q-card-subtitle
     margin-top: 0.5rem;
+    height: 2.5rem;
 
   >>> .card h1, .card h2, .card h3, .card h4, .card h5
     font-size: 1rem;
