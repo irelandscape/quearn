@@ -14,9 +14,15 @@
           <q-icon name="menu" />
         </q-btn>
 
-        <q-toolbar-title>
-          {{ appName }}
-          <div slot="subtitle">Running on Quasar v{{ $q.version }}</div>
+        <q-toolbar-title
+            v-if="this.$store.getters['quearn/config'].appName"
+        >
+          {{ this.$store.getters['quearn/config'].appName }}
+          <div slot="subtitle"
+            v-if="this.$store.getters['quearn/config'].subtitle"
+          >
+            {{ this.$store.getters['quearn/config'].subtitle }}
+          </div>
         </q-toolbar-title>
 
         <steemlogin></steemlogin>
@@ -99,17 +105,6 @@ export default {
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop
-    }
-  },
-  computed: {
-    appName () {
-      let config = this.$store.getters['quearn/config']
-
-      if (config) {
-        return config.appName
-      } else {
-        return ''
-      }
     }
   },
   methods: {
