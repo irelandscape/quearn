@@ -2,7 +2,7 @@
   "name": "quearn",
   "version": "1.0.0",
   "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "productName": "StemQ",
   "cordovaId": "org.cordova.quasar.app",
   "author": "",
   "private": true,

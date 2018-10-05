@@ -4,7 +4,7 @@
       icon="keyboard_arrow_up"
       flat
       dense
-      :color="btnColor()"
+      v-bind:class="{ 'bg-secondary': voted }"
       @click="voteDialogModel = true"
     >
       <q-tooltip>Upvote</q-tooltip>
@@ -106,6 +106,7 @@ export default {
 <style lang="stylus" scoped>
   .modal-body
     padding: 2rem;
+
   .q-btn
     color: #666666;
     margin-right: 0.2rem;

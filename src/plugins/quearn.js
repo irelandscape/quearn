@@ -9,7 +9,9 @@ export default ({ store, Vue }) => {
   store.commit('quearn/xss', new xss.FilterXSS())
   axios.get(store.getters['quearn/serverURL'] + '/configs/').then(
     function (response) {
-      store.commit('quearn/config', response.data[0])
+      let config = response.data[0]
+      store.commit('quearn/config', config)
+      // document.title = config.appName
     }).catch(
     function (error) {
       console.log(error)
