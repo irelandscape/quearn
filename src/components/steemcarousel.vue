@@ -30,7 +30,7 @@
             size="md"
             title="answers"
             disabled
-            :label="blog.answer_count"
+            :label="blog.answer_count.toString()"
           />
         </q-btn-group>
       </div>

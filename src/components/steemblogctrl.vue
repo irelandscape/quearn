@@ -12,7 +12,7 @@
           flat
           dense
           title="$tc('answers')"
-          :label="answer_count"
+          :label="answer_count.toString()"
           no-wrap
         >
           <q-tooltip>{{$tc('answers')}}</q-tooltip>
@@ -21,9 +21,10 @@
           v-if="this.$store.getters['steem/loggedIn']"
           icon="comment"
           flat
+          dense
           no-wrap
           title="comments"
-          :label="blog.children"
+          :label="blog.children.toString()"
           @click="showComments()"
         >
           <q-tooltip>{{$tc('comments')}}</q-tooltip>
