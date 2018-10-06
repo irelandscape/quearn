@@ -75,6 +75,14 @@
           </q-item-side>
           <q-item-main label="Discord Channel"/>
         </q-item>
+        <q-item @click.native="help">
+          <q-item-side icon="help" />
+          <q-item-main label="Help"/>
+        </q-item>
+        <q-item @click.native="about">
+          <q-item-side icon="info" />
+          <q-item-main label="About"/>
+        </q-item>
         <q-item @click.native="logout()"
           v-if="this.$store.getters['steem/loggedIn']"
         >
@@ -120,6 +128,12 @@ export default {
     },
     myAnswers: function () {
       this.$router.push('useranswers')
+    },
+    help: function () {
+      this.$router.push('help')
+    },
+    about: function () {
+      this.$router.push('about')
     },
     logout: function () {
       this.$store.commit('steem/logout')

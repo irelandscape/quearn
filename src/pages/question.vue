@@ -1,28 +1,28 @@
 <template>
   <q-page>
-      <q-toolbar
-        color="primary"
-      >
-        <q-toolbar-title v-if="blog">
-          {{blog.title}}
-            <div slot="subtitle">by {{ blog.author }}
-              <div>
-                <q-chip
-                  v-for="tag in tags"
-                  :key="tag"
-                  square color="secondary"
-                  dense>
-                  {{tag}}
-                </q-chip>
-              </div>
+    <q-toolbar
+      color="primary"
+    >
+      <q-toolbar-title v-if="blog">
+        {{blog.title}}
+          <div slot="subtitle">by {{ blog.author }}
+            <div>
+              <q-chip
+                v-for="tag in tags"
+                :key="tag"
+                square color="secondary"
+                dense>
+                {{tag}}
+              </q-chip>
             </div>
-        </q-toolbar-title>
-        <q-btn size="lg" @click="$router.go(-1)" >
-          <q-icon name="close" outlined>
-            <q-tooltip>Back</q-tooltip>
-          </q-icon>
-        </q-btn>
-      </q-toolbar>
+          </div>
+      </q-toolbar-title>
+      <q-btn size="lg" @click="$router.go(-1)" >
+        <q-icon name="close" outlined>
+          <q-tooltip>Back</q-tooltip>
+        </q-icon>
+      </q-btn>
+    </q-toolbar>
     <div v-if="blog"
      class="blog shadow-1"
     >
