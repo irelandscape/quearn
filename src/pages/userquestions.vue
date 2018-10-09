@@ -62,6 +62,12 @@ export default {
   components: {
     Steemblogctrl
   },
+  props: {
+    user: {
+      type: String,
+      default: null
+    }
+  },
   data: function () {
     return {
       questions: []
@@ -126,8 +132,15 @@ export default {
     }
   },
   mounted () {
+    let user
+
+    if (this.user) {
+      user = this.user
+    } else {
+      user = this.$store.getters['steem/username']
+    }
     axios.get(
-      this.$store.getters['quearn/serverURL'] + '/questions/?author=' + encodeURIComponent(this.$store.getters['steem/username']) + '&ordering=-created',
+      this.$store.getters['quearn/serverURL'] + '/questions/?author=' + encodeURIComponent(user + '&ordering=-created'),
       {
         params: {
           username: this.$store.getters['steem/username'],

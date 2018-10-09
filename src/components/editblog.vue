@@ -180,13 +180,18 @@ export default {
         message: this.$tc('postingnewquestion')
       })
 
+      let body = this.form.body
+      if (this.$store.getters['quearn/config'].post_addon_msg.length) {
+        body += '\n\n' + this.$store.getters['quearn/config'].post_addon_msg
+      }
+
       this.$store.getters['steem/client'].comment(
         '',
         this.$store.getters['quearn/config'].tag,
         this.$store.getters['steem/username'],
         permlink,
         this.form.title,
-        this.form.body,
+        body,
         {
           tags: tags
         }
@@ -221,7 +226,8 @@ export default {
             type: 'positive'
           })
           if (this.emit_editcompleted) {
-            this.$emit('editcompleted')
+            console.log(response.data[0])
+            this.$emit('editcompleted', response.data[0])
           } else {
             this.$router.push('/')
           }

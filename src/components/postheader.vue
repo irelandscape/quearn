@@ -4,7 +4,14 @@
       {{topic}}
     </q-chip>
     <div>
-      <img :src="avatar()" class="avatar no-shadow"/>
+      <a href="#"
+        @click="$router.push('userquestions', { user: blog.author })"
+      >
+        <img
+          :src="avatar()"
+          class="avatar no-shadow"
+        />
+      </a>
       <div style="display: inline-block;">
         <div class="author">
           {{blog.author}}

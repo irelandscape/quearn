@@ -55,7 +55,7 @@
         color = "secondary"
         @click = "editanswer=true"
         @editcompleted="onAnswerCompleted"
-        v-if = "editanswer === false"
+        v-if = "editanswer === false && notanswered"
       />
       <div v-if="editanswer">
         <h3 class="q-mt-sm q-mb-sm">{{$t('youranswer')}}:</h3>
@@ -121,6 +121,7 @@ export default {
   },
   data () {
     return {
+      notanswered: true,
       editanswer: false,
       writecomment: false,
       answers: [],
@@ -146,8 +147,13 @@ export default {
         return md2html(this.blog.body, this.$store.getters['quearn/xss'])
       }
     },
-    onAnswerCompleted: function () {
+    onAnswerCompleted: function (answer) {
       this.editanswer = false
+
+      if (answer) {
+        this.answers.push(answer)
+        this.answers = [...this.answers]
+      }
     },
     onCommentCompleted: function (context) {
       context.writecomment = false
@@ -173,12 +179,17 @@ export default {
         params: {
           username: this.$store.getters['steem/username'],
           access_token: this.$store.getters['steem/accessToken'],
-          question_author: this.blog.author,
-          question_permlink: this.blog.permlink
+          question: this.question.id
         }
       }
     ).then((response) => {
       this.answers = response.data
+      for (let answer of this.answers) {
+        if (answer.author === this.$store.getters['steem/username']) {
+          this.notanswered = false
+          break
+        }
+      }
     }).catch((err) => {
       this.$q.notify({
         message: this.$tc('failedtogetanswers'),

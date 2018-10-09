@@ -12,7 +12,7 @@
           flat
           dense
           title="$tc('answers')"
-          :label="answer_count.toString()"
+          :label="answer_count ? answer_count.toString() : '0'"
           no-wrap
         >
           <q-tooltip>{{$tc('answers')}}</q-tooltip>
@@ -24,7 +24,7 @@
           dense
           no-wrap
           title="comments"
-          :label="blog.children.toString()"
+          :label="blog.children.length ? blog.children.toString() : '0'"
           @click="showComments()"
         >
           <q-tooltip>{{$tc('comments')}}</q-tooltip>

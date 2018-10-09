@@ -2,6 +2,7 @@
   <q-tab-pane name="tab-newquestion">
     <editblog :isquestion=true
       v-if="this.$store.getters['steem/loggedIn']"
+      @editcompleted="onQuestionCompleted"
     />
     <loginorsignup v-else/>
   </q-tab-pane>
@@ -17,6 +18,11 @@ export default {
   components: {
     Editblog,
     Loginorsignup
+  },
+  methods: {
+    onQuestionCompleted: function () {
+      this.$router.go(-1)
+    }
   }
 }
 </script>
