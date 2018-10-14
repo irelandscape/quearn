@@ -55,6 +55,7 @@ export default {
   resteeming: 'Resteeming...',
   resteemsuccess: 'Resteem success!',
   search: 'Search',
+  signup: 'Signup',
   submit: 'Submit',
   success: 'Success',
   subtopicsavailable: 'Sub-topics available',

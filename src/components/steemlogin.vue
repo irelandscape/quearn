@@ -15,6 +15,11 @@
       :label = "$t('login')"
     >
     </q-btn>
+    <q-btn
+      @click="signup()"
+      :label = "$t('signup')"
+    >
+    </q-btn>
   </div>
 </template>
 
@@ -31,6 +36,7 @@ export default {
   },
   mounted: function () {
     this.$root.$on('login', () => this.login())
+    this.$root.$on('signup', () => this.signup())
 
     this.$store.commit('steem/createClient', {
       app: 'steemqa-io',
@@ -64,6 +70,9 @@ export default {
           })
           this.$router.push('/')
         })
+    },
+    signup: function () {
+      document.location = 'https://signup.steemit.com/?ref=' + this.$store.getters['quearn/config'].appName
     },
     logout: function () {
       this.$store.commit('steem/logout')

@@ -4,7 +4,7 @@
     class="q-mt-lg"
     :actions="[
       { label: 'login', icon: 'exit_to_app', handler: login },
-      { label: 'signup', icon: 'account_circle', handler: () => { $root.emit('signup') } }]"
+      { label: 'signup', icon: 'account_circle', handler: signup }]"
   >
     {{$tc('youmustbeloggedin')}}
     <br/>
@@ -21,6 +21,9 @@ export default {
   methods: {
     login: function () {
       this.$root.$emit('login')
+    },
+    signup: function () {
+      this.$root.$emit('signup')
     }
   }
 }

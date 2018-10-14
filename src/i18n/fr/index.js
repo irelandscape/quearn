@@ -54,6 +54,7 @@ export default {
   resteeming: 'Republication en cours...',
   resteemsuccess: 'Republication completee',
   search: 'Rechercher',
+  signup: 'S\'inscrire',
   submit: 'Envoyer',
   success: 'Operation reussie',
   subtopicsavailable: 'Sous-sujets disponible',
