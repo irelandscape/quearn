@@ -42,3 +42,12 @@ export const votingWeight = (state, weight) => {
   state.votingWeight = weight
   localStorage.setItem('votingWeight', weight)
 }
+
+export const userAccount = (state, info) => {
+  state.accounts[info.name] = info
+  state.accounts = {...state.accounts}
+}
+
+export const pendingAccount = (state, username) => {
+  state.accounts[username] = { reputation: '...' }
+}

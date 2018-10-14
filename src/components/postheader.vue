@@ -14,7 +14,7 @@
       </a>
       <div style="display: inline-block;">
         <div class="author">
-          {{blog.author}}
+          {{blog.author}} ({{reputation}})
         </div>
       </div>
     </div>
@@ -36,6 +36,17 @@ export default {
     fulldate: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    reputation: function () {
+      let reputation = this.$store.getters['steem/reputation'](this.blog.author)
+
+      if (reputation.length === 0) {
+        this.$store.dispatch('steem/account', this.blog.author)
+      }
+
+      return reputation
     }
   },
   methods: {

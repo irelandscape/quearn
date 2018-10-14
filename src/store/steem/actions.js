@@ -34,3 +34,14 @@ export const login = (state) => {
       console.log(error)
     })
 }
+
+export const account = (state, username) => {
+  state.commit('pendingAccount', username)
+  let dsteem = state.getters.dsteem
+  dsteem.database.getAccounts([username])
+    .then((result) => {
+      state.commit('userAccount', result[0])
+    }).catch((error) => {
+      console.log(error)
+    })
+}
