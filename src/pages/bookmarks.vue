@@ -137,7 +137,9 @@ export default {
       })
     },
     getBlogBody: function (blog) {
-      return md2html(blog.body, this.$store.getters['quearn/xss'])
+      return md2html(blog.body,
+        this.$store.getters['quearn/xss'],
+        this.$store.getters['quearn/config'].post_addon_msg)
     }
   },
   mounted () {

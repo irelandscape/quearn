@@ -144,15 +144,16 @@ export default {
       if (this.blogBody) {
         return this.blogBody
       } else {
-        return md2html(this.blog.body, this.$store.getters['quearn/xss'])
+        return md2html(this.blog.body,
+          this.$store.getters['quearn/xss'],
+          this.$store.getters['quearn/config'].post_addon_msg)
       }
     },
-    onAnswerCompleted: function (answer) {
+    onAnswerCompleted: function (reload) {
       this.editanswer = false
 
-      if (answer) {
-        this.answers.push(answer)
-        this.answers = [...this.answers]
+      if (reload) {
+        this.getAnswers()
       }
     },
     onCommentCompleted: function (context) {
@@ -160,6 +161,33 @@ export default {
     },
     showComments: function () {
       this.showcomments = !this.showcomments
+    },
+    getAnswers: function () {
+      this.answers = []
+      axios.get(
+        this.$store.getters['quearn/serverURL'] + '/answers/',
+        {
+          params: {
+            username: this.$store.getters['steem/username'],
+            access_token: this.$store.getters['steem/accessToken'],
+            question: this.question.id
+          }
+        }
+      ).then((response) => {
+        this.answers = response.data
+        for (let answer of this.answers) {
+          if (answer.author === this.$store.getters['steem/username']) {
+            this.notanswered = false
+            break
+          }
+        }
+      }).catch((err) => {
+        this.$q.notify({
+          message: this.$tc('failedtogetanswers'),
+          detail: err.error_description,
+          type: 'negative'
+        })
+      })
     }
   },
   watch: {
@@ -173,30 +201,7 @@ export default {
     }
 
     /* Get answers */
-    axios.get(
-      this.$store.getters['quearn/serverURL'] + '/answers/',
-      {
-        params: {
-          username: this.$store.getters['steem/username'],
-          access_token: this.$store.getters['steem/accessToken'],
-          question: this.question.id
-        }
-      }
-    ).then((response) => {
-      this.answers = response.data
-      for (let answer of this.answers) {
-        if (answer.author === this.$store.getters['steem/username']) {
-          this.notanswered = false
-          break
-        }
-      }
-    }).catch((err) => {
-      this.$q.notify({
-        message: this.$tc('failedtogetanswers'),
-        detail: err.error_description,
-        type: 'negative'
-      })
-    })
+    this.getAnswers()
 
     this.$root.$on('commentsuccess', function (caller, blog) {
       if (caller) {

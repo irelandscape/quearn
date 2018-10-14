@@ -226,8 +226,7 @@ export default {
             type: 'positive'
           })
           if (this.emit_editcompleted) {
-            console.log(response.data[0])
-            this.$emit('editcompleted', response.data[0])
+            this.$emit('editcompleted', true)
           } else {
             this.$router.push('/')
           }
@@ -239,7 +238,7 @@ export default {
           })
           this.$q.loading.hide()
           if (this.emit_editcompleted) {
-            this.$emit('editcompleted')
+            this.$emit('editcompleted', false)
           } else {
             this.$router.push('/')
           }
@@ -253,7 +252,7 @@ export default {
         })
         this.$q.loading.hide()
         if (this.emit_editcompleted) {
-          this.$emit('editcompleted')
+          this.$emit('editcompleted', false)
         } else {
           this.$router.push('/')
         }
@@ -261,7 +260,7 @@ export default {
     },
     cancel () {
       if (this.emit_editcompleted) {
-        this.$emit('editcompleted')
+        this.$emit('editcompleted', false)
       } else {
         this.$router.push('/')
       }
@@ -269,7 +268,9 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-      return md2html(this.input, this.$store.getters['quearn/xss'])
+      return md2html(this.input,
+        this.$store.getters['quearn/xss'],
+        this.$store.getters['quearn/config'].post_addon_msg)
     }
   }
 }

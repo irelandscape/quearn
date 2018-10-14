@@ -29,7 +29,7 @@
       </q-chip>
       <span class="swipe">swipe &gt;&gt;&gt;</span>
       <steemcardswiper
-        :filters="{ordering: '-net_votes'}"
+        :filters="{ordering: '-net_votes', created_gte: oldestDate}"
       />
 
       <q-chip
@@ -56,6 +56,13 @@ export default {
   components: {
     Steemcardswiper,
     Steemcarousel
+  },
+  computed: {
+    oldestDate: function () {
+      let d = new Date()
+      d.setDate(d.getDate() - this.$store.getters['quearn/config'].home_blog_history)
+      return d.toISOString()
+    }
   }
 }
 </script>

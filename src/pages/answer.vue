@@ -98,7 +98,9 @@ export default {
       if (this.blogBody) {
         return this.blogBody
       } else {
-        return md2html(this.blog.body, this.$store.getters['quearn/xss'])
+        return md2html(this.blog.body,
+          this.$store.getters['quearn/xss'],
+          this.$store.getters['quearn/config'].post_addon_msg)
       }
     },
     onAnswerCompleted: function () {
