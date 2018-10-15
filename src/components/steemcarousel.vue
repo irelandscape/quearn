@@ -37,14 +37,24 @@
       <div v-else class="mobile"
         v-on:click="showquestion(blog)"
       >
+        <img :src="image(blog)" v-bind:style="{ maxHeight: height }"/>
         <h2>{{blog.title}}</h2>
         <span class="author">
           by {{blog.author}},
           <timeago :datetime="blog.created" :auto-update="60"></timeago>
+          <br/>
           <q-btn-group>
-            <q-btn
+            <q-btn icon="attach_money"
               :label="blog.pending_payout_value | sbd"
-              flat size="md"
+              size="md"
+              disabled
+              class="tight"
+            />
+            <q-btn icon="question_answer"
+              size="md"
+              title="answers"
+              disabled
+              :label="blog.answer_count.toString()"
             />
           </q-btn-group>
         </span>

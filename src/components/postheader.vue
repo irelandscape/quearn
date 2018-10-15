@@ -1,21 +1,24 @@
 <template>
   <div v-if="blog">
-    <q-chip v-if="topic" small square color="secondary" dense class="float-right">
-      {{topic}}
-    </q-chip>
     <div>
       <a href="#"
         @click="$router.push('userquestions', { user: blog.author })"
       >
-        <img
-          :src="avatar()"
-          class="avatar no-shadow"
-        />
-      </a>
-      <div style="display: inline-block;">
-        <div class="author">
-          {{blog.author}} ({{reputation}})
+        <div class="avatar">
+          <img
+            :src="avatar()"
+            class="no-shadow"
+          />
+          <q-chip floating color="grey">
+            <q-tooltip>
+              reputation score
+            </q-tooltip>
+            {{reputation}}
+          </q-chip>
         </div>
+      </a>
+      <div class="author">
+        {{blog.author}}
       </div>
     </div>
     <div class="timestamp">
@@ -75,6 +78,10 @@ export default {
 
   time
     margin-top: 1rem;
+
+  .avatar
+    position: relative;
+    width: 2.5rem;
 
   >>> .q-chip-main
     max-width: 5rem;

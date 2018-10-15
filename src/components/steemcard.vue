@@ -9,10 +9,12 @@
         <img :src="image" v-on:click="showquestion" />
       </q-card-media>
       <q-card-title>
+        <q-chip v-if="topic" small square color="secondary" dense class="float-right">
+          {{topic}}
+        </q-chip>
         <span v-on:click="showquestion">{{title}}</span>
         <postheader slot="subtitle"
           :blog="blog"
-          :topic="topic"
         />
       </q-card-title>
     </div>
@@ -160,4 +162,9 @@ export default {
   >>> .q-card-container
     padding-top: 0
     padding-bottom: 0
+
+  >>> .q-chip-main
+    max-width: 5rem;
+    white-space: normal;
+
 </style>
