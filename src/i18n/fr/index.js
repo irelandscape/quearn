@@ -61,6 +61,7 @@ export default {
   title: 'Titre',
   topanswers: 'Meilleures reponses',
   topics: 'Sujets',
+  topratedanswers: 'Meilleures reponses',
   topratedquestions: 'Meilleures questions',
   unanswered: 'Sans reponse',
   updating: 'Mise a jour en cours...',

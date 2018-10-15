@@ -35,6 +35,19 @@
       <q-chip
         square
         color="black"
+        icon="new_releases"
+      >
+        {{ $tc('topratedanswers') }}
+      </q-chip>
+      <span class="swipe">swipe &gt;&gt;&gt;</span>
+      <steemcardswiper
+        :filters="{ordering: '-net_votes', created_gte: oldestDate}"
+        :question=false
+      />
+
+      <q-chip
+        square
+        color="black"
         icon="priority_high"
       >
         {{ $tc('mostwantedanswers') }}

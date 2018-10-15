@@ -4,9 +4,9 @@
     @reachEnd="onLastSlide()"
   >
     <swiper-slide
-      v-for="question in questions" :key="question.id"
+      v-for="blog in blogs" :key="blog.id"
     >
-      <steemcard :question="question"></steemcard>
+      <steemcard :discussion="blog"></steemcard>
     </swiper-slide>
   </swiper>
 </template>
@@ -20,11 +20,15 @@ import axios from 'axios'
 export default {
   name: 'Steemcardswiper',
   props: {
-    filters: {}
+    filters: {},
+    question: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {
-      questions: []
+      blogs: []
     }
   },
   methods: {
@@ -59,10 +63,10 @@ export default {
 
       axios.get(
         this.$store.getters['quearn/serverURL'] +
-          '/questions/?' +
+          '/' + (this.question ? 'questions' : 'answers') + '/?' +
           this.filtersToParams() +
           '&limit=' + config.initial_slides_count +
-          '&offset=' + this.questions.length,
+          '&offset=' + this.blogs.length,
         {
           params: {
             username: this.$store.getters['steem/username'],
@@ -70,17 +74,17 @@ export default {
           }
         }
       ).then((response) => {
-        this.questions = this.questions.concat(response.data.results)
+        this.blogs = this.blogs.concat(response.data.results)
       }).catch(function (error) {
         console.log(error)
       })
     },
-    getQuestions: function () {
-      this.questions = []
+    getblogs: function () {
+      this.blogs = []
       let config = this.$store.getters['quearn/config']
       axios.get(
         this.$store.getters['quearn/serverURL'] +
-          '/questions/?' +
+          '/' + (this.question ? 'questions' : 'answers') + '/?' +
           this.filtersToParams() +
           '&limit=' + config.initial_slides_count,
         {
@@ -90,7 +94,7 @@ export default {
           }
         }
       ).then((response) => {
-        this.questions = response.data.results
+        this.blogs = response.data.results
       }).catch(function (error) {
         console.log(error)
       })
@@ -102,11 +106,11 @@ export default {
     swiperSlide
   },
   mounted () {
-    this.getQuestions()
+    this.getblogs()
   },
   watch: {
     filters: function () {
-      this.getQuestions()
+      this.getblogs()
     }
   }
 }

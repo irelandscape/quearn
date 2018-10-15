@@ -20,9 +20,9 @@
       <steemblogctrl v-if="blog"
         class="q-mb-sm"
         :blog="blog"
-        :question="question"
+        :question="discussion"
         :condensed=true
-        :answer_count="question.answer_count"
+        :answer_count="discussion.answer_count"
       />
     </q-card-main>
   </q-card>
@@ -40,7 +40,7 @@ export default {
     Postheader
   },
   props: {
-    question: Object
+    discussion: Object
   },
   data: function () {
     return {
@@ -66,8 +66,8 @@ export default {
       }
     },
     topic: function () {
-      if (this.question) {
-        return this.$store.getters['quearn/topicStr'](this.question.topic)
+      if (this.discussion) {
+        return this.$store.getters['quearn/topicStr'](this.discussion.topic)
       } else {
         return ''
       }
@@ -101,7 +101,7 @@ export default {
         params: {
           blog: this.blog,
           blogBody: this.blogBody,
-          question: this.question
+          question: this.discussion
         }
       })
     }
@@ -109,7 +109,7 @@ export default {
   created () {
     let dsteem = this.$store.getters['steem/dsteem']
     dsteem.database.call('get_content',
-      [this.question.author, this.question.permlink]
+      [this.discussion.author, this.discussion.permlink]
     ).then(response => {
       this.blog = response
       this.metadata = JSON.parse(this.blog.json_metadata)

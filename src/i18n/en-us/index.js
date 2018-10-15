@@ -62,6 +62,7 @@ export default {
   title: 'Title',
   topanswers: 'Best answers',
   topics: 'Topics',
+  topratedanswers: 'Best rated answers',
   topratedquestions: 'Best rated questions',
   unanswered: 'Unanswered',
   updating: 'Updating...',
