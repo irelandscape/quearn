@@ -30,7 +30,7 @@
             size="md"
             title="answers"
             disabled
-            :label="blog.answer_count.toString()"
+            :label="blog.question.answer_count.toString()"
           />
         </q-btn-group>
       </div>
@@ -54,7 +54,7 @@
               size="md"
               title="answers"
               disabled
-              :label="blog.answer_count.toString()"
+              :label="blog.question.answer_count.toString()"
             />
           </q-btn-group>
         </span>
@@ -103,7 +103,8 @@ export default {
       this.$router.push({
         name: 'question',
         params: {
-          blog: blog
+          blog: blog,
+          question: blog.question
         }
       })
     },
@@ -112,11 +113,7 @@ export default {
       dsteem.database.call('get_content',
         [question.author, question.permlink]
       ).then(response => {
-        if (question.answer_count) {
-          response.answer_count = question.answer_count
-        } else {
-          response.answer_count = 0
-        }
+        response.question = question
         this.blogs.push(response)
       }).catch(function (error) {
         console.log(error)

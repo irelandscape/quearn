@@ -2,7 +2,7 @@
   <div>
     <steemcard
       v-for="question in questions" :key="question.id"
-      :question="question"
+      :discussion="question"
       class="gridcard"
     />
     <q-btn
