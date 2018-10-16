@@ -35,6 +35,11 @@ export const login = (state) => {
     })
 }
 
+export const logout = (state) => {
+  state.getters.client.revokeToken()
+  this.$store.commit('steem/logout')
+}
+
 export const account = (state, username) => {
   state.commit('pendingAccount', username)
   let dsteem = state.getters.dsteem

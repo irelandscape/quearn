@@ -1,25 +1,33 @@
 <template>
-  <div v-if="loggedIn">
-    <q-chip
-      :avatar="avatar"
-      color="primary"
-      square
-      class="nobackground"
-    >
-      {{username}}
-    </q-chip>
-  </div>
-  <div v-else>
-    <q-btn
-      @click="login()"
-      :label = "$t('login')"
-    >
-    </q-btn>
-    <q-btn
-      @click="signup()"
-      :label = "$t('signup')"
-    >
-    </q-btn>
+  <div>
+    <div v-if="loggedIn">
+      <q-chip
+        :avatar="avatar"
+        color="primary"
+        square
+        class="nobackground"
+      >
+        {{username}}
+      </q-chip>
+    </div>
+    <div v-else>
+      <q-btn
+        @click="login()"
+        :label = "$t('login')"
+      >
+      </q-btn>
+      <q-btn
+        @click="signup()"
+        :label = "$t('signup')"
+      >
+      </q-btn>
+    </div>
+    <q-dialog
+      v-model="showDialog"
+      :title="$tc('sessionexpired')"
+      @ok="logout()"
+      prevent-close
+    />
   </div>
 </template>
 
@@ -29,7 +37,8 @@ export default {
   name: 'Steemlogin',
   data: function () {
     return {
-      client: null
+      client: null,
+      showDialog: false
     }
   },
   props: {
@@ -45,6 +54,19 @@ export default {
       accessToken: this.$store.getters['steem/accessToken'],
       scope: ['vote', 'comment', 'custom_json']
     })
+
+    if (localStorage.expires) {
+      let now = new Date()
+      let expires = new Date(localStorage.expires)
+
+      if (now > expires) {
+        this.showDialog = true
+      } else {
+        setTimeout(() => {
+          this.showDialog = true
+        }, expires - now)
+      }
+    }
   },
   computed: {
     loggedIn () {
@@ -75,7 +97,7 @@ export default {
       document.location = 'https://signup.steemit.com/?ref=' + this.$store.getters['quearn/config'].appName
     },
     logout: function () {
-      this.$store.commit('steem/logout')
+      this.$store.dispatch('steem/logout')
     },
     myTopics: function () {
       this.$router.push('my_topics')

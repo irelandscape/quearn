@@ -55,6 +55,7 @@ export default {
   resteeming: 'Resteeming...',
   resteemsuccess: 'Resteem success!',
   search: 'Search',
+  sessionexpired: 'Your session has expired. Please login again.',
   signup: 'Signup',
   submit: 'Submit',
   success: 'Success',

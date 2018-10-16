@@ -54,6 +54,7 @@ export default {
   resteeming: 'Republication en cours...',
   resteemsuccess: 'Republication completee',
   search: 'Rechercher',
+  sessionexpired: 'Votre session a expiree. Veuillez-vous reconnecter a Steem.',
   signup: 'S\'inscrire',
   submit: 'Envoyer',
   success: 'Operation reussie',
