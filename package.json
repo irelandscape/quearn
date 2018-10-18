@@ -1,7 +1,7 @@
 {
-  "name": "quearn",
-  "version": "1.0.0",
-  "description": "A Quasar Framework app",
+  "name": "StemQ",
+  "version": "0.1.0",
+  "description": "A STEM Q&A application for the Steem blockchain",
   "productName": "StemQ",
   "cordovaId": "org.cordova.quasar.app",
   "author": "",
