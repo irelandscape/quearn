@@ -82,14 +82,12 @@ export default {
         let username = source.split(':')[0]
         let tag = source.split(':')[1]
 
-        console.log(tag)
         dsteem.database.getDiscussions(
           'created',
           {
             tag: tag,
             limit: 10
           }).then(response => {
-          console.log(response)
           let blogs = []
           for (let blog of response) {
             if (blog.author === username) {
