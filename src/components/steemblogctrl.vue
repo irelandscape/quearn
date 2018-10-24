@@ -57,7 +57,7 @@
                   <q-tooltip>{{$tc('resteem')}}</q-tooltip>
                 </q-btn>
                 <q-btn
-                  v-if="this.$store.getters['steem/loggedIn'] && !condensed"
+                  v-if="this.isAuthor() && !condensed"
                   icon="edit"
                   flat
                   no-wrap
@@ -134,6 +134,9 @@ export default {
             })
           })
         })
+    },
+    isAuthor: function () {
+      return this.$store.getters['steem/loggedIn'] && this.$store.getters['steem/username'] === this.blog.author
     },
     startEdit: function () {
       this.$root.$emit('edit_post', this.blog)
