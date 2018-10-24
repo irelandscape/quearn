@@ -40,6 +40,7 @@ export default {
   mytopics: 'Mes sujets',
   nextresults: 'Resultats suivant',
   newquestion: 'Nouvelle question',
+  news: 'Nouvelles',
   nomoreresults: 'Plus de resultat',
   questionrequirement: 'Doit finir avec un point d\'interrogation!',
   pleaseloginorsignup: 'Veuillez vous connecter ou creer un nouveau compte Steem.',

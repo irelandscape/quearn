@@ -28,6 +28,11 @@ export default [
             path: 'about',
             name: 'about',
             component: () => import('../components/tabs/tababout')
+          },
+          {
+            path: 'news',
+            name: 'news',
+            component: () => import('../pages/news')
           }
         ]
       },
