@@ -144,7 +144,7 @@ export default {
       user = this.$store.getters['steem/username']
     }
     axios.get(
-      this.$store.getters['quearn/serverURL'] + '/questions/?author=' + encodeURIComponent(user + '&ordering=-created'),
+      this.$store.getters['quearn/serverURL'] + '/questions/?author=' + encodeURIComponent(user) + '&ordering=-created',
       {
         params: {
           username: this.$store.getters['steem/username'],
