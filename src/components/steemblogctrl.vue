@@ -8,7 +8,7 @@
         />
         <q-btn
           v-if="question"
-          icon="question_answer"
+          icon="rate_review"
           flat
           dense
           title="$tc('answers')"
@@ -24,7 +24,7 @@
           dense
           no-wrap
           title="comments"
-          :label="blog.children.length ? blog.children.toString() : '0'"
+          :label="blog.children ? blog.children.toString() : '0'"
           @click="showComments()"
         >
           <q-tooltip>{{$tc('comments')}}</q-tooltip>

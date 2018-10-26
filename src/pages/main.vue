@@ -28,7 +28,7 @@
         {{ $t('topics') }}
       </q-route-tab>
       <q-route-tab
-        slot="title" icon="view_headline"
+        slot="title" icon="local_library"
         name="tab-news"
         to="news"
       >

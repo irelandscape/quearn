@@ -43,7 +43,7 @@ export default {
   data () {
     return {
       voteDialogModel: false,
-      voteWeight: parseInt(this.$store.getters['steem/votingWeight']),
+      voteWeight: 100,
       voted: false
     }
   },
@@ -51,8 +51,9 @@ export default {
     this.voted = false
     for (let vote of this.blog.active_votes) {
       if (vote.voter === this.$store.getters['steem/username']) {
-        if (vote.weight !== 0) {
+        if (vote.percent !== 0) {
           this.voted = true
+          this.voteWeight = vote.percent / 100
         }
         break
       }
