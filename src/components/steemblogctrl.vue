@@ -45,6 +45,13 @@
                   no-wrap
                 >
                   {{blog.active_votes.length}}
+                  <q-tooltip>
+                    <div v-for="vote in blog.active_votes.slice(0, 40)" :key="vote.voter">
+                      <span>{{vote.voter}}:&nbsp;</span>
+                      <span>{{vote.percent / 100}}&#37;</span>
+                      &nbsp;(<timeago :datetime="vote.time" :auto-update="1"></timeago>)
+                    </div>
+                  </q-tooltip>
                 </q-btn>
                 <q-btn
                   v-if="this.$store.getters['steem/loggedIn']"

@@ -7,7 +7,6 @@
       v-bind:class="{ 'bg-secondary': voted }"
       @click="voteDialogModel = true"
     >
-      <q-tooltip>Upvote</q-tooltip>
     </q-btn>
     <q-dialog
       v-model="voteDialogModel"
