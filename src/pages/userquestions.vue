@@ -80,6 +80,8 @@ export default {
       this.$router.push({
         name: 'question',
         params: {
+          author: blog.author,
+          permlink: blog.permlink,
           blog: blog,
           blogBody: this.getBlogBody(blog),
           question
