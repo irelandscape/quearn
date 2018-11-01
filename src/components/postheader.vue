@@ -69,8 +69,10 @@ export default {
 
   .author
     color: black;
+    padding-left: 3rem;
 
   .timestamp
+    padding-left: 3rem;
     margin-top: 0.5rem;
     color: grey;
     font-size: 0.8rem;

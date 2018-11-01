@@ -47,10 +47,13 @@ export default {
     this.$root.$on('login', () => this.login())
     this.$root.$on('signup', () => this.signup())
 
+    // let url = require('url')
+    // let q = url.parse(document.location.origin, true)
     this.$store.commit('steem/createClient', {
       app: 'steemqa-io',
       baseURL: 'https://steemconnect.com',
-      callbackURL: 'http://localhost:8080/auth/callback',
+      // callbackURL: 'http://' + q.hostname + '/auth/callback',
+      callbackURL: 'http://www.stemq.io/auth/callback',
       accessToken: this.$store.getters['steem/accessToken'],
       scope: ['vote', 'comment', 'custom_json']
     })

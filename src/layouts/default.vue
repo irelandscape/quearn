@@ -17,7 +17,7 @@
         <q-toolbar-title
             v-if="this.$store.getters['quearn/config'].appName"
         >
-          <img class="logo" src="/statics/stemq_logo_dark_bg.svg" alt="StemQ logo" />
+          <img class="logo" src="/statics/stemq_logo_dark_bg.png" alt="StemQ logo" />
           <!--
           <div slot="subtitle"
             v-if="this.$store.getters['quearn/config'].subtitle"
@@ -73,17 +73,13 @@
         -->
         <q-item @click.native="openURL('https://discord.gg/AMSChmj')">
           <q-item-side>
-            <img class="icon" src="/assets/Discord-Logo-White.svg" />
+            <img class="icon" src="/statics/Discord-Logo-White.svg" />
           </q-item-side>
           <q-item-main label="Discord Channel"/>
         </q-item>
         <q-item @click.native="help">
           <q-item-side icon="help" />
           <q-item-main label="Help"/>
-        </q-item>
-        <q-item @click.native="about">
-          <q-item-side icon="info" />
-          <q-item-main label="About"/>
         </q-item>
         <q-item @click.native="logout()"
           v-if="this.$store.getters['steem/loggedIn']"
@@ -155,6 +151,7 @@ export default {
   @import '~variables'
   body
     background: #eeeeee;
+
   >>> .q-tabs-bar
     color orange
     margin-bottom: 1px;
@@ -171,7 +168,7 @@ export default {
     opacity: 0.6;
 
   >>> img.logo
-    height: 4rem;
+    max-height: 4rem;
     max-width: 100%;
     floating: left;
     padding: 0;

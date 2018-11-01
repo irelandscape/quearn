@@ -18,7 +18,6 @@
           <q-tooltip>{{$tc('answers')}}</q-tooltip>
         </q-btn>
         <q-btn
-          v-if="this.$store.getters['steem/loggedIn']"
           icon="comment"
           flat
           dense

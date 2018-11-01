@@ -192,8 +192,6 @@ export default {
     margin: auto;
 
   .q-toolbar
-    position: fixed;
-    top: 4rem;
     z-index: 1;
 
   .blog
