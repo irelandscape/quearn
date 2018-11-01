@@ -17,7 +17,7 @@
         <q-toolbar-title
             v-if="this.$store.getters['quearn/config'].appName"
         >
-          <img class="logo" src="/assets/stemq_logo_dark_bg.svg" alt="StemQ logo" />
+          <img class="logo" src="/statics/stemq_logo_dark_bg.svg" alt="StemQ logo" />
           <!--
           <div slot="subtitle"
             v-if="this.$store.getters['quearn/config'].subtitle"
