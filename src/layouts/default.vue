@@ -17,7 +17,7 @@
         <q-toolbar-title
             v-if="this.$store.getters['quearn/config'].appName"
         >
-          <img src="/assets/stemq_logo_dark_bg.svg" alt="StemQ logo" />
+          <img class="logo" src="/assets/stemq_logo_dark_bg.svg" alt="StemQ logo" />
           <!--
           <div slot="subtitle"
             v-if="this.$store.getters['quearn/config'].subtitle"
@@ -71,7 +71,7 @@
           <q-item-main :label="$t('mytopics')" />
         </q-item>
         -->
-        <q-item @click.native="openURL('https://discord.gg/cTJaUGn')">
+        <q-item @click.native="openURL('https://discord.gg/AMSChmj')">
           <q-item-side>
             <img class="icon" src="/assets/Discord-Logo-White.svg" />
           </q-item-side>
@@ -155,19 +155,23 @@ export default {
   @import '~variables'
   body
     background: #eeeeee;
-  .q-tabs-bar
+  >>> .q-tabs-bar
     color orange
     margin-bottom: 1px;
 
-  #questiondetails
+  >>> #questiondetails
     hidden
 
-  .q-layout-drawer
+  >>> .q-layout-drawer
     background-color: black;
     color: #999999;
 
-  img
-    height: 3.5rem;
+  >>> img.icon
+    height: 1.5rem;
+    opacity: 0.6;
+
+  >>> img.logo
+    height: 4rem;
     max-width: 100%;
     floating: left;
     padding: 0;
