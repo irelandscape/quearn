@@ -125,8 +125,15 @@ export default {
     }
   },
   mounted () {
+    let user
+
+    if (this.user) {
+      user = this.user
+    } else {
+      user = this.$store.getters['steem/username']
+    }
     axios.get(
-      this.$store.getters['quearn/serverURL'] + '/answers/?author=' + encodeURIComponent(this.$store.getters['steem/username']) + '&ordering=-created',
+      this.$store.getters['quearn/serverURL'] + '/answers/?author=' + encodeURIComponent(user) + '&ordering=-created',
       {
         params: {
           username: this.$store.getters['steem/username'],

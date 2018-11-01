@@ -25,14 +25,14 @@ export default [
             component: () => import('../components/tabs/tabtopics')
           },
           {
-            path: 'about',
-            name: 'about',
-            component: () => import('../components/tabs/tababout')
+            path: 'news',
+            name: 'news',
+            component: () => import('../pages/news')
           }
         ]
       },
       {
-        path: 'question',
+        path: 'question/:author/:permlink',
         name: 'question',
         component: () => import('pages/question'),
         props: true

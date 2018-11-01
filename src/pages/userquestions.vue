@@ -25,10 +25,10 @@
         {{tag}}
       </q-chip>
       <div>
-        <div class="timestamp">
-          {{question.created | timestamp}}
-          (<timeago :datetime="question.created" :auto-update="60"></timeago>)
-        </div>
+        <postheader
+          :blog="question.blog"
+          :fulldate=true
+        />
         <div v-if="question.blog"
           v-on:click="showquestion(question.blog, question)">
           <h2>{{question.title}}</h2>
@@ -54,13 +54,15 @@
 
 <script>
 import Steemblogctrl from 'components/steemblogctrl'
+import Postheader from 'components/postheader'
 import axios from 'axios'
 import { md2html } from 'components/utils/markdown'
 
 export default {
   name: 'Userquestions',
   components: {
-    Steemblogctrl
+    Steemblogctrl,
+    Postheader
   },
   props: {
     user: {
@@ -78,6 +80,8 @@ export default {
       this.$router.push({
         name: 'question',
         params: {
+          author: blog.author,
+          permlink: blog.permlink,
           blog: blog,
           blogBody: this.getBlogBody(blog),
           question
@@ -142,7 +146,7 @@ export default {
       user = this.$store.getters['steem/username']
     }
     axios.get(
-      this.$store.getters['quearn/serverURL'] + '/questions/?author=' + encodeURIComponent(user + '&ordering=-created'),
+      this.$store.getters['quearn/serverURL'] + '/questions/?author=' + encodeURIComponent(user) + '&ordering=-created',
       {
         params: {
           username: this.$store.getters['steem/username'],
@@ -191,4 +195,12 @@ export default {
 
   .blog
     margin-top: 80px;
+
+  .q-chip
+    float: right;
+
+  .q-chip-main
+    max-width: 5rem;
+    white-space: normal;
+
 </style>

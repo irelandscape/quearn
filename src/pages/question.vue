@@ -112,8 +112,6 @@ export default {
     Writecomment
   },
   props: {
-    blog: null,
-    question: null,
     blogBody: {
       type: String,
       default: null
@@ -121,6 +119,8 @@ export default {
   },
   data () {
     return {
+      blog: null,
+      question: null,
       notanswered: true,
       editanswer: false,
       writecomment: false,
@@ -188,6 +188,20 @@ export default {
           type: 'negative'
         })
       })
+    },
+    getDiscussion: function () {
+      let dsteem = this.$store.getters['steem/dsteem']
+      dsteem.database.call('get_content',
+        [this.$route.params.author, this.$route.params.permlink]
+      ).then(response => {
+        this.blog = response
+      }).catch(function (err) {
+        this.$q.notify({
+          message: this.$tc('failedtogetquestions'),
+          detail: err.error_description,
+          type: 'negative'
+        })
+      })
     }
   },
   watch: {
@@ -196,12 +210,33 @@ export default {
   },
   mounted () {
     if (!this.blog) {
-      this.$router.push('/')
-      return
-    }
+      if (!this.$route.params.author || !this.$route.params.permlink) {
+        this.$router.push('/')
+        return
+      }
 
-    /* Get answers */
-    this.getAnswers()
+      this.getDiscussion()
+
+      axios.get(
+        this.$store.getters['quearn/serverURL'] +
+          '/questions/?' +
+          'author=' + this.$route.params.author +
+          '&permlink=' + this.$route.params.permlink,
+        {
+          params: {
+            username: this.$store.getters['steem/username'],
+            access_token: this.$store.getters['steem/accessToken']
+          }
+        }
+      ).then((response) => {
+        this.question = response.data[0]
+        this.getAnswers()
+      }).catch(function (error) {
+        console.log(error)
+      })
+    } else {
+      this.getAnswers()
+    }
 
     this.$root.$on('commentsuccess', function (caller, blog) {
       if (caller) {

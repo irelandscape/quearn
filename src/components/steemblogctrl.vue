@@ -8,7 +8,7 @@
         />
         <q-btn
           v-if="question"
-          icon="question_answer"
+          icon="rate_review"
           flat
           dense
           title="$tc('answers')"
@@ -24,7 +24,7 @@
           dense
           no-wrap
           title="comments"
-          :label="blog.children.length ? blog.children.toString() : '0'"
+          :label="blog.children ? blog.children.toString() : '0'"
           @click="showComments()"
         >
           <q-tooltip>{{$tc('comments')}}</q-tooltip>
@@ -45,6 +45,13 @@
                   no-wrap
                 >
                   {{blog.active_votes.length}}
+                  <q-tooltip>
+                    <div v-for="vote in blog.active_votes.slice(0, 40)" :key="vote.voter">
+                      <span>{{vote.voter}}:&nbsp;</span>
+                      <span>{{vote.percent / 100}}&#37;</span>
+                      &nbsp;(<timeago :datetime="vote.time" :auto-update="1"></timeago>)
+                    </div>
+                  </q-tooltip>
                 </q-btn>
                 <q-btn
                   v-if="this.$store.getters['steem/loggedIn']"
@@ -57,7 +64,7 @@
                   <q-tooltip>{{$tc('resteem')}}</q-tooltip>
                 </q-btn>
                 <q-btn
-                  v-if="this.$store.getters['steem/loggedIn'] && !condensed"
+                  v-if="this.isAuthor() && !condensed"
                   icon="edit"
                   flat
                   no-wrap
@@ -134,6 +141,9 @@ export default {
             })
           })
         })
+    },
+    isAuthor: function () {
+      return this.$store.getters['steem/loggedIn'] && this.$store.getters['steem/username'] === this.blog.author
     },
     startEdit: function () {
       this.$root.$emit('edit_post', this.blog)

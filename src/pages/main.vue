@@ -28,11 +28,11 @@
         {{ $t('topics') }}
       </q-route-tab>
       <q-route-tab
-        slot="title" icon="info"
-        name="tab-about"
-        to="about"
+        slot="title" icon="local_library"
+        name="tab-news"
+        to="news"
       >
-        {{ $t('about') }}
+        {{ $t('news') }}
       </q-route-tab>
       <router-view/>
     </q-tabs>

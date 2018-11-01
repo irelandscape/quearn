@@ -35,7 +35,6 @@ export default {
   name: 'Postheader',
   props: {
     blog: null,
-    topic: null,
     fulldate: {
       type: Boolean,
       default: false

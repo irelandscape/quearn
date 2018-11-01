@@ -101,6 +101,8 @@ export default {
       this.$router.push({
         name: 'question',
         params: {
+          author: this.discussion.author,
+          permlink: this.discussion.permlink,
           blog: this.blog,
           blogBody: this.blogBody,
           question: this.discussion

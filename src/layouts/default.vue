@@ -59,7 +59,7 @@
         <q-item @click.native="myAnswers"
           v-if="this.$store.getters['steem/loggedIn']"
         >
-          <q-item-side icon="check_circle" />
+          <q-item-side icon="rate_review" />
           <q-item-main :label="$t('myanswers')" />
         </q-item>
 

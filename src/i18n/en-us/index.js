@@ -41,6 +41,7 @@ export default {
   mytopics: 'My topics',
   nextresults: 'Next results',
   newquestion: 'New question',
+  news: 'News',
   nomoreresults: 'No more results',
   questionrequirement: 'Must finish with a question mark!',
   pleaseloginorsignup: 'Please login or sign up to Steem.',
