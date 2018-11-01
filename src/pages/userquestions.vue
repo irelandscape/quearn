@@ -186,7 +186,7 @@ export default {
 
   .q-toolbar
     position: fixed;
-    top: 50px;
+    top: 4rem;
     z-index: 1;
 
   .blog

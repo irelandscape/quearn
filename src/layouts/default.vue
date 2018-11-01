@@ -17,12 +17,14 @@
         <q-toolbar-title
             v-if="this.$store.getters['quearn/config'].appName"
         >
-          {{ this.$store.getters['quearn/config'].appName }}
+          <img src="/assets/stemq_logo_dark_bg.svg" alt="StemQ logo" />
+          <!--
           <div slot="subtitle"
             v-if="this.$store.getters['quearn/config'].subtitle"
           >
             {{ this.$store.getters['quearn/config'].subtitle }}
           </div>
+          -->
         </q-toolbar-title>
 
         <steemlogin></steemlogin>
@@ -149,7 +151,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   @import '~variables'
   body
     background: #eeeeee;
@@ -165,7 +167,9 @@ export default {
     color: #999999;
 
   img
-    width: 24px;
+    height: 3.5rem;
+    max-width: 100%;
+    floating: left;
     padding: 0;
 
 </style>
