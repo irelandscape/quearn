@@ -17,7 +17,7 @@
         <q-toolbar-title
             v-if="this.$store.getters['quearn/config'].appName"
         >
-          <img class="logo" src="/statics/stemq_logo_dark_bg.png" alt="StemQ logo" />
+          <img v-on:click="$router.push('/')" class="logo" src="/statics/stemq_logo_dark_bg.png" alt="StemQ logo" />
           <!--
           <div slot="subtitle"
             v-if="this.$store.getters['quearn/config'].subtitle"
@@ -172,5 +172,6 @@ export default {
     max-width: 100%;
     floating: left;
     padding: 0;
+    cursor: pointer;
 
 </style>

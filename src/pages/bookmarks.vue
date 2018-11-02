@@ -104,7 +104,7 @@ export default {
         if (images !== null && images.length > 0) {
           return images[0]
         } else {
-          return '/assets/atom.jpg'
+          return '/statics/atom.jpg'
         }
       }
     },

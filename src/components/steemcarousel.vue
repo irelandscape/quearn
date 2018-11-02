@@ -95,7 +95,7 @@ export default {
         if (images !== null && images.length > 0) {
           return images[0]
         } else {
-          return '/assets/atom.jpg'
+          return '/statics/atom.jpg'
         }
       }
     },
@@ -103,6 +103,8 @@ export default {
       this.$router.push({
         name: 'question',
         params: {
+          author: blog.author,
+          permlink: blog.permlink,
           blog: blog,
           question: blog.question
         }
