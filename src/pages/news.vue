@@ -24,12 +24,8 @@
         </div>
         <div v-if="blog.body.length">
           <h2>{{blog.title}}</h2>
-          <div style="text-align: center;">
-            <img :src="image(blog)" />
-          </div>
         </div>
         <div v-if="blog.body.length"
-          class="blogsummary"
           v-html="getBlogBody(blog)"
         />
         <steemblogctrl v-if="blog"
