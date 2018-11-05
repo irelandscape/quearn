@@ -37,7 +37,7 @@ export const login = (state) => {
 
 export const logout = (state) => {
   state.getters.client.revokeToken()
-  this.$store.commit('steem/logout')
+  state.commit('logout')
 }
 
 export const account = (state, username) => {

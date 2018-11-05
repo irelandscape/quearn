@@ -38,7 +38,8 @@ export default {
   data: function () {
     return {
       client: null,
-      showDialog: false
+      showDialog: false,
+      timer: null
     }
   },
   props: {
@@ -65,7 +66,7 @@ export default {
       if (now > expires) {
         this.showDialog = true
       } else {
-        setTimeout(() => {
+        this.timer = setTimeout(() => {
           this.showDialog = true
         }, expires - now)
       }
@@ -100,6 +101,10 @@ export default {
       document.location = 'https://signup.steemit.com/?ref=' + this.$store.getters['quearn/config'].appName
     },
     logout: function () {
+      if (this.timer) {
+        clearTimeout(this.timer)
+        this.timer = null
+      }
       this.$store.dispatch('steem/logout')
     },
     myTopics: function () {
