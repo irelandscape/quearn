@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.stemq.io/</loc>
+    <lastmod>2018-10-05</lastmod>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.stemq.io/newquestion</loc>
+    <lastmod>2018-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.stemq.io/topics</loc>
+    <lastmod>2018-10-05</lastmod>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://www.stemq.io/news</loc>
+    <lastmod>2018-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.stemq.io/help</loc>
+    <lastmod>2018-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+</urlset>
