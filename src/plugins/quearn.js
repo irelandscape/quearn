@@ -2,11 +2,11 @@ import axios from 'axios'
 import { Notify } from 'quasar'
 
 export default ({ store, Vue }) => {
-  let url = require('url')
-  let q = url.parse(document.location.origin, true)
   if (process.env.NODE_ENV === 'development') {
     store.commit('quearn/serverURL', 'http://localhost:8000')
   } else {
+    let url = require('url')
+    let q = url.parse(document.location.origin, true)
     store.commit('quearn/serverURL', 'https://' + q.hostname + ':8443')
   }
   let xss = require('xss')
