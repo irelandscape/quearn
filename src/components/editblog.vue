@@ -98,9 +98,7 @@ export default {
     return {
       text: '',
       input: '',
-      form: {
-        title: ''
-      }
+      form: {}
     }
   },
   validations () {
@@ -139,14 +137,7 @@ export default {
       }
       return ''
     },
-    submit () {
-      this.$v.form.$touch()
-
-      if (this.$v.form.$error) {
-        this.$q.notify('Please review fields again')
-        return
-      }
-
+    selectedTopic () {
       let tag1 = ''
       if (this.$refs.topicpicker.ternaryTopic !== '') {
         tag1 = this.topicStr(this.$store.getters['quearn/topics'],
@@ -158,6 +149,24 @@ export default {
         tag1 = this.topicStr(this.$store.getters['quearn/topics'],
           this.$refs.topicpicker.primaryTopic)
       }
+
+      return tag1
+    },
+    resetForm () {
+      this.form = {}
+      this.$refs.topicpicker.primaryTopic = ''
+      this.$refs.topicpicker.secondaryTopic = ''
+      this.$refs.topicpicker.ternaryTopic = ''
+    },
+    submit () {
+      this.$v.form.$touch()
+
+      if (this.$v.form.$error) {
+        this.$q.notify('Please review fields again')
+        return
+      }
+
+      let tag1 = this.selectedTopic()
 
       if (!this.isquestion) {
         this.form.title = 'A: ' + this.question_title
@@ -220,6 +229,7 @@ export default {
           url,
           params
         ).then((response) => {
+          this.resetForm()
           this.$q.loading.hide()
           this.$q.notify({
             message: this.$tc('postingsuccess'),
@@ -259,6 +269,7 @@ export default {
       })
     },
     cancel () {
+      this.resetForm()
       if (this.emit_editcompleted) {
         this.$emit('editcompleted', false)
       } else {
@@ -271,6 +282,37 @@ export default {
       return md2html(this.input,
         this.$store.getters['quearn/xss'],
         this.$store.getters['quearn/config'].post_addon_msg)
+    }
+  },
+  beforeDestroy: function () {
+    if (this.isquestion) {
+      this.$q.localStorage.set('questioneditblogform', this.form)
+      this.$q.localStorage.set('questionprimaryTopic', this.$refs.topicpicker.primaryTopic)
+      this.$q.localStorage.set('questionsecondaryTopic', this.$refs.topicpicker.secondaryTopic)
+      this.$q.localStorage.set('questionternaryTopic', this.$refs.topicpicker.ternaryTopic)
+    } else {
+      this.$q.localStorage.set('answereditblogform', this.form)
+      this.$q.localStorage.set('answerprimaryTopic', this.$refs.topicpicker.primaryTopic)
+      this.$q.localStorage.set('answersecondaryTopic', this.$refs.topicpicker.secondaryTopic)
+      this.$q.localStorage.set('answerternaryTopic', this.$refs.topicpicker.ternaryTopic)
+    }
+  },
+  mounted: function () {
+    let form = null
+    if (this.isquestion) {
+      form = this.$q.localStorage.get.item('questioneditblogform')
+      this.$refs.topicpicker.primaryTopic = this.$q.localStorage.get.item('questionprimaryTopic')
+      this.$refs.topicpicker.secondaryTopic = this.$q.localStorage.get.item('questionsecondaryTopic')
+      this.$refs.topicpicker.ternaryTopic = this.$q.localStorage.get.item('questionternaryTopic')
+    } else {
+      form = this.$q.localStorage.get.item('answereditblogform')
+      this.$refs.topicpicker.primaryTopic = this.$q.localStorage.get.item('answerprimaryTopic')
+      this.$refs.topicpicker.secondaryTopic = this.$q.localStorage.get.item('answersecondaryTopic')
+      this.$refs.topicpicker.ternaryTopic = this.$q.localStorage.get.item('answerternaryTopic')
+    }
+
+    if (form) {
+      this.form = form
     }
   }
 }
