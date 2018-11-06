@@ -8,6 +8,8 @@
     >
       <steemcard :discussion="blog"></steemcard>
     </swiper-slide>
+    <div v-if="this.$q.platform.is.desktop" class="nav swiper-button-prev" slot="button-prev"></div>
+    <div v-if="this.$q.platform.is.desktop" class="nav swiper-button-next" slot="button-next"></div>
   </swiper>
 </template>
 
@@ -38,6 +40,10 @@ export default {
           pagination: {
             el: '.swiper-pagination',
             clickable: true
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
           },
           slidesPerView: window.innerWidth / 300,
           spaceBetween: 5
@@ -117,4 +123,24 @@ export default {
 </script>
 
 <style lang="stylus">
+  .nav
+    opacity: 0;
+    height: 100%;
+    top: 0;
+    -webkit-transition: opacity 0.5s ease-out;
+    -moz-transition: opacity 0.5s ease-out;
+    -o-transition: opacity 0.5s ease-out;
+    -ms-transition: opacity 0.5s ease-out;
+    transition: opacity 0.5s ease-out;
+
+  .nav:hover
+    -webkit-transition: opacity 0.5s ease-in;
+    -moz-transition: opacity 0.5s ease-in;
+    -o-transition: opacity 0.5s ease-in;
+    -ms-transition: opacity 0.5s ease-in;
+    transition: opacity 0.5s ease-in;
+    opacity: 1;
+
+  .swiper-button-prev.swiper-button-disabled
+    opacity: 0;
 </style>
