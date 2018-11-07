@@ -158,6 +158,118 @@ export default {
       this.$refs.topicpicker.secondaryTopic = ''
       this.$refs.topicpicker.ternaryTopic = ''
     },
+    submitPost: (vue) => {
+      let tag1 = ''
+      if (vue.$refs.topicpicker.ternaryTopic !== '') {
+        tag1 = vue.topicStr(vue.$store.getters['quearn/topics'],
+          vue.$refs.topicpicker.ternaryTopic)
+      } else if (vue.$refs.topicpicker.secondaryTopic !== '') {
+        tag1 = vue.topicStr(vue.$store.getters['quearn/topics'],
+          vue.$refs.topicpicker.secondaryTopic)
+      } else if (vue.$refs.topicpicker.primaryTopic !== '') {
+        tag1 = vue.topicStr(vue.$store.getters['quearn/topics'],
+          vue.$refs.topicpicker.primaryTopic)
+      }
+
+      if (!vue.isquestion) {
+        vue.form.title = 'A: ' + vue.question_title
+      }
+
+      let permlink = vue.permlink(vue.form.title)
+      let tags = [vue.$store.getters['quearn/config'].tag]
+      tags.push(tag1)
+      if (vue.form.tag2) {
+        tags.push(vue.form.tag2)
+      }
+      if (vue.form.tag3) {
+        tags.push(vue.form.tag3)
+      }
+      if (vue.form.tag4) {
+        tags.push(vue.form.tag4)
+      }
+
+      vue.$q.loading.show({
+        message: vue.$tc('postingnewquestion')
+      })
+
+      let body = vue.form.body
+      if (vue.$store.getters['quearn/config'].post_addon_msg.length) {
+        body += '\n\n' + vue.$store.getters['quearn/config'].post_addon_msg
+      }
+
+      vue.$store.getters['steem/client'].comment(
+        '',
+        vue.$store.getters['quearn/config'].tag,
+        vue.$store.getters['steem/username'],
+        permlink,
+        vue.form.title,
+        body,
+        {
+          tags: tags
+        }
+      ).then(() => {
+        let url = vue.$store.getters['quearn/serverURL']
+        if (vue.isquestion) {
+          url += '/newquestion'
+        } else {
+          url += '/newanswer'
+        }
+
+        let params = {
+          username: vue.$store.getters['steem/username'],
+          access_token: vue.$store.getters['steem/accessToken'],
+          permlink: permlink,
+          title: vue.form.title,
+          tags: tags
+        }
+
+        if (!vue.isquestion) {
+          params['question_author'] = vue.question_author
+          params['question_permlink'] = vue.question_permlink
+        }
+
+        axios.post(
+          url,
+          params
+        ).then((response) => {
+          vue.$q.loading.hide()
+          vue.$q.notify({
+            message: vue.$tc('postingsuccess'),
+            type: 'positive'
+          })
+          if (vue.emit_editcompleted) {
+            vue.$emit('editcompleted', true)
+          } else {
+            vue.$router.push('/')
+          }
+        }).catch((err) => {
+          vue.$q.notify({
+            message: vue.$tc('postingfailed'),
+            detail: err.error_description,
+            type: 'negative'
+          })
+          vue.$q.loading.hide()
+          if (vue.emit_editcompleted) {
+            vue.$emit('editcompleted', false)
+          } else {
+            vue.$router.push('/')
+          }
+        })
+        vue.$q.loading.hide()
+      }).catch((err) => {
+        vue.$q.notify({
+          message: vue.$tc('postingfailed'),
+          detail: err.error_description,
+          type: 'negative'
+        })
+        vue.$q.loading.hide()
+        if (vue.emit_editcompleted) {
+          vue.$emit('editcompleted', false)
+        } else {
+          vue.$router.push('/')
+        }
+      })
+    },
     submit () {
       this.$v.form.$touch()
 
@@ -166,107 +278,22 @@ export default {
         return
       }
 
-      let tag1 = this.selectedTopic()
-
-      if (!this.isquestion) {
-        this.form.title = 'A: ' + this.question_title
+      let images = this.form.body.match('https?://.*?\\.(?:png|jpe?g|gif)')
+      if (images !== null && images.length > 0) {
+        this.submitPost(this)
+      } else {
+        this.$root.$emit('confirm_dialog',
+          this.$tc('noimagewarning'),
+          this.$tc('noimagewarningdetails'),
+          () => {
+            this.submitPost(this)
+          },
+          undefined,
+          this.$tc('yesimsure'),
+          this.$tc('woopsiforgot'),
+          'warning',
+          'warning')
       }
-
-      let permlink = this.permlink(this.form.title)
-      let tags = [this.$store.getters['quearn/config'].tag]
-      tags.push(tag1)
-      if (this.form.tag2) {
-        tags.push(this.form.tag2)
-      }
-      if (this.form.tag3) {
-        tags.push(this.form.tag3)
-      }
-      if (this.form.tag4) {
-        tags.push(this.form.tag4)
-      }
-
-      this.$q.loading.show({
-        message: this.$tc('postingnewquestion')
-      })
-
-      let body = this.form.body
-      if (this.$store.getters['quearn/config'].post_addon_msg.length) {
-        body += '\n\n' + this.$store.getters['quearn/config'].post_addon_msg
-      }
-
-      this.$store.getters['steem/client'].comment(
-        '',
-        this.$store.getters['quearn/config'].tag,
-        this.$store.getters['steem/username'],
-        permlink,
-        this.form.title,
-        body,
-        {
-          tags: tags
-        }
-      ).then(() => {
-        let url = this.$store.getters['quearn/serverURL']
-        if (this.isquestion) {
-          url += '/newquestion'
-        } else {
-          url += '/newanswer'
-        }
-
-        let params = {
-          username: this.$store.getters['steem/username'],
-          access_token: this.$store.getters['steem/accessToken'],
-          permlink: permlink,
-          title: this.form.title,
-          tags: tags
-        }
-
-        if (!this.isquestion) {
-          params['question_author'] = this.question_author
-          params['question_permlink'] = this.question_permlink
-        }
-
-        axios.post(
-          url,
-          params
-        ).then((response) => {
-          this.resetForm()
-          this.$q.loading.hide()
-          this.$q.notify({
-            message: this.$tc('postingsuccess'),
-            type: 'positive'
-          })
-          if (this.emit_editcompleted) {
-            this.$emit('editcompleted', true)
-          } else {
-            this.$router.push('/')
-          }
-        }).catch((err) => {
-          this.$q.notify({
-            message: this.$tc('postingfailed'),
-            detail: err.error_description,
-            type: 'negative'
-          })
-          this.$q.loading.hide()
-          if (this.emit_editcompleted) {
-            this.$emit('editcompleted', false)
-          } else {
-            this.$router.push('/')
-          }
-        })
-        this.$q.loading.hide()
-      }).catch((err) => {
-        this.$q.notify({
-          message: this.$tc('postingfailed'),
-          detail: err.error_description,
-          type: 'negative'
-        })
-        this.$q.loading.hide()
-        if (this.emit_editcompleted) {
-          this.$emit('editcompleted', false)
-        } else {
-          this.$router.push('/')
-        }
-      })
     },
     cancel () {
       this.resetForm()

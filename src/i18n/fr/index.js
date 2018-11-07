@@ -41,6 +41,8 @@ export default {
   nextresults: 'Resultats suivant',
   newquestion: 'Nouvelle question',
   news: 'Nouvelles',
+  noimagewarning: 'Avertissement: pas d\'image!',
+  noimagewarningdetails: 'Vous n\'avez pas d\'image dans votre article! Nous vous conseillons d\'ajouter une image pour ameliorer la visibilite de votre contribution.',
   nomoreresults: 'Plus de resultat',
   questionrequirement: 'Doit finir avec un point d\'interrogation!',
   pleaseloginorsignup: 'Veuillez vous connecter ou creer un nouveau compte Steem.',
@@ -71,7 +73,9 @@ export default {
   voting: 'Vote en cours...',
   votingfailed: 'Erreur durant soumission du vote!',
   votingweight: 'Poid du vote',
+  woopsiforgot: 'Oups, j\'ai oublie!',
   writeacomment: 'Ecrivez un commentaire',
+  yesimsure: 'Oui, je suis certain!',
   youmustbeloggedin: 'Vous devez etre connecte pour soumettre des contributions.',
   youranswer: 'Votre reponse',
   yourcomment: 'Votre commentaire'

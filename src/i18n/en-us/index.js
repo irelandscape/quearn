@@ -42,6 +42,8 @@ export default {
   nextresults: 'Next results',
   newquestion: 'New question',
   news: 'News',
+  noimagewarning: 'Warning: No Image!',
+  noimagewarningdetails: 'You haven\'t specified any image in your post!<br/>Please consider adding an image as it will increase the appeal of your contribution.',
   nomoreresults: 'No more results',
   questionrequirement: 'Must finish with a question mark!',
   pleaseloginorsignup: 'Please login or sign up to Steem.',
@@ -72,7 +74,9 @@ export default {
   voting: 'Voting...',
   votingfailed: 'Voting failed!',
   votingweight: 'Voting weight',
+  woopsiforgot: 'Woops, I forgot!',
   writeacomment: 'Write a comment',
+  yesimsure: 'Yes, I\'m sure!',
   youmustbeloggedin: 'You must be logged in to contribute content.',
   youranswer: 'Your Answer',
   yourcomment: 'Your comment'

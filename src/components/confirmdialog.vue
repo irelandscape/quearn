@@ -1,24 +1,21 @@
 <template>
   <q-dialog
     v-model="showDialog"
+    :ok="ok"
+    :cancel="cancel"
     @cancel="onCancel()"
     @ok="onOk()"
     :title="title"
     prevent-close
   >
-    <div slot="body" v-html="body" />
-    <template slot="buttons" slot-scope="props">
-      <q-btn
-        flat
-        icon="cancel"
-        :label="$tc('cancel')"
-        @click="props.cancel" />
-      <q-btn
-        flat
-        icon="done"
-        :label="$tc('confirm')"
-        @click="props.ok" />
-    </template>
+    <div slot="body">
+      <q-icon
+        v-if="icon"
+        :name="icon"
+        size="5rem"
+        :color="iconcolor" />
+      <div v-html="body" />
+    </div>
   </q-dialog>
 </template>
 
@@ -32,19 +29,34 @@ export default {
       body: '',
       showDialog: false,
       okHandler: null,
-      cancelHandler: null
+      cancelHandler: null,
+      ok: true,
+      cancel: true,
+      icon: null,
+      iconcolor: 'secondary'
     }
   },
   mounted: function () {
     this.$root.$on('confirm_dialog', this.openDialog)
   },
   methods: {
-    openDialog: function (title, body, okHandler, cancelHandler) {
+    openDialog: function (title, body, okHandler, cancelHandler, okLabel, cancelLabel, icon, iconcolor) {
       this.title = title
       this.body = body
       this.okHandler = okHandler
       this.cancelHandler = cancelHandler
       this.showDialog = true
+      this.icon = icon
+      if (iconcolor) {
+        this.iconcolor = iconcolor
+      }
+
+      if (okLabel) {
+        this.ok = okLabel
+      }
+      if (cancelLabel) {
+        this.cancel = cancelLabel
+      }
     },
     onOk: function () {
       if (this.okHandler) {
@@ -58,5 +70,12 @@ export default {
     }
   }
 }
-
 </script>
+
+<style lang="stylus" scoped>
+  .q-icon
+    float: left;
+
+  >>> br
+    font-size: 150%;
+</style>
