@@ -1,4 +1,8 @@
 export function md2html (str, xss, addonMsg) {
+  if (!str) {
+    return
+  }
+
   let Remarkable = require('remarkable')
   let md = new Remarkable('full', {
     html: true,
