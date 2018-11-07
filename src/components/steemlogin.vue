@@ -50,18 +50,18 @@ export default {
 
     // let url = require('url')
     // let q = url.parse(document.location.origin, true)
-    let url
+    let callbackurl
     if (process.env.NODE_ENV === 'development') {
-      url = 'http://localhost:8080/auth/callback'
+      callbackurl = 'http://localhost:8080/auth/callback'
     } else {
       let url = require('url')
       let q = url.parse(document.location.origin, true)
-      url = 'https://' + q.hostname + ':8443'
+      callbackurl = 'https://' + q.hostname + '/auth/callback'
     }
     this.$store.commit('steem/createClient', {
       app: 'steemqa-io',
       baseURL: 'https://steemconnect.com',
-      callbackURL: url,
+      callbackURL: callbackurl,
       accessToken: this.$store.getters['steem/accessToken'],
       scope: ['vote', 'comment', 'custom_json']
     })
