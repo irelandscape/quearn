@@ -340,6 +340,7 @@ export default {
 
     if (form) {
       this.form = form
+      this.input = form.body
     }
   }
 }
