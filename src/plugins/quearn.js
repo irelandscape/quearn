@@ -10,7 +10,15 @@ export default ({ store, Vue }) => {
     store.commit('quearn/serverURL', 'https://' + q.hostname + ':8443')
   }
   let xss = require('xss')
-  store.commit('quearn/xss', new xss.FilterXSS())
+  store.commit('quearn/xss', new xss.FilterXSS({
+    onTagAttr: function (tag, name, value, isWhiteAttr) {
+      if (tag === 'div' && name === 'class') {
+        if (value === 'pull-left' || value === 'pull-right') {
+          return 'class="' + value + '"'
+        }
+      }
+    }
+  }))
   axios.get(store.getters['quearn/serverURL'] + '/configs/').then(
     function (response) {
       let config = response.data[0]
