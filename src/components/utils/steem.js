@@ -30,3 +30,8 @@ export function editComment (client, parentAuthor, parentPermlink, config, usern
     {}
   )
 }
+
+export function payout (blog) {
+  let value = parseFloat(blog.total_payout_value) + parseFloat(blog.pending_payout_value)
+  return value.toFixed(2)
+}

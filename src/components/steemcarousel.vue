@@ -21,7 +21,7 @@
         </div>
         <q-btn-group>
           <q-btn icon="attach_money"
-            :label="blog.total_payout_value | sbd"
+            :label="getPayout(blog)"
             size="md"
             disabled
             class="tight"
@@ -45,7 +45,7 @@
           <br/>
           <q-btn-group>
             <q-btn icon="attach_money"
-              :label="blog.total_payout_value | sbd"
+              :label="getPayout(blog)"
               size="md"
               disabled
               class="tight"
@@ -66,6 +66,7 @@
 <script>
 import { easing } from 'quasar'
 import axios from 'axios'
+import { payout } from 'components/utils/steem'
 
 export default {
   name: 'Steemcarousel',
@@ -120,6 +121,9 @@ export default {
       }).catch(function (error) {
         console.log(error)
       })
+    },
+    getPayout (blog) {
+      return payout(blog)
     }
   },
   mounted () {

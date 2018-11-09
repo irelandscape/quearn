@@ -86,7 +86,7 @@
       <div class="col-3 right">
         <q-btn
           icon="attach_money"
-          :label="blog.total_payout_value | sbd"
+          :label="getPayout"
           flat
           class="tight"
           no-wrap
@@ -100,6 +100,7 @@
 
 <script>
 import Steemvote from 'components/steemvote'
+import { payout } from 'components/utils/steem'
 
 export default {
   name: 'Steemblogctrl',
@@ -176,6 +177,9 @@ export default {
       } else {
         return ''
       }
+    },
+    getPayout () {
+      return payout(this.blog)
     }
   }
 }
