@@ -21,7 +21,7 @@
         </div>
         <q-btn-group>
           <q-btn icon="attach_money"
-            :label="blog.pending_payout_value | sbd"
+            :label="blog.total_payout_value | sbd"
             size="md"
             disabled
             class="tight"
@@ -45,7 +45,7 @@
           <br/>
           <q-btn-group>
             <q-btn icon="attach_money"
-              :label="blog.pending_payout_value | sbd"
+              :label="blog.total_payout_value | sbd"
               size="md"
               disabled
               class="tight"
