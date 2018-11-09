@@ -38,7 +38,8 @@ export default {
   data: function () {
     return {
       client: null,
-      showDialog: false
+      showDialog: false,
+      timer: null
     }
   },
   props: {
@@ -49,11 +50,18 @@ export default {
 
     // let url = require('url')
     // let q = url.parse(document.location.origin, true)
+    let callbackurl
+    if (process.env.NODE_ENV === 'development') {
+      callbackurl = 'http://localhost:8080/auth/callback'
+    } else {
+      let url = require('url')
+      let q = url.parse(document.location.origin, true)
+      callbackurl = 'https://' + q.hostname + '/auth/callback'
+    }
     this.$store.commit('steem/createClient', {
       app: 'steemqa-io',
       baseURL: 'https://steemconnect.com',
-      // callbackURL: 'http://' + q.hostname + '/auth/callback',
-      callbackURL: 'http://www.stemq.io/auth/callback',
+      callbackURL: callbackurl,
       accessToken: this.$store.getters['steem/accessToken'],
       scope: ['vote', 'comment', 'custom_json']
     })
@@ -65,7 +73,7 @@ export default {
       if (now > expires) {
         this.showDialog = true
       } else {
-        setTimeout(() => {
+        this.timer = setTimeout(() => {
           this.showDialog = true
         }, expires - now)
       }
@@ -100,6 +108,10 @@ export default {
       document.location = 'https://signup.steemit.com/?ref=' + this.$store.getters['quearn/config'].appName
     },
     logout: function () {
+      if (this.timer) {
+        clearTimeout(this.timer)
+        this.timer = null
+      }
       this.$store.dispatch('steem/logout')
     },
     myTopics: function () {

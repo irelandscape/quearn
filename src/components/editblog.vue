@@ -98,9 +98,7 @@ export default {
     return {
       text: '',
       input: '',
-      form: {
-        title: ''
-      }
+      form: {}
     }
   },
   validations () {
@@ -139,14 +137,7 @@ export default {
       }
       return ''
     },
-    submit () {
-      this.$v.form.$touch()
-
-      if (this.$v.form.$error) {
-        this.$q.notify('Please review fields again')
-        return
-      }
-
+    selectedTopic () {
       let tag1 = ''
       if (this.$refs.topicpicker.ternaryTopic !== '') {
         tag1 = this.topicStr(this.$store.getters['quearn/topics'],
@@ -159,106 +150,153 @@ export default {
           this.$refs.topicpicker.primaryTopic)
       }
 
-      if (!this.isquestion) {
-        this.form.title = 'A: ' + this.question_title
+      return tag1
+    },
+    resetForm () {
+      this.form = {}
+      this.$refs.topicpicker.primaryTopic = ''
+      this.$refs.topicpicker.secondaryTopic = ''
+      this.$refs.topicpicker.ternaryTopic = ''
+    },
+    submitPost: (vue) => {
+      let tag1 = ''
+      if (vue.$refs.topicpicker.ternaryTopic !== '') {
+        tag1 = vue.topicStr(vue.$store.getters['quearn/topics'],
+          vue.$refs.topicpicker.ternaryTopic)
+      } else if (vue.$refs.topicpicker.secondaryTopic !== '') {
+        tag1 = vue.topicStr(vue.$store.getters['quearn/topics'],
+          vue.$refs.topicpicker.secondaryTopic)
+      } else if (vue.$refs.topicpicker.primaryTopic !== '') {
+        tag1 = vue.topicStr(vue.$store.getters['quearn/topics'],
+          vue.$refs.topicpicker.primaryTopic)
       }
 
-      let permlink = this.permlink(this.form.title)
-      let tags = [this.$store.getters['quearn/config'].tag]
+      if (!vue.isquestion) {
+        vue.form.title = 'A: ' + vue.question_title
+      }
+
+      let permlink = vue.permlink(vue.form.title)
+      let tags = [vue.$store.getters['quearn/config'].tag]
       tags.push(tag1)
-      if (this.form.tag2) {
-        tags.push(this.form.tag2)
+      if (vue.form.tag2) {
+        tags.push(vue.form.tag2)
       }
-      if (this.form.tag3) {
-        tags.push(this.form.tag3)
+      if (vue.form.tag3) {
+        tags.push(vue.form.tag3)
       }
-      if (this.form.tag4) {
-        tags.push(this.form.tag4)
+      if (vue.form.tag4) {
+        tags.push(vue.form.tag4)
       }
 
-      this.$q.loading.show({
-        message: this.$tc('postingnewquestion')
+      vue.$q.loading.show({
+        message: vue.$tc('postingnewquestion')
       })
 
-      let body = this.form.body
-      if (this.$store.getters['quearn/config'].post_addon_msg.length) {
-        body += '\n\n' + this.$store.getters['quearn/config'].post_addon_msg
+      let body = vue.form.body
+      if (vue.$store.getters['quearn/config'].post_addon_msg.length) {
+        body += '\n\n' + vue.$store.getters['quearn/config'].post_addon_msg
       }
 
-      this.$store.getters['steem/client'].comment(
+      vue.$store.getters['steem/client'].comment(
         '',
-        this.$store.getters['quearn/config'].tag,
-        this.$store.getters['steem/username'],
+        vue.$store.getters['quearn/config'].tag,
+        vue.$store.getters['steem/username'],
         permlink,
-        this.form.title,
+        vue.form.title,
         body,
         {
           tags: tags
         }
       ).then(() => {
-        let url = this.$store.getters['quearn/serverURL']
-        if (this.isquestion) {
+        let url = vue.$store.getters['quearn/serverURL']
+        if (vue.isquestion) {
           url += '/newquestion'
         } else {
           url += '/newanswer'
         }
 
         let params = {
-          username: this.$store.getters['steem/username'],
-          access_token: this.$store.getters['steem/accessToken'],
+          username: vue.$store.getters['steem/username'],
+          access_token: vue.$store.getters['steem/accessToken'],
           permlink: permlink,
-          title: this.form.title,
+          title: vue.form.title,
           tags: tags
         }
 
-        if (!this.isquestion) {
-          params['question_author'] = this.question_author
-          params['question_permlink'] = this.question_permlink
+        if (!vue.isquestion) {
+          params['question_author'] = vue.question_author
+          params['question_permlink'] = vue.question_permlink
         }
 
         axios.post(
           url,
           params
         ).then((response) => {
-          this.$q.loading.hide()
-          this.$q.notify({
-            message: this.$tc('postingsuccess'),
+          vue.$q.loading.hide()
+          vue.$q.notify({
+            message: vue.$tc('postingsuccess'),
             type: 'positive'
           })
-          if (this.emit_editcompleted) {
-            this.$emit('editcompleted', true)
+          if (vue.emit_editcompleted) {
+            vue.$emit('editcompleted', true)
           } else {
-            this.$router.push('/')
+            vue.$router.push('/')
           }
         }).catch((err) => {
-          this.$q.notify({
-            message: this.$tc('postingfailed'),
+          vue.$q.notify({
+            message: vue.$tc('postingfailed'),
             detail: err.error_description,
             type: 'negative'
           })
-          this.$q.loading.hide()
-          if (this.emit_editcompleted) {
-            this.$emit('editcompleted', false)
+          vue.$q.loading.hide()
+          if (vue.emit_editcompleted) {
+            vue.$emit('editcompleted', false)
           } else {
-            this.$router.push('/')
+            vue.$router.push('/')
           }
         })
-        this.$q.loading.hide()
+        vue.$q.loading.hide()
       }).catch((err) => {
-        this.$q.notify({
-          message: this.$tc('postingfailed'),
+        vue.$q.notify({
+          message: vue.$tc('postingfailed'),
           detail: err.error_description,
           type: 'negative'
         })
-        this.$q.loading.hide()
-        if (this.emit_editcompleted) {
-          this.$emit('editcompleted', false)
+        vue.$q.loading.hide()
+        if (vue.emit_editcompleted) {
+          vue.$emit('editcompleted', false)
         } else {
-          this.$router.push('/')
+          vue.$router.push('/')
         }
       })
     },
+    submit () {
+      this.$v.form.$touch()
+
+      if (this.$v.form.$error) {
+        this.$q.notify('Please review fields again')
+        return
+      }
+
+      let images = this.form.body.match('https?://.*?\\.(?:png|jpe?g|gif)')
+      if (images !== null && images.length > 0) {
+        this.submitPost(this)
+      } else {
+        this.$root.$emit('confirm_dialog',
+          this.$tc('noimagewarning'),
+          this.$tc('noimagewarningdetails'),
+          () => {
+            this.submitPost(this)
+          },
+          undefined,
+          this.$tc('yesimsure'),
+          this.$tc('woopsiforgot'),
+          'warning',
+          'warning')
+      }
+    },
     cancel () {
+      this.resetForm()
       if (this.emit_editcompleted) {
         this.$emit('editcompleted', false)
       } else {
@@ -271,6 +309,38 @@ export default {
       return md2html(this.input,
         this.$store.getters['quearn/xss'],
         this.$store.getters['quearn/config'].post_addon_msg)
+    }
+  },
+  beforeDestroy: function () {
+    if (this.isquestion) {
+      this.$q.localStorage.set('questioneditblogform', this.form)
+      this.$q.localStorage.set('questionprimaryTopic', this.$refs.topicpicker.primaryTopic)
+      this.$q.localStorage.set('questionsecondaryTopic', this.$refs.topicpicker.secondaryTopic)
+      this.$q.localStorage.set('questionternaryTopic', this.$refs.topicpicker.ternaryTopic)
+    } else {
+      this.$q.localStorage.set('answereditblogform', this.form)
+      this.$q.localStorage.set('answerprimaryTopic', this.$refs.topicpicker.primaryTopic)
+      this.$q.localStorage.set('answersecondaryTopic', this.$refs.topicpicker.secondaryTopic)
+      this.$q.localStorage.set('answerternaryTopic', this.$refs.topicpicker.ternaryTopic)
+    }
+  },
+  mounted: function () {
+    let form = null
+    if (this.isquestion) {
+      form = this.$q.localStorage.get.item('questioneditblogform')
+      this.$refs.topicpicker.primaryTopic = this.$q.localStorage.get.item('questionprimaryTopic')
+      this.$refs.topicpicker.secondaryTopic = this.$q.localStorage.get.item('questionsecondaryTopic')
+      this.$refs.topicpicker.ternaryTopic = this.$q.localStorage.get.item('questionternaryTopic')
+    } else {
+      form = this.$q.localStorage.get.item('answereditblogform')
+      this.$refs.topicpicker.primaryTopic = this.$q.localStorage.get.item('answerprimaryTopic')
+      this.$refs.topicpicker.secondaryTopic = this.$q.localStorage.get.item('answersecondaryTopic')
+      this.$refs.topicpicker.ternaryTopic = this.$q.localStorage.get.item('answerternaryTopic')
+    }
+
+    if (form) {
+      this.form = form
+      this.input = form.body
     }
   }
 }

@@ -2,12 +2,23 @@ import axios from 'axios'
 import { Notify } from 'quasar'
 
 export default ({ store, Vue }) => {
-  let url = require('url')
-  let q = url.parse(document.location.origin, true)
-  store.commit('quearn/serverURL', 'https://' + q.hostname + ':8443')
-  // store.commit('quearn/serverURL', 'http://' + q.hostname + ':8000')
+  if (process.env.NODE_ENV === 'development') {
+    store.commit('quearn/serverURL', 'http://localhost:8000')
+  } else {
+    let url = require('url')
+    let q = url.parse(document.location.origin, true)
+    store.commit('quearn/serverURL', 'https://' + q.hostname + ':8443')
+  }
   let xss = require('xss')
-  store.commit('quearn/xss', new xss.FilterXSS())
+  store.commit('quearn/xss', new xss.FilterXSS({
+    onTagAttr: function (tag, name, value, isWhiteAttr) {
+      if (tag === 'div' && name === 'class') {
+        if (value === 'pull-left' || value === 'pull-right') {
+          return 'class="' + value + '"'
+        }
+      }
+    }
+  }))
   axios.get(store.getters['quearn/serverURL'] + '/configs/').then(
     function (response) {
       let config = response.data[0]
