@@ -147,7 +147,8 @@ export default {
           this.blog.permlink,
           this.blog.title,
           tags,
-          this.blog.body).then(() => {
+          this.blog.body,
+          this.$store.getters['quearn/config'].appName + '/' + this.$store.getters['quearn/release']).then(() => {
           this.$q.loading.hide()
           this.$q.notify({
             message: this.$t('editsuccessfull'),

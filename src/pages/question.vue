@@ -195,7 +195,6 @@ export default {
         [this.$route.params.author, this.$route.params.permlink]
       ).then(response => {
         this.blog = response
-        console.log(this.blog)
       }).catch(function (err) {
         this.$q.notify({
           message: this.$tc('failedtogetquestions'),

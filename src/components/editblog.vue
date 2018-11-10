@@ -205,7 +205,8 @@ export default {
         vue.form.title,
         body,
         {
-          tags: tags
+          tags: tags,
+          app: vue.$store.getters['quearn/config'].appName + '/' + vue.$store.getters['quearn/release']
         }
       ).then(() => {
         let url = vue.$store.getters['quearn/serverURL']

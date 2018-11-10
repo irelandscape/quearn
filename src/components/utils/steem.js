@@ -4,7 +4,7 @@ export function permlink (str) {
     .toLowerCase()
 }
 
-export function editPost (client, username, config, permlink, title, tags, body) {
+export function editPost (client, username, config, permlink, title, tags, body, app) {
   tags.unshift(config.tag)
   return client.comment(
     '',
@@ -14,7 +14,8 @@ export function editPost (client, username, config, permlink, title, tags, body)
     title,
     body,
     {
-      tags: tags
+      tags: tags,
+      app: app
     }
   )
 }
