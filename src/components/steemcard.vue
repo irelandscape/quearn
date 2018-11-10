@@ -61,7 +61,7 @@ export default {
       } else {
         let images = this.blog.body.match('https?://.*?\\.(?:png|jpe?g|gif)')
         if (images !== null && images.length > 0) {
-          return images[0]
+          return 'https://steemitimages.com/0x0/' + images[0]
         } else {
           return '/statics/atom.jpg'
         }
