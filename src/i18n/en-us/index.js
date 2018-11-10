@@ -28,6 +28,7 @@ export default {
   help: 'Help',
   home: 'Home',
   latest: 'Latest',
+  latestanswers: 'Latest answers',
   latestquestions: 'Latest questions',
   login: 'Login',
   logout: 'Logout',

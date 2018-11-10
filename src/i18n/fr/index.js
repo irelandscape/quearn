@@ -27,6 +27,7 @@ export default {
   help: 'Aide',
   home: 'Acceuil',
   latest: 'Recent',
+  latestanswers: 'Reponses recentes',
   latestquestions: 'Questions recentes',
   login: 'Se connecter',
   logout: 'Se deconnecter',

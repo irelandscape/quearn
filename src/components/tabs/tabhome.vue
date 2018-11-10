@@ -22,6 +22,18 @@
       <q-chip
         square
         color="black"
+        icon="access_time"
+      >
+        {{ $tc('latestanswers') }}
+      </q-chip>
+      <steemcardswiper
+        :question=false
+        :filters="{ordering: '-created'}"
+      />
+
+      <q-chip
+        square
+        color="black"
         icon="star"
       >
         {{ $tc('topratedquestions') }}
