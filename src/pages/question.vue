@@ -190,6 +190,9 @@ export default {
       })
     },
     getDiscussion: function (author, permlink) {
+      if (this.blog) {
+        return
+      }
       let dsteem = this.$store.getters['steem/dsteem']
       dsteem.database.call('get_content',
         [author, permlink]

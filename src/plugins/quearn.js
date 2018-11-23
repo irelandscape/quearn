@@ -3,7 +3,7 @@ import { Notify } from 'quasar'
 
 export default ({ store, Vue }) => {
   if (process.env.NODE_ENV === 'development') {
-    store.commit('quearn/serverURL', 'http://localhost:8000')
+    store.commit('quearn/serverURL', 'http://localhost:8000/api')
   } else {
     let url = require('url')
     let q = url.parse(document.location.origin, true)

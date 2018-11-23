@@ -91,7 +91,6 @@ export default {
   },
   methods: {
     isFirst: function (index) {
-      console.log(index)
       return index === 0
     },
     getBlogBody: function () {
@@ -113,6 +112,23 @@ export default {
           id: this.answer.question
         }
       })
+    },
+    getDiscussion: function (author, permlink) {
+      if (this.blog) {
+        return
+      }
+      let dsteem = this.$store.getters['steem/dsteem']
+      dsteem.database.call('get_content',
+        [author, permlink]
+      ).then(response => {
+        this.blog = response
+      }).catch(function (err) {
+        this.$q.notify({
+          message: this.$tc('failedtogetanswers'),
+          detail: err.error_description,
+          type: 'negative'
+        })
+      })
     }
   },
   watch: {
@@ -120,19 +136,14 @@ export default {
     }
   },
   mounted () {
-    if (!this.blog) {
-      if (!this.$route.params.author || !this.$route.params.permlink) {
-        this.$router.push('/')
-        return
-      }
+    if (this.$route.params.blog) {
+      this.blog = this.$route.params.blog
+    }
 
-      this.getDiscussion()
-
+    if (this.$route.params.id) {
       axios.get(
         this.$store.getters['quearn/serverURL'] +
-          '/answers/?' +
-          'author=' + this.$route.params.author +
-          '&permlink=' + this.$route.params.permlink,
+          '/answers/?id=' + this.$route.params.id,
         {
           params: {
             username: this.$store.getters['steem/username'],
@@ -141,32 +152,23 @@ export default {
         }
       ).then((response) => {
         this.answer = response.data[0]
-        this.getAnswers()
+        this.getDiscussion(this.answer.author, this.answer.permlink)
       }).catch(function (error) {
         console.log(error)
       })
+    } else if (this.$route.params.answer) {
+      this.answer = this.$route.params.answer
+      this.getDiscussion(this.answer.author, this.answer.permlink)
     } else {
-      /* Get answers */
-      axios.get(
-        this.$store.getters['quearn/serverURL'] + '/answers/',
-        {
-          params: {
-            username: this.$store.getters['steem/username'],
-            access_token: this.$store.getters['steem/accessToken'],
-            answer_author: this.blog.author,
-            answer_permlink: this.blog.permlink
-          }
-        }
-      ).then((response) => {
-        this.answer = response.data[0]
-      }).catch((err) => {
-        this.$q.notify({
-          message: this.$tc('failedtogetanswers'),
-          detail: err.error_description,
-          type: 'negative'
-        })
-      })
+      this.$router.push('/')
+      return
     }
+
+    this.$root.$on('commentsuccess', function (caller, blog) {
+      if (caller) {
+        caller.writecomment = false
+      }
+    })
   }
 }
 </script>
