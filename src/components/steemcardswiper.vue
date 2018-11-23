@@ -6,7 +6,10 @@
     <swiper-slide
       v-for="blog in blogs" :key="blog.id"
     >
-      <steemcard :discussion="blog"></steemcard>
+      <steemcard
+        :discussion="blog"
+        :question="question"
+      ></steemcard>
     </swiper-slide>
     <div v-if="this.$q.platform.is.desktop" class="nav swiper-button-prev" slot="button-prev"></div>
     <div v-if="this.$q.platform.is.desktop" class="nav swiper-button-next" slot="button-next"></div>

@@ -6,13 +6,13 @@
   >
     <div>
       <q-card-media overlay-position="bottom">
-        <img :src="image" v-on:click="showquestion" />
+        <img :src="image" v-on:click="showpost" />
       </q-card-media>
       <q-card-title>
         <q-chip v-if="topic" small square color="secondary" dense class="float-right">
           {{topic}}
         </q-chip>
-        <span v-on:click="showquestion">{{title}}</span>
+        <span v-on:click="showpost">{{title}}</span>
         <postheader slot="subtitle"
           :blog="blog"
         />
@@ -42,7 +42,11 @@ export default {
     Postheader
   },
   props: {
-    discussion: Object
+    discussion: Object,
+    question: {
+      type: Boolean,
+      default: true
+    }
   },
   data: function () {
     return {
@@ -97,15 +101,15 @@ export default {
     }
   },
   methods: {
-    showquestion () {
+    showpost () {
       this.$router.push({
-        name: 'question',
+        name: this.question ? 'question' : 'answer',
         params: {
           author: this.discussion.author,
           permlink: this.discussion.permlink,
           blog: this.blog,
           blogBody: this.blogBody,
-          question: this.discussion
+          id: this.discussion.id
         }
       })
     }

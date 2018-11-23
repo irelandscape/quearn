@@ -189,10 +189,10 @@ export default {
         })
       })
     },
-    getDiscussion: function () {
+    getDiscussion: function (author, permlink) {
       let dsteem = this.$store.getters['steem/dsteem']
       dsteem.database.call('get_content',
-        [this.$route.params.author, this.$route.params.permlink]
+        [author, permlink]
       ).then(response => {
         this.blog = response
       }).catch(function (err) {
@@ -209,19 +209,14 @@ export default {
     }
   },
   mounted () {
-    if (!this.blog) {
-      if (!this.$route.params.author || !this.$route.params.permlink) {
-        this.$router.push('/')
-        return
-      }
+    if (this.$route.params.blog) {
+      this.blog = this.$route.params.blog
+    }
 
-      this.getDiscussion()
-
+    if (this.$route.params.id) {
       axios.get(
         this.$store.getters['quearn/serverURL'] +
-          '/questions/?' +
-          'author=' + this.$route.params.author +
-          '&permlink=' + this.$route.params.permlink,
+          '/questions/?id=' + this.$route.params.id,
         {
           params: {
             username: this.$store.getters['steem/username'],
@@ -230,12 +225,18 @@ export default {
         }
       ).then((response) => {
         this.question = response.data[0]
+        this.getDiscussion(this.question.author, this.question.permlink)
         this.getAnswers()
       }).catch(function (error) {
         console.log(error)
       })
-    } else {
+    } else if (this.$route.params.question) {
+      this.question = this.$route.params.question
+      this.getDiscussion(this.question.author, this.question.permlink)
       this.getAnswers()
+    } else {
+      this.$router.push('/')
+      return
     }
 
     this.$root.$on('commentsuccess', function (caller, blog) {

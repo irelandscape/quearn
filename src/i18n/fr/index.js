@@ -24,6 +24,7 @@ export default {
   failedtogetcomments: 'Commentaires non-retrouve depuis Steem!',
   failedtogetquestions: 'Questions non-retrouvee depuis Steem!',
   feed: 'Suivis',
+  gotoquestion: 'Voir question et toutes les reponses',
   help: 'Aide',
   home: 'Acceuil',
   latest: 'Recent',

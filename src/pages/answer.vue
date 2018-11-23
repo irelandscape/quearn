@@ -34,9 +34,9 @@
       <hr/>
       <q-btn
         class="q-mt-md q-mb-md"
-        :label = "$t('answerthisanswer')"
+        :label = "$t('gotoquestion')"
         color = "secondary"
-        @click = "editanswer=true"
+        @click = "goToQuestion()"
         v-if = "editanswer === false"
       />
       <div v-if="editanswer">
@@ -105,6 +105,14 @@ export default {
     },
     onAnswerCompleted: function () {
       this.editanswer = false
+    },
+    goToQuestion: function () {
+      this.$router.push({
+        name: 'question',
+        params: {
+          id: this.answer.question
+        }
+      })
     }
   },
   watch: {
@@ -113,30 +121,52 @@ export default {
   },
   mounted () {
     if (!this.blog) {
-      this.$router.push('/')
-      return
-    }
-
-    /* Get answers */
-    axios.get(
-      this.$store.getters['quearn/serverURL'] + '/answers/',
-      {
-        params: {
-          username: this.$store.getters['steem/username'],
-          access_token: this.$store.getters['steem/accessToken'],
-          answer_author: this.blog.author,
-          answer_permlink: this.blog.permlink
-        }
+      if (!this.$route.params.author || !this.$route.params.permlink) {
+        this.$router.push('/')
+        return
       }
-    ).then((response) => {
-      this.answers = response.data
-    }).catch((err) => {
-      this.$q.notify({
-        message: this.$tc('failedtogetanswers'),
-        detail: err.error_description,
-        type: 'negative'
+
+      this.getDiscussion()
+
+      axios.get(
+        this.$store.getters['quearn/serverURL'] +
+          '/answers/?' +
+          'author=' + this.$route.params.author +
+          '&permlink=' + this.$route.params.permlink,
+        {
+          params: {
+            username: this.$store.getters['steem/username'],
+            access_token: this.$store.getters['steem/accessToken']
+          }
+        }
+      ).then((response) => {
+        this.answer = response.data[0]
+        this.getAnswers()
+      }).catch(function (error) {
+        console.log(error)
       })
-    })
+    } else {
+      /* Get answers */
+      axios.get(
+        this.$store.getters['quearn/serverURL'] + '/answers/',
+        {
+          params: {
+            username: this.$store.getters['steem/username'],
+            access_token: this.$store.getters['steem/accessToken'],
+            answer_author: this.blog.author,
+            answer_permlink: this.blog.permlink
+          }
+        }
+      ).then((response) => {
+        this.answer = response.data[0]
+      }).catch((err) => {
+        this.$q.notify({
+          message: this.$tc('failedtogetanswers'),
+          detail: err.error_description,
+          type: 'negative'
+        })
+      })
+    }
   }
 }
 </script>

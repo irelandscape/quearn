@@ -8,4 +8,8 @@ export default ({ Vue }) => {
     let d = new Date(value)
     return d.toLocaleString()
   })
+
+  Vue.filter('stripA', function (value) {
+    return value.replace('A:', '')
+  })
 }

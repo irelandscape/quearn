@@ -9,10 +9,10 @@
       v-for="blog in blogs" :key="blog.id"
     >
       <div v-if="$q.platform.is.desktop" class="desktop"
-        v-on:click="showquestion(blog)"
+        v-on:click="showanswer(blog)"
       >
         <img :src="image(blog)" v-bind:style="{ maxHeight: height }"/>
-        <h2>{{blog.title}}</h2>
+        <h2>{{blog.title | stripA}}</h2>
         <span class="author">
           by {{blog.author}}
         </span>
@@ -26,16 +26,10 @@
             disabled
             class="tight"
           />
-          <q-btn icon="question_answer"
-            size="md"
-            title="answers"
-            disabled
-            :label="blog.question.answer_count.toString()"
-          />
         </q-btn-group>
       </div>
       <div v-else class="mobile"
-        v-on:click="showquestion(blog)"
+        v-on:click="showanswer(blog)"
       >
         <img :src="image(blog)" v-bind:style="{ maxHeight: height }"/>
         <h2>{{blog.title}}</h2>
@@ -49,12 +43,6 @@
               size="md"
               disabled
               class="tight"
-            />
-            <q-btn icon="question_answer"
-              size="md"
-              title="answers"
-              disabled
-              :label="blog.question.answer_count.toString()"
             />
           </q-btn-group>
         </span>
@@ -100,23 +88,23 @@ export default {
         }
       }
     },
-    showquestion: function (blog) {
+    showanswer: function (blog) {
       this.$router.push({
-        name: 'question',
+        name: 'answer',
         params: {
           author: blog.author,
           permlink: blog.permlink,
           blog: blog,
-          question: blog.question
+          answer: blog.answer
         }
       })
     },
-    getQuestionFromSteem (question) {
+    getAnswerFromSteem (answer) {
       let dsteem = this.$store.getters['steem/dsteem']
       dsteem.database.call('get_content',
-        [question.author, question.permlink]
+        [answer.author, answer.permlink]
       ).then(response => {
-        response.question = question
+        response.answer = answer
         this.blogs.push(response)
       }).catch(function (error) {
         console.log(error)
@@ -131,7 +119,7 @@ export default {
     d.setDate(d.getDate() - this.$store.getters['quearn/config'].carousel_history)
     d = encodeURIComponent(d.toISOString())
     axios.get(
-      this.$store.getters['quearn/serverURL'] + '/questions/?ordering=-net_votes&created_gte=' + d + '&limit=' +
+      this.$store.getters['quearn/serverURL'] + '/answers/?ordering=-net_votes&created_gte=' + d + '&limit=' +
         this.$store.getters['quearn/config'].carousel_slide_count,
       {
         params: {
@@ -139,9 +127,9 @@ export default {
           access_token: this.$store.getters['steem/accessToken']
         }
       }
-    ).then((questions) => {
-      for (let question of questions.data.results) {
-        this.getQuestionFromSteem(question)
+    ).then((answers) => {
+      for (let answer of answers.data.results) {
+        this.getAnswerFromSteem(answer)
       }
     }).catch(function (error) {
       console.log(error)

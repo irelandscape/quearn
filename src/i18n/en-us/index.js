@@ -25,6 +25,7 @@ export default {
   failedtogetquestions: 'Failed to get questions from Steem!',
   faq: 'FAQ',
   feed: 'Feed',
+  gotoquestion: 'See original question and all answers',
   help: 'Help',
   home: 'Home',
   latest: 'Latest',
