@@ -7,7 +7,8 @@ export default ({ store, Vue }) => {
   } else {
     let url = require('url')
     let q = url.parse(document.location.origin, true)
-    store.commit('quearn/serverURL', 'https://' + q.hostname + ':8443')
+    store.commit('quearn/serverURL', 'https://' + q.hostname + '/api')
+    // store.commit('quearn/serverURL', 'https://api.stemq.com')
   }
   let xss = require('xss')
   store.commit('quearn/xss', new xss.FilterXSS({
