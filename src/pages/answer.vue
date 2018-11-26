@@ -30,6 +30,7 @@
       <steemblogctrl
         :blog="blog"
         :condensed=false
+        @showComments="showComments"
       />
       <hr/>
       <q-btn
@@ -51,6 +52,12 @@
           @editcompleted="onAnswerCompleted"
         />
       </div>
+      <comments
+        class="comments"
+        v-if="showcomments"
+        :parentAuthor=this.blog.author
+        :parentPermlink=this.blog.permlink
+      />
     </div>
   </q-page>
 </template>
@@ -60,6 +67,7 @@ import Steemblogctrl from 'components/steemblogctrl'
 import Editblog from 'components/editblog'
 import Answer from 'components/answer'
 import axios from 'axios'
+import Comments from 'components/comments'
 import { md2html } from 'components/utils/markdown'
 
 export default {
@@ -67,6 +75,7 @@ export default {
   components: {
     Steemblogctrl,
     Editblog,
+    Comments,
     Answer
   },
   props: {
@@ -78,7 +87,8 @@ export default {
   },
   data () {
     return {
-      editanswer: false
+      editanswer: false,
+      showcomments: false
     }
   },
   computed: {
@@ -101,6 +111,9 @@ export default {
           this.$store.getters['quearn/xss'],
           this.$store.getters['quearn/config'].post_addon_msg)
       }
+    },
+    showComments: function () {
+      this.showcomments = !this.showcomments
     },
     onAnswerCompleted: function () {
       this.editanswer = false
