@@ -22,7 +22,7 @@
       <steemblogctrl v-if="blog"
         class="q-mb-sm"
         :blog="blog"
-        :question="discussion"
+        :question="question"
         :condensed=true
         :answer_count="discussion.answer_count"
       />
