@@ -61,7 +61,6 @@
       >
         {{ $tc('mostwantedanswers') }}
       </q-chip>
-      <span class="swipe">swipe &gt;&gt;&gt;</span>
       <steemcardswiper
         :filters="{ordering: '-net_votes', answer_count: 0}"
       />
