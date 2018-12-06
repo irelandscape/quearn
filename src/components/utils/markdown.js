@@ -13,6 +13,6 @@ export function md2html (str, xss, addonMsg) {
   }
 
   str = xss.process(md.render(str))
-  str = str.replace(/[^"](https?:\/\/.*\.(?:png|jpe?g|gif))/g, '<img src="$1"/>')
+  str = str.replace(/[^/"](https?:\/\/.*\.(?:png|jpe?g|gif))/g, '<img src="$1"/>')
   return str.replace(/(https?:\/\/.*\.(?:png|jpe?g|gif))/g, 'https://steemitimages.com/0x0/$1')
 }
