@@ -221,7 +221,8 @@ export default {
           access_token: vue.$store.getters['steem/accessToken'],
           permlink: permlink,
           title: vue.form.title,
-          tags: tags
+          tags: tags,
+          withCredentials: true
         }
 
         if (!vue.isquestion) {

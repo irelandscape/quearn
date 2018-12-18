@@ -32,6 +32,21 @@
         :condensed=false
         @showComments="showComments"
       />
+      <q-btn
+        :label = "$t('writeacomment')"
+        flat
+        icon="add_comment"
+        @click = "writecomment=!writecomment"
+        v-if="!writecomment"
+      />
+      <writecomment
+        :parentAuthor=this.blog.author
+        :parentPermlink=this.blog.permlink
+        v-if="writecomment"
+        :callback="onCommentCompleted"
+        :callbackContext=this
+        :title="$tc('yourcomment')"
+      />
       <hr/>
       <q-btn
         class="q-mt-md q-mb-md"
@@ -66,6 +81,7 @@
 import Steemblogctrl from 'components/steemblogctrl'
 import Editblog from 'components/editblog'
 import Answer from 'components/answer'
+import Writecomment from 'components/writecomment'
 import axios from 'axios'
 import Comments from 'components/comments'
 import { md2html } from 'components/utils/markdown'
@@ -76,6 +92,7 @@ export default {
     Steemblogctrl,
     Editblog,
     Comments,
+    Writecomment,
     Answer
   },
   props: {
@@ -88,6 +105,7 @@ export default {
   data () {
     return {
       editanswer: false,
+      writecomment: false,
       showcomments: false
     }
   },
@@ -111,6 +129,9 @@ export default {
           this.$store.getters['quearn/xss'],
           this.$store.getters['quearn/config'].post_addon_msg)
       }
+    },
+    onCommentCompleted: function (context) {
+      context.writecomment = false
     },
     showComments: function () {
       this.showcomments = !this.showcomments
