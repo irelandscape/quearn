@@ -39,7 +39,7 @@
         {{ $tc('topratedquestions') }}
       </q-chip>
       <steemcardswiper
-        :filters="{ordering: '-author_payout_value', created_gte: oldestDate}"
+        :filters="{ordering: '-total_payout_value', created_gte: oldestDate}"
       />
 
       <q-chip
@@ -50,7 +50,7 @@
         {{ $tc('topratedanswers') }}
       </q-chip>
       <steemcardswiper
-        :filters="{ordering: '-author_payout_value', created_gte: oldestDate}"
+        :filters="{ordering: '-total_payout_value', created_gte: oldestDate}"
         :question=false
       />
 
@@ -62,7 +62,7 @@
         {{ $tc('mostwantedanswers') }}
       </q-chip>
       <steemcardswiper
-        :filters="{ordering: '-author_payout_value', answer_count: 0}"
+        :filters="{ordering: '-total_payout_value', answer_count: 0}"
       />
     </div>
   </q-tab-pane>

@@ -119,8 +119,7 @@ export default {
     d.setDate(d.getDate() - this.$store.getters['quearn/config'].carousel_history)
     d = encodeURIComponent(d.toISOString())
     axios.get(
-      this.$store.getters['quearn/serverURL'] + '/answers/?created_gte=' + d + '&limit=' +
-        this.$store.getters['quearn/config'].carousel_slide_count,
+      this.$store.getters['quearn/serverURL'] + '/answers/?created_gte=' + d,
       {
         params: {
           username: this.$store.getters['steem/username'],
@@ -128,11 +127,11 @@ export default {
         }
       }
     ).then((answers) => {
-      // Sort answers by author_payout_value
-      answers = answers.data.results.sort(function (a, b) {
-        return b.author_payout_value - a.author_payout_value
+      // Sort answers by total_payout_value
+      answers = answers.data.sort(function (a, b) {
+        return b.total_payout_value - a.total_payout_value
       })
-      for (let answer of answers) {
+      for (let answer of answers.slice(0, this.$store.getters['quearn/config'].carousel_slide_count)) {
         this.getAnswerFromSteem(answer)
       }
     }).catch(function (error) {
