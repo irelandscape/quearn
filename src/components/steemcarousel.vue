@@ -119,7 +119,7 @@ export default {
     d.setDate(d.getDate() - this.$store.getters['quearn/config'].carousel_history)
     d = encodeURIComponent(d.toISOString())
     axios.get(
-      this.$store.getters['quearn/serverURL'] + '/answers/?ordering=-net_votes&created_gte=' + d + '&limit=' +
+      this.$store.getters['quearn/serverURL'] + '/answers/?ordering=-author_payout_value&created_gte=' + d + '&limit=' +
         this.$store.getters['quearn/config'].carousel_slide_count,
       {
         params: {
