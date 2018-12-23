@@ -55,7 +55,6 @@
         color = "secondary"
         @click = "editanswer=true"
         @editcompleted="onAnswerCompleted"
-        v-if = "editanswer === false && notanswered"
       />
       <div v-if="editanswer">
         <h3 class="q-mt-sm q-mb-sm">{{$t('youranswer')}}:</h3>

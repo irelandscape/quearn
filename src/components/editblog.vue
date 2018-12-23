@@ -125,9 +125,10 @@ export default {
       this.input = value
     }, 300),
     permlink: (str) => {
+      let now = new Date()
       return str.replace(/[^a-z0-9]+/gi, '-')
         . replace(/^-*|-*$/g, '')
-        .toLowerCase()
+        .toLowerCase() + now.getTime()
     },
     topicStr: (topics, id) => {
       for (let topic of topics) {
