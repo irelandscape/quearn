@@ -206,6 +206,18 @@ export default {
           app: vue.$store.getters['quearn/config'].appName + '/' + vue.$store.getters['quearn/release']
         }
       ).then(() => {
+        if (vue.isquestion) {
+          vue.$q.localStorage('questioneditblogform')
+          vue.$q.localStorage('questionprimaryTopic')
+          vue.$q.localStorage('questionsecondaryTopic')
+          vue.$q.localStorage('questionternaryTopic')
+        } else {
+          vue.$q.localStorage('answereditblogform')
+          vue.$q.localStorage('answerprimaryTopic')
+          vue.$q.localStorage('answersecondaryTopic')
+          vue.$q.localStorage('answerternaryTopic')
+        }
+
         let url = vue.$store.getters['quearn/serverURL']
         if (vue.isquestion) {
           url += '/newquestion'
