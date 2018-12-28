@@ -61,6 +61,7 @@ module.exports = function (ctx) {
         'QItemMain',
         'QItemSide',
         'QChip',
+        'QChipsInput',
         'QTabs',
         'QRouteTab',
         'QTab',
