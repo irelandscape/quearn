@@ -100,6 +100,7 @@ export default {
     return {
       text: '',
       input: '',
+      success: false,
       form: {
         additionalTags: []
       }
@@ -206,16 +207,17 @@ export default {
           app: vue.$store.getters['quearn/config'].appName + '/' + vue.$store.getters['quearn/release']
         }
       ).then(() => {
+        vue.success = true
         if (vue.isquestion) {
-          vue.$q.localStorage('questioneditblogform')
-          vue.$q.localStorage('questionprimaryTopic')
-          vue.$q.localStorage('questionsecondaryTopic')
-          vue.$q.localStorage('questionternaryTopic')
+          vue.$q.localStorage.remove('questioneditblogform')
+          vue.$q.localStorage.remove('questionprimaryTopic')
+          vue.$q.localStorage.remove('questionsecondaryTopic')
+          vue.$q.localStorage.remove('questionternaryTopic')
         } else {
-          vue.$q.localStorage('answereditblogform')
-          vue.$q.localStorage('answerprimaryTopic')
-          vue.$q.localStorage('answersecondaryTopic')
-          vue.$q.localStorage('answerternaryTopic')
+          vue.$q.localStorage.remove('answereditblogform')
+          vue.$q.localStorage.remove('answerprimaryTopic')
+          vue.$q.localStorage.remove('answersecondaryTopic')
+          vue.$q.localStorage.remove('answerternaryTopic')
         }
 
         let url = vue.$store.getters['quearn/serverURL']
@@ -330,16 +332,18 @@ export default {
     }
   },
   beforeDestroy: function () {
-    if (this.isquestion) {
-      this.$q.localStorage.set('questioneditblogform', this.form)
-      this.$q.localStorage.set('questionprimaryTopic', this.$refs.topicpicker.primaryTopic)
-      this.$q.localStorage.set('questionsecondaryTopic', this.$refs.topicpicker.secondaryTopic)
-      this.$q.localStorage.set('questionternaryTopic', this.$refs.topicpicker.ternaryTopic)
-    } else {
-      this.$q.localStorage.set('answereditblogform', this.form)
-      this.$q.localStorage.set('answerprimaryTopic', this.$refs.topicpicker.primaryTopic)
-      this.$q.localStorage.set('answersecondaryTopic', this.$refs.topicpicker.secondaryTopic)
-      this.$q.localStorage.set('answerternaryTopic', this.$refs.topicpicker.ternaryTopic)
+    if (!this.success) {
+      if (this.isquestion) {
+        this.$q.localStorage.set('questioneditblogform', this.form)
+        this.$q.localStorage.set('questionprimaryTopic', this.$refs.topicpicker.primaryTopic)
+        this.$q.localStorage.set('questionsecondaryTopic', this.$refs.topicpicker.secondaryTopic)
+        this.$q.localStorage.set('questionternaryTopic', this.$refs.topicpicker.ternaryTopic)
+      } else {
+        this.$q.localStorage.set('answereditblogform', this.form)
+        this.$q.localStorage.set('answerprimaryTopic', this.$refs.topicpicker.primaryTopic)
+        this.$q.localStorage.set('answersecondaryTopic', this.$refs.topicpicker.secondaryTopic)
+        this.$q.localStorage.set('answerternaryTopic', this.$refs.topicpicker.ternaryTopic)
+      }
     }
   },
   mounted: function () {
