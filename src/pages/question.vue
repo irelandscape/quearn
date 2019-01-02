@@ -236,6 +236,23 @@ export default {
       this.question = this.$route.params.question
       this.getDiscussion(this.question.author, this.question.permlink)
       this.getAnswers()
+    } else if (this.$route.params.author && this.$route.params.permlink) {
+      axios.get(
+        this.$store.getters['quearn/serverURL'] +
+          '/questions/?author=' + this.$route.params.author + '&permlink=' + this.$route.params.permlink,
+        {
+          params: {
+            username: this.$store.getters['steem/username'],
+            access_token: this.$store.getters['steem/accessToken']
+          }
+        }
+      ).then((response) => {
+        this.question = response.data[0]
+        this.getDiscussion(this.question.author, this.question.permlink)
+        this.getAnswers()
+      }).catch(function (error) {
+        console.log(error)
+      })
     } else {
       this.$router.push('/')
       return
