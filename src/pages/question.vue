@@ -227,6 +227,7 @@ export default {
         }
       ).then((response) => {
         this.question = response.data[0]
+        window.history.pushState(null, this.$store.getters['quearn/config'].appName, '/question/' + this.question.author + '/' + this.question.permlink)
         this.getDiscussion(this.question.author, this.question.permlink)
         this.getAnswers()
       }).catch(function (error) {
