@@ -73,6 +73,9 @@ import axios from 'axios'
 import { required, maxLength } from 'vuelidate/lib/validators'
 import { md2html } from 'components/utils/markdown'
 
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
+axios.defaults.xsrfCookieName = 'csrftoken'
+
 var debounce = require('debounce')
 
 const mustBeQuestion = (value) => value.trim().slice(-1) === '?'
