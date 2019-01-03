@@ -30,6 +30,15 @@ export const topics = (state) => {
   return state.topics
 }
 
+export const topicByName = (state) => (name) => {
+  for (let topic of state.topics) {
+    if (topic.topic.toLowerCase() === name.toLowerCase()) {
+      return topic.topic
+    }
+  }
+  return null
+}
+
 export const topicStr = (state) => (id) => {
   for (let topic of state.topics) {
     if (topic.id === id) {

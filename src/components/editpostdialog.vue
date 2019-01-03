@@ -13,10 +13,10 @@
     <div slot="body" class="mydialog">
       <q-field
         v-if="!info.iscomment"
-        icon="title"
-        :helper="$t('questionrequirement')"
+        label-width="2"
       >
         <q-input
+          :float-label="$t('questionrequirement')"
           v-model="blog.title"
           type="text"
           :error="$v.blog.title.$error"
@@ -26,25 +26,24 @@
         <topicpicker ref="topicpicker"
           :tags="tags"
         />
-
-        <q-field icon="label" label="Tag 2" >
-          <q-input type="text" value="" v-model="blog.tag2"/>
-        </q-field>
-        <q-field icon="label" label="Tag 3" >
-          <q-input type="text" value="" v-model="blog.tag3"/>
-        </q-field>
-        <q-field icon="label" label="Tag 4" >
-          <q-input type="text" value="" v-model="blog.tag4"/>
-        </q-field>
       </div>
 
       <q-field
-        icon="notes"
+        label-width="2"
+      >
+        <q-chips-input
+          :float-label="$t('requesttags')"
+          v-model="additionalTags"
+        />
+      </q-field>
+
+      <q-field
+        label-width="2"
       >
         <q-input
           v-model="blog.body"
           type="textarea"
-          rows=20
+          rows=7
           stack-label="Edit your content"
         />
       </q-field>
@@ -65,6 +64,7 @@ export default {
     return {
       editpost: false,
       blog: null,
+      additionalTags: [],
       info: {
         title: this.$tc('edit'),
         callback: null,
@@ -108,6 +108,14 @@ export default {
       this.originalBody = this.blog.body
       this.editpost = true
       this.info = info
+      let metadata = JSON.parse(this.blog.json_metadata)
+      this.additionalTags = []
+      for (let tag of metadata.tags) {
+        if (tag === 'stemq' || this.$store.getters['quearn/topicByName'](tag)) {
+          continue
+        }
+        this.additionalTags.push(tag)
+      }
     },
     cancelEdit: function () {
       this.blog.title = this.originalTitle
@@ -127,15 +135,7 @@ export default {
       if (!this.info.iscomment) {
         let tags = []
         tags.push(this.$refs.topicpicker.selectTopicToTag())
-        if (this.blog.tag2) {
-          tags.push(this.blog.tag2)
-        }
-        if (this.blog.tag3) {
-          tags.push(this.blog.tag3)
-        }
-        if (this.blog.tag4) {
-          tags.push(this.blog.tag4)
-        }
+        tags = tags.concat(this.additionalTags)
 
         this.$q.loading.show({
           message: this.$tc('updating')
