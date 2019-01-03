@@ -26,17 +26,16 @@
         <topicpicker ref="topicpicker"
           :tags="tags"
         />
+        <q-field
+          label-width="2"
+        >
+          <q-chips-input
+            :float-label="$t('requesttags')"
+            v-model="additionalTags"
+          />
+        </q-field>
+
       </div>
-
-      <q-field
-        label-width="2"
-      >
-        <q-chips-input
-          :float-label="$t('requesttags')"
-          v-model="additionalTags"
-        />
-      </q-field>
-
       <q-field
         label-width="2"
       >
