@@ -31,6 +31,7 @@ export default {
   latest: 'Latest',
   latestanswers: 'Latest answers',
   latestquestions: 'Latest questions',
+  linktoquestion: 'The following is an answer to [this question](@LINK)',
   login: 'Login',
   logout: 'Logout',
   maintext: 'Main Text',

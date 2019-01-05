@@ -14,6 +14,10 @@ export const config = (state) => {
   return state.config
 }
 
+export const removePatterns = (state) => {
+  return state.removePatterns
+}
+
 export const xss = (state) => {
   return state.xss
 }
