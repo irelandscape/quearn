@@ -5,6 +5,7 @@ export default {
   topics: null,
   favouriteTopicsById: null,
   xss: null,
+  removePatterns: [],
   bookmarksByQuestion: {
     type: Object
   }

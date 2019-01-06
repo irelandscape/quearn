@@ -1,4 +1,4 @@
-export function md2html (str, xss, addonMsg) {
+export function md2html (str, xss, removePatterns) {
   if (!str) {
     return
   }
@@ -8,8 +8,9 @@ export function md2html (str, xss, addonMsg) {
     html: true,
     linkify: false
   })
-  if (addonMsg && addonMsg.length) {
-    str = str.replace(addonMsg, '')
+
+  for (let pattern of removePatterns) {
+    str = str.replace(pattern, '')
   }
 
   str = xss.process(md.render(str))

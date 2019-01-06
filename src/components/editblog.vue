@@ -194,6 +194,15 @@ export default {
       })
 
       let body = vue.form.body
+
+      if (!vue.isquestion) {
+        let url = require('url')
+        let q = url.parse(document.location.origin, true)
+        let questionUrl = 'https://' + q.hostname + '/question/' + vue.question_author + '/' + vue.question_permlink
+        body = '**' + vue.$store.getters['quearn/config'].appName + ' Notice:** *' + vue.$tc('linktoquestion') + '*\n\n' + body
+        body = body.replace(/@LINK/, questionUrl)
+      }
+
       if (vue.$store.getters['quearn/config'].post_addon_msg.length) {
         body += '\n\n' + vue.$store.getters['quearn/config'].post_addon_msg
       }
@@ -331,7 +340,7 @@ export default {
     compiledMarkdown: function () {
       return md2html(this.input,
         this.$store.getters['quearn/xss'],
-        this.$store.getters['quearn/config'].post_addon_msg)
+        this.$store.getters['quearn/removePatterns'])
     }
   },
   beforeDestroy: function () {
@@ -363,13 +372,17 @@ export default {
       this.$refs.topicpicker.ternaryTopic = this.$q.localStorage.get.item('answerternaryTopic')
     }
 
-    if (form) {
-      this.form = form
-      if (!this.form.additionalTags) {
-        this.form.additionalTags = []
-      }
-      this.input = form.body
-    } else {
+    this.form = form
+    if (!this.form.additionalTags) {
+      this.form.additionalTags = []
+    }
+    this.input = form.body
+
+    if (this.$store.getters['quearn/config'].default_tags && this.form.additionalTags.length === 0) {
+      this.form.additionalTags = this.$store.getters['quearn/config'].default_tags.split()
+      this.form.additionalTags = this.form.additionalTags.map(function (item) {
+        return item.trim()
+      })
     }
   }
 }

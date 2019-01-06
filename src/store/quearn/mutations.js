@@ -6,6 +6,10 @@ export const config = (state, config) => {
   state.config = config
 }
 
+export const removePatterns = (state, pattern) => {
+  state.removePatterns.push(pattern)
+}
+
 export const xss = (state, xss) => {
   state.xss = xss
 }

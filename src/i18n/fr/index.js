@@ -30,6 +30,7 @@ export default {
   latest: 'Recent',
   latestanswers: 'Reponses recentes',
   latestquestions: 'Questions recentes',
+  linktoquestion: 'Cet article est une reponse a [cette question](@LINK).',
   login: 'Se connecter',
   logout: 'Se deconnecter',
   maintext: 'Votre Texte',
