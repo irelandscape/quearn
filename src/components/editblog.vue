@@ -372,13 +372,17 @@ export default {
       this.$refs.topicpicker.ternaryTopic = this.$q.localStorage.get.item('answerternaryTopic')
     }
 
-    if (form) {
-      this.form = form
-      if (!this.form.additionalTags) {
-        this.form.additionalTags = []
-      }
-      this.input = form.body
-    } else {
+    this.form = form
+    if (!this.form.additionalTags) {
+      this.form.additionalTags = []
+    }
+    this.input = form.body
+
+    if (this.$store.getters['quearn/config'].default_tags && this.form.additionalTags.length === 0) {
+      this.form.additionalTags = this.$store.getters['quearn/config'].default_tags.split()
+      this.form.additionalTags = this.form.additionalTags.map(function (item) {
+        return item.trim()
+      })
     }
   }
 }
