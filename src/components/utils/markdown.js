@@ -9,8 +9,10 @@ export function md2html (str, xss, removePatterns) {
     linkify: false
   })
 
-  for (let pattern of removePatterns) {
-    str = str.replace(pattern, '')
+  if (removePatterns) {
+    for (let pattern of removePatterns) {
+      str = str.replace(pattern, '')
+    }
   }
 
   str = xss.process(md.render(str))
