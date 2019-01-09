@@ -162,7 +162,9 @@ export default {
       return tag1
     },
     resetForm () {
-      this.form = {}
+      this.form = {
+        additionalTags: []
+      }
       this.$refs.topicpicker.primaryTopic = ''
       this.$refs.topicpicker.secondaryTopic = ''
       this.$refs.topicpicker.ternaryTopic = ''
@@ -373,16 +375,18 @@ export default {
     }
 
     this.form = form
-    if (!this.form.additionalTags) {
-      this.form.additionalTags = []
-    }
-    this.input = form.body
+    if (this.form) {
+      if (!this.form.additionalTags) {
+        this.form.additionalTags = []
+      }
+      this.input = form.body
 
-    if (this.$store.getters['quearn/config'].default_tags && this.form.additionalTags.length === 0) {
-      this.form.additionalTags = this.$store.getters['quearn/config'].default_tags.split()
-      this.form.additionalTags = this.form.additionalTags.map(function (item) {
-        return item.trim()
-      })
+      if (this.$store.getters['quearn/config'].default_tags && this.form.additionalTags.length === 0) {
+        this.form.additionalTags = this.$store.getters['quearn/config'].default_tags.split()
+        this.form.additionalTags = this.form.additionalTags.map(function (item) {
+          return item.trim()
+        })
+      }
     }
   }
 }
