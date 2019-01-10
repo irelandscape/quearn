@@ -361,7 +361,8 @@ export default {
     }
   },
   mounted: function () {
-    let form = null
+    let form
+
     if (this.isquestion) {
       form = this.$q.localStorage.get.item('questioneditblogform')
       this.$refs.topicpicker.primaryTopic = this.$q.localStorage.get.item('questionprimaryTopic')
@@ -374,8 +375,8 @@ export default {
       this.$refs.topicpicker.ternaryTopic = this.$q.localStorage.get.item('answerternaryTopic')
     }
 
-    this.form = form
-    if (this.form) {
+    if (form !== null && form !== 'null') {
+      this.form = form
       if (!this.form.additionalTags) {
         this.form.additionalTags = []
       }
