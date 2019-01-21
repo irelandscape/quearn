@@ -12,6 +12,7 @@
     <q-dialog
       v-model="beneficiariesDialog"
       @ok='onOK'
+      @cancel='onCancel'
       :title="$tc('beneficiaries')"
       v-show=true
       :ok="$tc('save')"
@@ -184,6 +185,15 @@ export default {
       beneficiary.weight = Math.min(beneficiary.weight, max)
     },
     onOK (data) {
+    },
+    onCancel () {
+      this.form.beneficiaries = [
+        {
+          account: '',
+          weight: 0,
+          valid: false
+        }
+      ]
     }
   }
 }
