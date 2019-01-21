@@ -3,12 +3,9 @@
 // en-us translation files.
 export default {
   about: 'Infos',
-  account: 'Compte',
-  addbeneficiaries: 'Ajoutez des beneficiaires',
   addingbookmark: 'Ajout aux question favorites...',
   answerthisquestion: 'Repondre a cette question',
   answers: 'Reponses',
-  beneficiaries: 'Beneficiaires',
   best: 'Meilleur',
   bookmark: 'Favoris',
   cancel: 'Annuler',
@@ -64,7 +61,6 @@ export default {
   resteemfailed: 'Republication a echouee!',
   resteeming: 'Republication en cours...',
   resteemsuccess: 'Republication completee',
-  save: 'Sauvegarder',
   search: 'Rechercher',
   sessionexpired: 'Votre session a expiree. Veuillez-vous reconnecter a Steem.',
   signup: 'S\'inscrire',
@@ -79,7 +75,6 @@ export default {
   unanswered: 'Sans reponse',
   updating: 'Mise a jour en cours...',
   upvote: 'Vote | Votes',
-  username: 'Nom d\'utilisateur',
   voting: 'Vote en cours...',
   votingfailed: 'Erreur durant soumission du vote!',
   votingweight: 'Poid du vote',

@@ -42,8 +42,6 @@
       />
     </q-field>
 
-    <beneficiaries ref="beneficiaries" />
-
     <q-field
       inset="full"
       label-width="2"
@@ -70,7 +68,6 @@
 </template>
 
 <script>
-import Beneficiaries from 'components/beneficiaries'
 import topicpicker from 'components/topicpicker'
 import axios from 'axios'
 import { required, maxLength } from 'vuelidate/lib/validators'
@@ -86,7 +83,6 @@ const mustBeQuestion = (value) => value.trim().slice(-1) === '?'
 export default {
   name: 'Editblog',
   components: {
-    Beneficiaries,
     topicpicker
   },
   props: {
@@ -213,43 +209,18 @@ export default {
         body += '\n\n' + vue.$store.getters['quearn/config'].post_addon_msg
       }
 
-      let operations = []
-      const params = {
-        parent_author: '',
-        parent_permlink: vue.$store.getters['quearn/config'].tag,
-        author: vue.$store.getters['steem/username'],
-        permlink: permlink,
-        title: vue.form.title,
-        body: body,
-        json_metadata: JSON.stringify({
+      vue.$store.getters['steem/client'].comment(
+        '',
+        vue.$store.getters['quearn/config'].tag,
+        vue.$store.getters['steem/username'],
+        permlink,
+        vue.form.title,
+        body,
+        {
           tags: tags,
           app: vue.$store.getters['quearn/config'].appName + '/' + vue.$store.getters['quearn/release']
-        })
-      }
-      operations.push(['comment', params])
-
-      let commentOptionsConfig = {
-        author: vue.$store.getters['steem/username'],
-        permlink: permlink,
-        allow_votes: true,
-        allow_curation_rewards: true,
-        max_accepted_payout: '1000000.000 SBD',
-        percent_steem_dollars: 10000,
-        extensions: []
-      }
-
-      let beneficiaries = vue.$refs.beneficiaries.getBeneficiaries()
-      if (beneficiaries.length) {
-        commentOptionsConfig.extensions.push([
-          0,
-          {
-            beneficiaries: beneficiaries
-          }
-        ])
-      }
-      operations.push(['comment_options', commentOptionsConfig])
-
-      vue.$store.getters['steem/client'].broadcast(operations).then(() => {
+        }
+      ).then(() => {
         vue.success = true
         if (vue.isquestion) {
           vue.$q.localStorage.remove('questioneditblogform')

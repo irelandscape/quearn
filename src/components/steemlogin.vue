@@ -63,7 +63,7 @@ export default {
       baseURL: 'https://steemconnect.com',
       callbackURL: callbackurl,
       accessToken: this.$store.getters['steem/accessToken'],
-      scope: ['vote', 'comment', 'custom_json', 'comment_options']
+      scope: ['vote', 'comment', 'custom_json']
     })
 
     if (localStorage.expires) {

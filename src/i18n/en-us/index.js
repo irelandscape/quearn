@@ -3,12 +3,9 @@
 // en-us translation files.
 export default {
   about: 'About',
-  account: 'Account',
-  addbeneficiaries: 'Add beneficiaries',
   addingbookmark: 'Adding bookmark...',
   answerthisquestion: 'Answer this question',
   answers: 'Answers',
-  beneficiaries: 'Beneficiaries',
   best: 'Best',
   bookmark: 'Bookmark | Bookmarks',
   cancel: 'Cancel',
@@ -65,7 +62,6 @@ export default {
   resteemfailed: 'Resteem failed!',
   resteeming: 'Resteeming...',
   resteemsuccess: 'Resteem success!',
-  save: 'Save',
   search: 'Search',
   sessionexpired: 'Your session has expired. Please login again.',
   signup: 'Signup',
@@ -80,7 +76,6 @@ export default {
   unanswered: 'Unanswered',
   updating: 'Updating...',
   upvote: 'Upvote | Upvotes',
-  username: 'Username',
   voting: 'Voting...',
   votingfailed: 'Voting failed!',
   votingweight: 'Voting weight',

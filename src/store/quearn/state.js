@@ -1,5 +1,5 @@
 export default {
-  release: '0.2.0',
+  release: '0.1.2',
   serverURL: '',
   config: null,
   topics: null,
