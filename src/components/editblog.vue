@@ -229,6 +229,8 @@ export default {
       operations.push(['comment', params])
 
       let commentOptionsConfig = {
+        author: vue.$store.getters['steem/username'],
+        permlink: permlink,
         allow_votes: true,
         allow_curation_rewards: true,
         max_accepted_payout: '1000000.000 SBD',
@@ -245,7 +247,7 @@ export default {
           }
         ])
       }
-      operations.push(['comment_options', commentOptionsConfig.extensions])
+      operations.push(['comment_options', commentOptionsConfig])
 
       vue.$store.getters['steem/client'].broadcast(operations).then(() => {
         vue.success = true
