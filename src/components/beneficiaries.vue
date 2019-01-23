@@ -23,7 +23,7 @@
         <div
           v-for="(beneficiary, index) in form.beneficiaries"
           :key="index"
-          class="row no-wrap items-center">
+          class="row items-center">
           <span v-if="beneficiary.account.length >= 4">
             <q-icon
               v-if="beneficiary.valid"
