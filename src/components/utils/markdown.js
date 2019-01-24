@@ -6,7 +6,8 @@ export function md2html (str, xss, removePatterns) {
   let Remarkable = require('remarkable')
   let md = new Remarkable('full', {
     html: true,
-    linkify: false
+    linkify: false,
+    breaks: true
   })
 
   if (removePatterns) {

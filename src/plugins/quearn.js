@@ -14,7 +14,7 @@ export default ({ store, Vue }) => {
   store.commit('quearn/xss', new xss.FilterXSS({
     onTagAttr: function (tag, name, value, isWhiteAttr) {
       if (tag === 'div' && name === 'class') {
-        if (value === 'pull-left' || value === 'pull-right') {
+        if (value === 'pull-left' || value === 'pull-right' || value === 'text-justify') {
           return 'class="' + value + '"'
         }
       }
