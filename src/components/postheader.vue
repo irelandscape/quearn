@@ -25,7 +25,7 @@
       <span v-if="fulldate">
         {{blog.created | timestamp}},
       </span>
-      <timeago :datetime="blog.created" :auto-update="60"></timeago>
+      <timeago :datetime="datetime(blog.created)" :auto-update="60"></timeago>
     </div>
   </div>
 </template>
@@ -52,6 +52,9 @@ export default {
     }
   },
   methods: {
+    datetime: function (t) {
+      return t + 'Z'
+    },
     avatar () {
       return 'https://steemitimages.com/u/' + this.blog.author + '/avatar'
     }
