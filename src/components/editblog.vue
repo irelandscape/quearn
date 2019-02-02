@@ -42,7 +42,12 @@
       />
     </q-field>
 
-    <beneficiaries ref="beneficiaries" />
+    <beneficiaries
+      v-model="beneficiaries"
+      buttonColor="secondary"
+      knobColor="secondary"
+      dialogButtonsColor="secondary"
+    />
 
     <q-field
       inset="full"
@@ -105,6 +110,7 @@ export default {
   },
   data: function () {
     return {
+      beneficiaries: [],
       text: '',
       input: '',
       success: false,
@@ -238,12 +244,11 @@ export default {
         extensions: []
       }
 
-      let beneficiaries = vue.$refs.beneficiaries.getBeneficiaries()
-      if (beneficiaries.length) {
+      if (this.beneficiaries.length) {
         commentOptionsConfig.extensions.push([
           0,
           {
-            beneficiaries: beneficiaries
+            beneficiaries: this.beneficiaries
           }
         ])
       }

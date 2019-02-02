@@ -1,6 +1,6 @@
 {
   "name": "StemQ",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A STEM Q&A application for the Steem blockchain",
   "productName": "StemQ",
   "cordovaId": "org.cordova.quasar.app",

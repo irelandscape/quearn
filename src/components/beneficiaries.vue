@@ -2,7 +2,7 @@
   <span>
     <q-btn
       icon="group_add"
-      color="secondary"
+      :color="buttonColor"
       :label="nbrOfBeneficiaries"
       flat
       dense
@@ -11,7 +11,6 @@
     </q-btn>
     <q-dialog
       v-model="beneficiariesDialog"
-      @ok='onOK'
       @cancel='onCancel'
       :title="$tc('beneficiaries')"
       v-show=true
@@ -21,7 +20,7 @@
     >
       <div slot="body">
         <div
-          v-for="(beneficiary, index) in form.beneficiaries"
+          v-for="(beneficiary, index) in beneficiaries"
           :key="index"
           class="row items-center">
           <span v-if="beneficiary.account.length >= 4">
@@ -41,7 +40,6 @@
             style="height: 3rem;"
             type="text"
             v-model="beneficiary.account"
-            :error="$v.form.beneficiaries.$error"
             :float-label="$tc('account')"
             @input="update($event, beneficiary)"
           />
@@ -51,15 +49,15 @@
             :max=10000
             :step=500
             size="3rem"
-            color="secondary"
+            :color="knobColor"
             @input="checkWeight($event, beneficiary)"
           >
             {{displayWeight(beneficiary.weight)}} %
           </q-knob>
           <q-btn
-            v-if="index == (form.beneficiaries.length - 1) && index < 7"
+            v-if="index == (beneficiaries.length - 1) && index < 7"
             icon="add"
-            color="secondary"
+            :color="dialogButtonsColor"
             size="2rem"
             flat
             :disable="!beneficiary.valid || !beneficiary.weight"
@@ -68,7 +66,7 @@
           <q-btn
             v-else
             icon="delete_forever"
-            color="secondary"
+            :color="dialogButtonsColor"
             size="2rem"
             flat
             @click="deleteBeneficiary(index)"
@@ -80,48 +78,42 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
 var debounce = require('debounce')
 
 export default {
   name: 'Beneficiaries',
   props: {
+    value: undefined,
+    buttonColor: {
+      type: String,
+      default: 'primary'
+    },
+    dialogButtonsColor: {
+      type: String,
+      default: 'primary'
+    },
+    knobColor: {
+      type: String,
+      default: 'primary'
+    }
   },
   data () {
     return {
+      validBeneficiaries: 0,
       beneficiariesDialog: false,
-      form: {
-        beneficiaries: [
-          {
-            account: '',
-            weight: 0,
-            valid: false
-          }
-        ]
-      }
+      beneficiaries: [
+        {
+          account: '',
+          weight: 0,
+          valid: false
+        }
+      ]
     }
   },
   computed: {
     nbrOfBeneficiaries: function () {
-      let count = 0
-
-      for (let beneficiary of this.form.beneficiaries) {
-        if (beneficiary.valid && beneficiary.weight) {
-          ++count
-        }
-      }
-      return this.$tc('addbeneficiaries') + ' (' + count + ')'
+      return this.$tc('addbeneficiaries') + ' (' + this.validBeneficiaries + ')'
     }
-  },
-  validations () {
-    let form = {
-      form: {
-        beneficiaries: {
-          required
-        }
-      }
-    }
-    return form
   },
   mounted: function () {
   },
@@ -130,20 +122,20 @@ export default {
       return weight / 100
     },
     addBeneficiary () {
-      this.form.beneficiaries.push({
+      this.beneficiaries.push({
         account: '',
         weight: 0
       })
     },
     deleteBeneficiary (index) {
-      this.form.beneficiaries.splice(index, 1)
-      this.form.beneficiaries = [...this.form.beneficiaries]
+      this.beneficiaries.splice(index, 1)
+      this.beneficiaries = [...this.beneficiaries]
     },
     getBeneficiaries () {
       let beneficiaries = []
 
       // Add entries with valid account and non-zero weight
-      for (let beneficiary of this.form.beneficiaries) {
+      for (const beneficiary of this.beneficiaries) {
         if (beneficiary.valid && beneficiary.weight) {
           beneficiaries.push({
             account: beneficiary.account,
@@ -157,56 +149,61 @@ export default {
         return a.account.localeCompare(b.account)
       })
     },
+    countValidBeneficiaries () {
+      let count = 0
+
+      for (const beneficiary of this.beneficiaries) {
+        if (beneficiary.valid && beneficiary.weight) {
+          ++count
+        }
+      }
+
+      if (count !== this.validBeneficiaries) {
+        this.validBeneficiaries = count
+        this.$emit('input', this.getBeneficiaries())
+      }
+
+      return count
+    },
     update: debounce(function (value, beneficiary) {
       if (value.length < 4) {
         beneficiary.valid = false
         return
       }
 
-      let dsteem = this.$store.getters['steem/dsteem']
+      const dsteem = this.$store.getters['steem/dsteem']
       dsteem.database.getAccounts([value]).then(response => {
         if (response.length) {
           beneficiary.valid = true
         } else {
           beneficiary.valid = false
         }
-        this.form.beneficiaries = [...this.form.beneficiaries]
+        this.beneficiaries = [...this.beneficiaries]
+        this.countValidBeneficiaries()
       })
     }, 300),
     checkWeight: function (value, beneficiary) {
       let max = 10000
 
-      for (let b of this.form.beneficiaries) {
+      for (const b of this.beneficiaries) {
         if (b !== beneficiary) {
           max -= b.weight
         }
       }
 
       beneficiary.weight = Math.min(beneficiary.weight, max)
-    },
-    onOK (data) {
+      this.countValidBeneficiaries()
     },
     onCancel () {
-      this.form.beneficiaries = [
+      this.beneficiaries = [
         {
           account: '',
           weight: 0,
           valid: false
         }
       ]
+      this.countValidBeneficiaries()
     }
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-  .modal-body
-    padding: 2rem;
-
-  .q-btn
-    color: #666666;
-    margin-right: 0.2rem;
-    padding-top: 0;
-    padding-bottom: 0;
-
-</style>

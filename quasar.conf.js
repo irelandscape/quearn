@@ -148,7 +148,7 @@ module.exports = function (ctx) {
       }
     },
     cordova: {
-      // id: 'org.cordova.quasar.app'
+      id: 'io.stemq.app'
     },
     electron: {
       // bundler: 'builder', // or 'packager'
