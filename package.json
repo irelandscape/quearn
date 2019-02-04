@@ -21,6 +21,7 @@
     "minimalistic-crypto-utils": "^1.0.1",
     "moment": "^2.22.2",
     "querystring": "^0.2.0",
+    "qv-steem-beneficiaries": "^0.1.0",
     "remarkable": "^1.7.1",
     "remove-markdown": "^0.3.0",
     "steem": "^0.7.1",
