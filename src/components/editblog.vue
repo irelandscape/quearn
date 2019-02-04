@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import Beneficiaries from 'components/beneficiaries'
+import Beneficiaries from 'qv-steem-beneficiaries'
 import topicpicker from 'components/topicpicker'
 import axios from 'axios'
 import { required, maxLength } from 'vuelidate/lib/validators'
