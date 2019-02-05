@@ -244,11 +244,11 @@ export default {
         extensions: []
       }
 
-      if (this.beneficiaries.length) {
+      if (vue.beneficiaries.length) {
         commentOptionsConfig.extensions.push([
           0,
           {
-            beneficiaries: this.beneficiaries
+            beneficiaries: vue.beneficiaries
           }
         ])
       }
