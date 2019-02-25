@@ -1,6 +1,6 @@
 {
   "name": "StemQ",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A STEM Q&A application for the Steem blockchain",
   "productName": "StemQ",
   "cordovaId": "org.cordova.quasar.app",
@@ -21,6 +21,7 @@
     "minimalistic-crypto-utils": "^1.0.1",
     "moment": "^2.22.2",
     "querystring": "^0.2.0",
+    "qv-steem-beneficiaries": "^0.1.0",
     "remarkable": "^1.7.1",
     "remove-markdown": "^0.3.0",
     "steem": "^0.7.1",

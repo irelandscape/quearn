@@ -14,7 +14,7 @@ export default ({ store, Vue }) => {
   store.commit('quearn/xss', new xss.FilterXSS({
     onTagAttr: function (tag, name, value, isWhiteAttr) {
       if (tag === 'div' && name === 'class') {
-        if (value === 'pull-left' || value === 'pull-right') {
+        if (value === 'pull-left' || value === 'pull-right' || value === 'text-justify') {
           return 'class="' + value + '"'
         }
       }
@@ -25,6 +25,8 @@ export default ({ store, Vue }) => {
       let config = response.data[0]
       store.commit('quearn/config', config)
       // document.title = config.appName
+
+      store.commit('quearn/removePatterns', new RegExp('\\*\\*' + config.appName + ' [Nn]otice:.*\n*', 'g'))
     }).catch(
     function (error) {
       console.log(error)

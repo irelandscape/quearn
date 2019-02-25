@@ -67,7 +67,7 @@ export default {
     getBlogBody: function () {
       return md2html(this.blog.body,
         this.$store.getters['quearn/xss'],
-        this.$store.getters['quearn/config'].post_addon_msg)
+        this.$store.getters['quearn/removePatterns'])
     },
     onCommentCompleted: function (context) {
       context.writecomment = false

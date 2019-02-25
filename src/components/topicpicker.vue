@@ -5,7 +5,7 @@
       <q-select :options="secondaryTopics()" v-model="secondaryTopic" @input="secondaryChanged" color="amber" inverted-light />
       <q-select :options="ternaryTopics()" v-model="ternaryTopic" color="amber" inverted-light @input="ternaryChanged "/>
     </div>
-    <q-field icon="label" label="Tag 1" v-else >
+    <q-field v-else label-width="2">
       <q-select :options="primaryTopics()" v-model="primaryTopic" @input="primaryChanged"/>
       <q-select :options="secondaryTopics()" v-model="secondaryTopic" @input="secondaryChanged"/>
       <q-select :options="ternaryTopics()" v-model="ternaryTopic" @input="ternaryChanged"/>

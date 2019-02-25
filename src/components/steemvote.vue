@@ -60,7 +60,6 @@ export default {
   },
   methods: {
     showDialog () {
-      console.log('click!')
       this.$q.dialog({
         title: 'MY TITLE',
         message: 'MESSAGE'
