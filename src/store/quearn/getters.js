@@ -14,6 +14,10 @@ export const config = (state) => {
   return state.config
 }
 
+export const removePatterns = (state) => {
+  return state.removePatterns
+}
+
 export const xss = (state) => {
   return state.xss
 }
@@ -28,6 +32,15 @@ export const bookmarksByQuestion = (state) => {
 
 export const topics = (state) => {
   return state.topics
+}
+
+export const topicByName = (state) => (name) => {
+  for (let topic of state.topics) {
+    if (topic.topic.toLowerCase() === name.toLowerCase()) {
+      return topic.topic
+    }
+  }
+  return null
 }
 
 export const topicStr = (state) => (id) => {

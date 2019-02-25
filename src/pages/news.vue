@@ -69,7 +69,7 @@ export default {
     getBlogBody: function (blog) {
       return md2html(blog.body,
         this.$store.getters['quearn/xss'],
-        this.$store.getters['quearn/config'].post_addon_msg)
+        this.$store.getters['quearn/removePatterns'])
     },
     getNews: function (sources) {
       let dsteem = this.$store.getters['steem/dsteem']

@@ -54,6 +54,7 @@ module.exports = function (ctx) {
         'QToolbarTitle',
         'QBtn',
         'QBtnGroup',
+        'QKnob',
         'QIcon',
         'QList',
         'QListHeader',
@@ -61,6 +62,7 @@ module.exports = function (ctx) {
         'QItemMain',
         'QItemSide',
         'QChip',
+        'QChipsInput',
         'QTabs',
         'QRouteTab',
         'QTab',
@@ -146,7 +148,7 @@ module.exports = function (ctx) {
       }
     },
     cordova: {
-      // id: 'org.cordova.quasar.app'
+      id: 'io.stemq.app'
     },
     electron: {
       // bundler: 'builder', // or 'packager'

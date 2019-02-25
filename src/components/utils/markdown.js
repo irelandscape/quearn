@@ -1,4 +1,4 @@
-export function md2html (str, xss, addonMsg) {
+export function md2html (str, xss, removePatterns) {
   if (!str) {
     return
   }
@@ -6,10 +6,14 @@ export function md2html (str, xss, addonMsg) {
   let Remarkable = require('remarkable')
   let md = new Remarkable('full', {
     html: true,
-    linkify: false
+    linkify: false,
+    breaks: true
   })
-  if (addonMsg && addonMsg.length) {
-    str = str.replace(addonMsg, '')
+
+  if (removePatterns) {
+    for (let pattern of removePatterns) {
+      str = str.replace(pattern, '')
+    }
   }
 
   str = xss.process(md.render(str))
