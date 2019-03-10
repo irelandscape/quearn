@@ -14,13 +14,9 @@
       <q-btn
         @click="login()"
         :label = "$t('login')"
-      >
-      </q-btn>
-      <q-btn
-        @click="signup()"
-        :label = "$t('signup')"
-      >
-      </q-btn>
+        class="float-left"
+      />
+      <SteemSignup class="float-left" />
     </div>
     <q-dialog
       v-model="showDialog"
@@ -33,8 +29,13 @@
 
 <script>
 
+import SteemSignup from 'components/steemsignup'
+
 export default {
   name: 'Steemlogin',
+  components: {
+    SteemSignup
+  },
   data: function () {
     return {
       client: null,
@@ -45,7 +46,7 @@ export default {
   props: {
   },
   mounted: function () {
-    this.$root.$on('signup', () => this.signup())
+    this.$root.$on('login', () => this.login())
 
     if (localStorage.expires) {
       let now = new Date()
