@@ -45,6 +45,9 @@
 
 <script>
 
+import { decryptAuthDetails } from 'components/utils/steem'
+import { PrivateKey } from 'dsteem'
+
 export default {
   name: 'PageMyTopics',
   data: function () {
@@ -55,18 +58,23 @@ export default {
   },
   mounted () {
     let username = this.$store.getters['steem/username']
-    let accessToken = this.$store.getters['steem/accessToken']
     let topics = this.$store.getters['quearn/topics']
     let favouriteTopics = this.$store.getters['quearn/favouriteTopicsById']
 
     if (favouriteTopics === null) {
-      this.$store.dispatch('quearn/favouriteTopicsById',
-        {
-          username,
-          accessToken
+      decryptAuthDetails(this.$store.getters['steem/authDetails'])
+        .then((authDetails) => {
+          this.$store.dispatch('quearn/favouriteTopicsById',
+            {
+              username,
+              pk: PrivateKey.fromString(authDetails.steemPostingKey)
+            })
+            .then(response => {
+              this.updateTopics()
+            })
         })
-        .then(response => {
-          this.updateTopics()
+        .catch((error) => {
+          console.log(error)
         })
     }
 
@@ -123,17 +131,26 @@ export default {
     },
     checkFavouriteTopic: function (id) {
       let username = this.$store.getters['steem/username']
-      let accessToken = this.$store.getters['steem/accessToken']
 
-      if (this.mytopics.includes(id)) {
-        this.$store.dispatch('quearn/addTopic', {
-          id, username, accessToken
+      decryptAuthDetails(this.$store.getters['steem/authDetails'])
+        .then((authDetails) => {
+          if (this.mytopics.includes(id)) {
+            this.$store.dispatch('quearn/addTopic', {
+              id,
+              username,
+              pk: PrivateKey.fromString(authDetails.steemPostingKey)
+            })
+          } else {
+            this.$store.dispatch('quearn/removeTopic', {
+              id,
+              username,
+              pk: PrivateKey.fromString(authDetails.steemPostingKey)
+            })
+          }
         })
-      } else {
-        this.$store.dispatch('quearn/removeTopic', {
-          id, username, accessToken
+        .catch((error) => {
+          console.log(error)
         })
-      }
     }
   }
 }

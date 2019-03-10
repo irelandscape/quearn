@@ -180,8 +180,6 @@ export default {
           '/answers/?id=' + this.$route.params.id,
         {
           params: {
-            username: this.$store.getters['steem/username'],
-            access_token: this.$store.getters['steem/accessToken']
           }
         }
       ).then((response) => {

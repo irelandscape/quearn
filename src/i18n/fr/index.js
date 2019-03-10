@@ -35,6 +35,8 @@ export default {
   latestquestions: 'Questions recentes',
   linktoquestion: 'Cet article est une reponse a [cette question](@LINK).',
   login: 'Se connecter',
+  loginfailure: 'Erreur durant l\'authentication',
+  loginwithoutauthcode: 'SteemLogin n\'a pas retourne de code d\'authorisation!',
   logout: 'Se deconnecter',
   maintext: 'Votre Texte',
   more: 'Plus',

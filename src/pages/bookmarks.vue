@@ -151,8 +151,6 @@ export default {
         this.$store.getters['quearn/serverURL'] + '/questions/' + bookmark.question + '/',
         {
           params: {
-            username: this.$store.getters['steem/username'],
-            access_token: this.$store.getters['steem/accessToken']
           }
         }
       ).then((question) => {

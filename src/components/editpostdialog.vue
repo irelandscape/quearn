@@ -53,7 +53,7 @@
 <script>
 import { required, maxLength } from 'vuelidate/lib/validators'
 import topicpicker from 'components/topicpicker'
-import * as steem from 'components/utils/steem'
+import { editComment, editPost, decryptAuthDetails } from 'components/utils/steem'
 
 const mustBeQuestion = (value) => value.trim().slice(-1) === '?'
 
@@ -109,11 +109,13 @@ export default {
       this.info = info
       let metadata = JSON.parse(this.blog.json_metadata)
       this.additionalTags = []
-      for (let tag of metadata.tags) {
-        if (tag === 'stemq' || this.$store.getters['quearn/topicByName'](tag)) {
-          continue
+      if (metadata.tags) {
+        for (let tag of metadata.tags) {
+          if (tag === 'stemq' || this.$store.getters['quearn/topicByName'](tag)) {
+            continue
+          }
+          this.additionalTags.push(tag)
         }
-        this.additionalTags.push(tag)
       }
     },
     cancelEdit: function () {
@@ -131,63 +133,74 @@ export default {
         this.editpost = true
       }
 
-      if (!this.info.iscomment) {
-        let tags = []
-        tags.push(this.$refs.topicpicker.selectTopicToTag())
-        tags = tags.concat(this.additionalTags)
+      decryptAuthDetails(this.$store.getters['steem/authDetails'])
+        .then((authDetails) => {
+          if (!this.info.iscomment) {
+            let tags = []
+            tags.push(this.$refs.topicpicker.selectTopicToTag())
+            tags = tags.concat(this.additionalTags)
 
-        this.$q.loading.show({
-          message: this.$tc('updating')
-        })
+            this.$q.loading.show({
+              message: this.$tc('updating')
+            })
 
-        steem.editPost(this.$store.getters['steem/client'],
-          this.$store.getters['steem/username'],
-          this.$store.getters['quearn/config'],
-          this.blog.permlink,
-          this.blog.title,
-          tags,
-          this.blog.body,
-          this.$store.getters['quearn/config'].appName + '/' + this.$store.getters['quearn/release']).then(() => {
-          this.$q.loading.hide()
-          this.$q.notify({
-            message: this.$t('editsuccessfull'),
-            type: 'positive'
-          })
-        }).catch((err) => {
-          this.$q.notify({
-            message: this.$tc('editfailure'),
-            detail: err.error_description,
-            type: 'negative'
-          })
-          this.blog.title = this.originalTitle
-          this.blog.body = this.originalBody
-          this.$q.loading.hide()
+            editPost(this.$store.getters['steem/dsteem'],
+              authDetails.steemPostingKey,
+              this.$store.getters['steem/username'],
+              this.$store.getters['quearn/config'],
+              this.blog.permlink,
+              this.blog.title,
+              tags,
+              this.blog.body,
+              this.$store.getters['quearn/config'].appName + '/' + this.$store.getters['quearn/release']).then(() => {
+              this.$q.loading.hide()
+              this.$q.notify({
+                message: this.$t('editsuccessfull'),
+                type: 'positive'
+              })
+            }).catch((err) => {
+              console.log(err)
+              this.$q.notify({
+                message: this.$tc('editfailure'),
+                detail: err.error_description,
+                type: 'negative'
+              })
+              this.blog.title = this.originalTitle
+              this.blog.body = this.originalBody
+              this.$q.loading.hide()
+            })
+          } else {
+            editComment(this.$store.getters['steem/dsteem'],
+              authDetails.steemPostingKey,
+              this.info.parentAuthor,
+              this.info.parentPermlink,
+              this.$store.getters['quearn/config'],
+              this.$store.getters['steem/username'],
+              this.blog.permlink,
+              this.blog.body).then(() => {
+              this.$q.loading.hide()
+              this.$q.notify({
+                message: this.$t('editsuccessfull'),
+                type: 'positive'
+              })
+              if (this.info.callback) {
+                this.info.callback(this.info.callbackContext)
+              }
+            }).catch((err) => {
+              this.$q.notify({
+                message: this.$tc('editfailure'),
+                detail: err.error_description,
+                type: 'negative'
+              })
+              this.blog.title = this.originalTitle
+              this.blog.body = this.originalBody
+              this.$q.loading.hide()
+            })
+          }
         })
-      } else {
-        steem.editComment(this.$store.getters['steem/client'],
-          this.info.parentAuthor,
-          this.info.parentPermlink,
-          this.$store.getters['quearn/config'],
-          this.$store.getters['steem/username'],
-          this.blog.permlink,
-          this.blog.body).then(() => {
-          this.$q.loading.hide()
-          this.$q.notify({
-            message: this.$t('editsuccessfull'),
-            type: 'positive'
-          })
-          this.info.callback(this.info.callbackContext)
-        }).catch((err) => {
-          this.$q.notify({
-            message: this.$tc('editfailure'),
-            detail: err.error_description,
-            type: 'negative'
-          })
-          this.blog.title = this.originalTitle
-          this.blog.body = this.originalBody
-          this.$q.loading.hide()
+        .catch((error) => {
+          console.log(error)
         })
-      }
     },
     title: function () {
       return this.info.title

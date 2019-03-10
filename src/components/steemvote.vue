@@ -34,6 +34,9 @@
 </template>
 
 <script>
+import { decryptAuthDetails } from 'components/utils/steem'
+import { PrivateKey } from 'dsteem'
+
 export default {
   name: 'Steemvote',
   props: {
@@ -77,26 +80,35 @@ export default {
         message: this.$tc('voting')
       })
       this.$store.commit('steem/votingWeight', this.voteWeight)
-      this.$store.getters['steem/client'].vote(
-        this.$store.getters['steem/username'],
-        this.blog.author,
-        this.blog.permlink,
-        this.voteWeight * 100
-      ).then(() => {
-        if (this.voteWeight !== 0) {
-          this.voted = true
-        } else {
-          this.voted = false
-        }
-        this.$q.loading.hide()
-      }).catch((err) => {
-        this.$q.notify({
-          message: this.$i18n.tc('votingfailed'),
-          detail: err.error_description,
-          type: 'negative'
+      decryptAuthDetails(this.$store.getters['steem/authDetails'])
+        .then((authDetails) => {
+          this.$store.getters['steem/dsteem'].broadcast.vote(
+            {
+              voter: this.$store.getters['steem/username'],
+              author: this.blog.author,
+              permlink: this.blog.permlink,
+              weight: this.voteWeight * 100
+            },
+            PrivateKey.fromString(authDetails.steemPostingKey)
+          ).then(() => {
+            if (this.voteWeight !== 0) {
+              this.voted = true
+            } else {
+              this.voted = false
+            }
+            this.$q.loading.hide()
+          }).catch((err) => {
+            this.$q.notify({
+              message: this.$i18n.tc('votingfailed'),
+              detail: err.error_description,
+              type: 'negative'
+            })
+            this.$q.loading.hide()
+          })
         })
-        this.$q.loading.hide()
-      })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 }

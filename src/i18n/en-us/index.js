@@ -36,6 +36,8 @@ export default {
   latestquestions: 'Latest questions',
   linktoquestion: 'The following is an answer to [this question](@LINK)',
   login: 'Login',
+  loginfailure: 'Login failure',
+  loginwithoutauthcode: 'No authorization code supplied by SteemLogin!',
   logout: 'Logout',
   maintext: 'Main Text',
   more: 'More',

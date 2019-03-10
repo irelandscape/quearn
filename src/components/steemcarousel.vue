@@ -122,8 +122,6 @@ export default {
       this.$store.getters['quearn/serverURL'] + '/answers/?created_gte=' + d,
       {
         params: {
-          username: this.$store.getters['steem/username'],
-          access_token: this.$store.getters['steem/accessToken']
         }
       }
     ).then((answers) => {

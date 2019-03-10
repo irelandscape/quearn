@@ -80,6 +80,8 @@ import topicpicker from 'components/topicpicker'
 import axios from 'axios'
 import { required, maxLength } from 'vuelidate/lib/validators'
 import { md2html } from 'components/utils/markdown'
+import { decryptAuthDetails } from 'components/utils/steem'
+import { PrivateKey } from 'dsteem'
 
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
 axios.defaults.xsrfCookieName = 'csrftoken'
@@ -179,15 +181,15 @@ export default {
       this.$refs.topicpicker.secondaryTopic = ''
       this.$refs.topicpicker.ternaryTopic = ''
     },
-    submitPost: (vue) => {
+    submitPost: (vue, pk) => {
       let tag1 = ''
-      if (vue.$refs.topicpicker.ternaryTopic !== '') {
+      if (vue.$refs.topicpicker.ternaryTopic && vue.$refs.topicpicker.ternaryTopic !== '') {
         tag1 = vue.topicStr(vue.$store.getters['quearn/topics'],
           vue.$refs.topicpicker.ternaryTopic)
-      } else if (vue.$refs.topicpicker.secondaryTopic !== '') {
+      } else if (vue.$refs.topicpicker.secondaryTopic && vue.$refs.topicpicker.secondaryTopic !== '') {
         tag1 = vue.topicStr(vue.$store.getters['quearn/topics'],
           vue.$refs.topicpicker.secondaryTopic)
-      } else if (vue.$refs.topicpicker.primaryTopic !== '') {
+      } else if (vue.$refs.topicpicker.primaryTopic && vue.$refs.topicpicker.primaryTopic !== '') {
         tag1 = vue.topicStr(vue.$store.getters['quearn/topics'],
           vue.$refs.topicpicker.primaryTopic)
       }
@@ -219,21 +221,6 @@ export default {
         body += '\n\n' + vue.$store.getters['quearn/config'].post_addon_msg
       }
 
-      let operations = []
-      const params = {
-        parent_author: '',
-        parent_permlink: vue.$store.getters['quearn/config'].tag,
-        author: vue.$store.getters['steem/username'],
-        permlink: permlink,
-        title: vue.form.title,
-        body: body,
-        json_metadata: JSON.stringify({
-          tags: tags,
-          app: vue.$store.getters['quearn/config'].appName + '/' + vue.$store.getters['quearn/release']
-        })
-      }
-      operations.push(['comment', params])
-
       let commentOptionsConfig = {
         author: vue.$store.getters['steem/username'],
         permlink: permlink,
@@ -252,57 +239,85 @@ export default {
           }
         ])
       }
-      operations.push(['comment_options', commentOptionsConfig])
 
-      vue.$store.getters['steem/client'].broadcast(operations).then(() => {
-        vue.success = true
-        if (vue.isquestion) {
-          vue.$q.localStorage.remove('questioneditblogform')
-          vue.$q.localStorage.remove('questionprimaryTopic')
-          vue.$q.localStorage.remove('questionsecondaryTopic')
-          vue.$q.localStorage.remove('questionternaryTopic')
-        } else {
-          vue.$q.localStorage.remove('answereditblogform')
-          vue.$q.localStorage.remove('answerprimaryTopic')
-          vue.$q.localStorage.remove('answersecondaryTopic')
-          vue.$q.localStorage.remove('answerternaryTopic')
-        }
-
-        let url = vue.$store.getters['quearn/serverURL']
-        if (vue.isquestion) {
-          url += '/newquestion'
-        } else {
-          url += '/newanswer'
-        }
-
-        let params = {
-          username: vue.$store.getters['steem/username'],
-          access_token: vue.$store.getters['steem/accessToken'],
+      vue.$store.getters['steem/dsteem'].broadcast.commentWithOptions(
+        {
+          parent_author: '',
+          parent_permlink: vue.$store.getters['quearn/config'].tag,
+          author: vue.$store.getters['steem/username'],
           permlink: permlink,
           title: vue.form.title,
-          tags: tags,
-          withCredentials: true
-        }
-
-        if (!vue.isquestion) {
-          params['question_author'] = vue.question_author
-          params['question_permlink'] = vue.question_permlink
-        }
-
-        axios.post(
-          url,
-          params
-        ).then((response) => {
-          vue.$q.loading.hide()
-          vue.$q.notify({
-            message: vue.$tc('postingsuccess'),
-            type: 'positive'
+          body: body,
+          json_metadata: JSON.stringify({
+            tags: tags,
+            app: vue.$store.getters['quearn/config'].appName + '/' + vue.$store.getters['quearn/release']
           })
-          if (vue.emit_editcompleted) {
-            vue.$emit('editcompleted', true)
+        },
+        commentOptionsConfig,
+        PrivateKey.fromString(pk))
+        .then(() => {
+          vue.success = true
+          if (vue.isquestion) {
+            vue.$q.localStorage.remove('questioneditblogform')
+            vue.$q.localStorage.remove('questionprimaryTopic')
+            vue.$q.localStorage.remove('questionsecondaryTopic')
+            vue.$q.localStorage.remove('questionternaryTopic')
           } else {
-            vue.$router.push('/')
+            vue.$q.localStorage.remove('answereditblogform')
+            vue.$q.localStorage.remove('answerprimaryTopic')
+            vue.$q.localStorage.remove('answersecondaryTopic')
+            vue.$q.localStorage.remove('answerternaryTopic')
           }
+
+          let url = vue.$store.getters['quearn/serverURL']
+          if (vue.isquestion) {
+            url += '/newquestion'
+          } else {
+            url += '/newanswer'
+          }
+
+          let params = {
+            username: vue.$store.getters['steem/username'],
+            posting_key: pk,
+            permlink: permlink,
+            title: vue.form.title,
+            tags: tags,
+            withCredentials: true
+          }
+
+          if (!vue.isquestion) {
+            params['question_author'] = vue.question_author
+            params['question_permlink'] = vue.question_permlink
+          }
+
+          axios.post(
+            url,
+            params
+          ).then((response) => {
+            vue.$q.loading.hide()
+            vue.$q.notify({
+              message: vue.$tc('postingsuccess'),
+              type: 'positive'
+            })
+            if (vue.emit_editcompleted) {
+              vue.$emit('editcompleted', true)
+            } else {
+              vue.$router.push('/')
+            }
+          }).catch((err) => {
+            vue.$q.notify({
+              message: vue.$tc('postingfailed'),
+              detail: err.error_description,
+              type: 'negative'
+            })
+            vue.$q.loading.hide()
+            if (vue.emit_editcompleted) {
+              vue.$emit('editcompleted', false)
+            } else {
+              vue.$router.push('/')
+            }
+          })
+          vue.$q.loading.hide()
         }).catch((err) => {
           vue.$q.notify({
             message: vue.$tc('postingfailed'),
@@ -316,45 +331,37 @@ export default {
             vue.$router.push('/')
           }
         })
-        vue.$q.loading.hide()
-      }).catch((err) => {
-        vue.$q.notify({
-          message: vue.$tc('postingfailed'),
-          detail: err.error_description,
-          type: 'negative'
-        })
-        vue.$q.loading.hide()
-        if (vue.emit_editcompleted) {
-          vue.$emit('editcompleted', false)
-        } else {
-          vue.$router.push('/')
-        }
-      })
     },
     submit () {
-      this.$v.form.$touch()
+      decryptAuthDetails(this.$store.getters['steem/authDetails'])
+        .then((authDetails) => {
+          this.$v.form.$touch()
 
-      if (this.$v.form.$error) {
-        this.$q.notify('Please review fields again')
-        return
-      }
+          if (this.$v.form.$error) {
+            this.$q.notify('Please review fields again')
+            return
+          }
 
-      let images = this.form.body.match('https?://.*?\\.(?:png|jpe?g|gif)')
-      if (images !== null && images.length > 0) {
-        this.submitPost(this)
-      } else {
-        this.$root.$emit('confirm_dialog',
-          this.$tc('noimagewarning'),
-          this.$tc('noimagewarningdetails'),
-          () => {
-            this.submitPost(this)
-          },
-          undefined,
-          this.$tc('yesimsure'),
-          this.$tc('woopsiforgot'),
-          'warning',
-          'warning')
-      }
+          let images = this.form.body.match('https?://.*?\\.(?:png|jpe?g|gif)')
+          if (images !== null && images.length > 0) {
+            this.submitPost(this, authDetails.steemPostingKey)
+          } else {
+            this.$root.$emit('confirm_dialog',
+              this.$tc('noimagewarning'),
+              this.$tc('noimagewarningdetails'),
+              () => {
+                this.submitPost(this, authDetails.steemPostingKey)
+              },
+              undefined,
+              this.$tc('yesimsure'),
+              this.$tc('woopsiforgot'),
+              'warning',
+              'warning')
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
     cancel () {
       this.resetForm()
@@ -407,6 +414,16 @@ export default {
       this.$refs.topicpicker.primaryTopic = this.$q.localStorage.get.item('answerprimaryTopic')
       this.$refs.topicpicker.secondaryTopic = this.$q.localStorage.get.item('answersecondaryTopic')
       this.$refs.topicpicker.ternaryTopic = this.$q.localStorage.get.item('answerternaryTopic')
+    }
+
+    if (this.$refs.topicpicker.primaryTopic === 'null') {
+      this.$refs.topicpicker.primaryTopic = ''
+    }
+    if (this.$refs.topicpicker.secondaryTopic === 'null') {
+      this.$refs.topicpicker.secondaryTopic = ''
+    }
+    if (this.$refs.topicpicker.ternaryTopic === 'null') {
+      this.$refs.topicpicker.ternaryTopic = ''
     }
 
     if (form !== null && form !== 'null') {

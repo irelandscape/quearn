@@ -167,8 +167,6 @@ export default {
         this.$store.getters['quearn/serverURL'] + '/answers/',
         {
           params: {
-            username: this.$store.getters['steem/username'],
-            access_token: this.$store.getters['steem/accessToken'],
             question: this.question.id
           }
         }
@@ -221,8 +219,6 @@ export default {
           '/questions/?id=' + this.$route.params.id,
         {
           params: {
-            username: this.$store.getters['steem/username'],
-            access_token: this.$store.getters['steem/accessToken']
           }
         }
       ).then((response) => {
@@ -243,8 +239,6 @@ export default {
           '/questions/?author=' + this.$route.params.author + '&permlink=' + this.$route.params.permlink,
         {
           params: {
-            username: this.$store.getters['steem/username'],
-            access_token: this.$store.getters['steem/accessToken']
           }
         }
       ).then((response) => {

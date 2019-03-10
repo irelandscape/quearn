@@ -136,8 +136,6 @@ export default {
       this.$store.getters['quearn/serverURL'] + '/answers/?author=' + encodeURIComponent(user) + '&ordering=-created',
       {
         params: {
-          username: this.$store.getters['steem/username'],
-          access_token: this.$store.getters['steem/accessToken']
         }
       }
     ).then((answers) => {

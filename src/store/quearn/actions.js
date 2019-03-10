@@ -7,7 +7,7 @@ export const favouriteTopicsById = (state, payload) => {
     {
       params: {
         username: payload.username,
-        access_token: payload.accessToken
+        posting_key: payload.pk
       }
     }
   ).then(function (response) {
@@ -22,7 +22,7 @@ export const addTopic = (state, payload) => {
     state.getters.serverURL + '/favourite_topics/',
     {
       username: payload.username,
-      access_token: payload.accessToken,
+      posting_key: payload.pk,
       topic: payload.id
     }
   ).then(function (response) {
@@ -40,7 +40,7 @@ export const removeTopic = (state, payload) => {
         {
           params: {
             username: payload.username,
-            access_token: payload.accessToken
+            posting_key: payload.pk
           }
         }
       ).then(function (response) {
@@ -62,7 +62,7 @@ export const addBookmark = (state, params) => {
     {
       question: params.question.id,
       username: params.username,
-      access_token: params.accessToken
+      posting_key: params.pk
     }
   ).then((response) => {
     state.commit('addBookmark', response.data)
@@ -91,7 +91,7 @@ export const removeBookmark = (state, params) => {
     {
       params: {
         username: params.username,
-        access_token: params.accessToken
+        posting_key: params.pk
       }
     }
   ).then((response) => {
