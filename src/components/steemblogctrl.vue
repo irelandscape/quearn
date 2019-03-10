@@ -100,7 +100,8 @@
 
 <script>
 import Steemvote from 'components/steemvote'
-import { payout } from 'components/utils/steem'
+import { payout, decryptAuthDetails } from 'components/utils/steem'
+import { PrivateKey } from 'dsteem'
 
 export default {
   name: 'Steemblogctrl',
@@ -122,24 +123,43 @@ export default {
           this.$q.loading.show({
             message: this.$tc('resteeming')
           })
-          this.$store.getters['steem/client'].reblog(
-            this.$store.getters['steem/username'],
-            this.blog.author,
-            this.blog.permlink
-          ).then(() => {
-            this.$q.loading.hide()
-            this.$q.notify({
-              message: this.$tc('resteemsuccess'),
-              type: 'positive'
+          decryptAuthDetails(this.$store.getters['steem/authDetails'])
+            .then((authDetails) => {
+              const jsonOp = JSON.stringify([
+                'reblog',
+                {
+                  account: this.$store.getters['steem/username'],
+                  author: this.blog.author,
+                  permlink: this.blog.permlink
+                }
+              ])
+              const data = {
+                id: 'follow',
+                json: jsonOp,
+                required_auths: [],
+                required_posting_auths: [this.$store.getters['steem/username']]
+              }
+
+              this.$store.getters['steem/dsteem'].broadcast.json(data,
+                PrivateKey.fromString(authDetails.steemPostingKey))
+                .then(() => {
+                  this.$q.loading.hide()
+                  this.$q.notify({
+                    message: this.$tc('resteemsuccess'),
+                    type: 'positive'
+                  })
+                }).catch((err) => {
+                  this.$q.loading.hide()
+                  this.$q.notify({
+                    message: this.$tc('resteemfailed'),
+                    detail: err.error_description,
+                    type: 'negative'
+                  })
+                })
             })
-          }).catch((err) => {
-            this.$q.loading.hide()
-            this.$q.notify({
-              message: this.$tc('resteemfailed'),
-              detail: err.error_description,
-              type: 'negative'
+            .catch((error) => {
+              console.log(error)
             })
-          })
         })
     },
     isAuthor: function () {
@@ -153,21 +173,27 @@ export default {
     },
     toggleBookmark: function () {
       let bookmark = this.$store.getters['quearn/bookmark'](this.question.id)
-      if (bookmark) {
-        this.$store.dispatch('quearn/removeBookmark', {
-          vue: this,
-          bookmark,
-          username: this.$store.getters['steem/username'],
-          accessToken: this.$store.getters['steem/accessToken']
+      decryptAuthDetails(this.$store.getters['steem/authDetails'])
+        .then((authDetails) => {
+          if (bookmark) {
+            this.$store.dispatch('quearn/removeBookmark', {
+              vue: this,
+              bookmark,
+              username: this.$store.getters['steem/username'],
+              pk: authDetails.steemPostingKey
+            })
+          } else {
+            this.$store.dispatch('quearn/addBookmark', {
+              vue: this,
+              question: this.question,
+              username: this.$store.getters['steem/username'],
+              pk: authDetails.steemPostingKey
+            })
+          }
         })
-      } else {
-        this.$store.dispatch('quearn/addBookmark', {
-          vue: this,
-          question: this.question,
-          username: this.$store.getters['steem/username'],
-          accessToken: this.$store.getters['steem/accessToken']
+        .catch((error) => {
+          console.log(error)
         })
-      }
     }
   },
   computed: {

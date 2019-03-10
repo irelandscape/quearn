@@ -2,16 +2,12 @@
 export const someGetter = (state) => {}
  */
 
-export const client = (state) => {
-  return state.client
-}
-
 export const dsteem = (state) => {
   return state.dsteem
 }
 
 export const loggedIn = (state) => {
-  return state.access_token != null
+  return state.authDetails && state.authDetails.length
 }
 
 export const avatar = (state) => {
@@ -22,8 +18,8 @@ export const username = (state) => {
   return state.username
 }
 
-export const accessToken = (state) => {
-  return state.access_token
+export const postingKey = (state) => {
+  return state.postingKey
 }
 
 export const votingWeight = (state) => {
@@ -47,4 +43,8 @@ export const reputation = (state) => (username) => {
   } else {
     return ''
   }
+}
+
+export const authDetails = (state) => {
+  return state.authDetails
 }

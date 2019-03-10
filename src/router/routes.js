@@ -80,14 +80,14 @@ export default [
     ]
   },
   {
-    path: '/auth',
-    children: [
-      {
-        path: 'callback',
-        name: 'auth.callback',
-        component: () => import('components/steemlogincallback')
-      }
-    ]
+    path: '/steemlogin/success',
+    component: () => import('components/steemloginsuccess'),
+    props: true
+  },
+  {
+    path: '/steemlogin/failure',
+    component: () => import('components/steemloginfailure'),
+    props: true
   },
   { // Always leave this as last one
     path: '*',

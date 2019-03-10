@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Notify } from 'quasar'
+import { decryptAuthDetails } from 'components/utils/steem'
 
 export default ({ store, Vue }) => {
   if (process.env.NODE_ENV === 'development') {
@@ -42,18 +43,24 @@ export default ({ store, Vue }) => {
     })
 
   if (store.getters['steem/username']) {
-    axios.get(store.getters['quearn/serverURL'] + '/bookmarks/',
-      {
-        params: {
-          username: store.getters['steem/username'],
-          access_token: store.getters['steem/accessToken']
-        }
-      }
-    ).then(function (response) {
-      store.commit('quearn/bookmarks', response.data)
-    }).catch(function (error) {
-      console.log(error)
-      Notify.create('Failed to contact API Server')
-    })
+    decryptAuthDetails(store.getters['steem/authDetails'])
+      .then((authDetails) => {
+        axios.get(store.getters['quearn/serverURL'] + '/bookmarks/',
+          {
+            params: {
+              username: store.getters['steem/username'],
+              posting_key: authDetails.steemPostingKey
+            }
+          }
+        ).then(function (response) {
+          store.commit('quearn/bookmarks', response.data)
+        }).catch(function (error) {
+          console.log(error)
+          Notify.create('Failed to contact API Server')
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 }

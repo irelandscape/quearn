@@ -48,24 +48,6 @@ export default {
   mounted: function () {
     this.$root.$on('login', () => this.login())
 
-    // let url = require('url')
-    // let q = url.parse(document.location.origin, true)
-    let callbackurl
-    if (process.env.NODE_ENV === 'development') {
-      callbackurl = 'http://localhost:8080/auth/callback'
-    } else {
-      let url = require('url')
-      let q = url.parse(document.location.origin, true)
-      callbackurl = 'https://' + q.hostname + '/auth/callback'
-    }
-    this.$store.commit('steem/createClient', {
-      app: 'steemqa-io',
-      baseURL: 'https://steemconnect.com',
-      callbackURL: callbackurl,
-      accessToken: this.$store.getters['steem/accessToken'],
-      scope: ['vote', 'comment', 'custom_json', 'comment_options']
-    })
-
     if (localStorage.expires) {
       let now = new Date()
       let expires = new Date(localStorage.expires)
@@ -92,17 +74,13 @@ export default {
   },
   methods: {
     login: function () {
-      this.$store.dispatch('steem/login')
-        .then(response => {
-          this.$store.getters['steem/client'].me((err, res) => {
-            if (err == null) {
-              this.$store.commit('steem/metadata', res.account.json_metadata)
-            } else {
-              console.log(err)
-            }
-          })
-          this.$router.push('/')
-        })
+      const url = this.$store.getters['quearn/config'].steemlogin_auth_url +
+        '?app=' + encodeURI(this.$store.getters['quearn/config'].appName)
+      if (process.env.DEV) {
+        window.location = url + '&dev'
+      } else {
+        window.location = url
+      }
     },
     signup: function () {
       document.location = 'https://signup.steemit.com/?ref=' + this.$store.getters['quearn/config'].appName

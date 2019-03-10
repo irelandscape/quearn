@@ -63,6 +63,7 @@ export default {
         this.secondaryTopic = topics.secondary.id
       }
       if (topics.ternary) {
+        console.log('HEY!')
         this.ternaryTopic = topics.ternary.id
       }
     },
