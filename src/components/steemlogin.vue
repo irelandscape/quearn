@@ -14,13 +14,9 @@
       <q-btn
         @click="login()"
         :label = "$t('login')"
-      >
-      </q-btn>
-      <q-btn
-        @click="signup()"
-        :label = "$t('signup')"
-      >
-      </q-btn>
+        class="float-left"
+      />
+      <SteemSignup class="float-left" />
     </div>
     <q-dialog
       v-model="showDialog"
@@ -33,8 +29,13 @@
 
 <script>
 
+import SteemSignup from 'components/steemsignup'
+
 export default {
   name: 'Steemlogin',
+  components: {
+    SteemSignup
+  },
   data: function () {
     return {
       client: null,
@@ -46,7 +47,6 @@ export default {
   },
   mounted: function () {
     this.$root.$on('login', () => this.login())
-    this.$root.$on('signup', () => this.signup())
 
     // let url = require('url')
     // let q = url.parse(document.location.origin, true)
