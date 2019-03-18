@@ -1,7 +1,3 @@
-import axios from 'axios'
-import { Notify } from 'quasar'
-import { decryptAuthDetails } from 'components/utils/steem'
-
 export default ({ store, Vue }) => {
   if (process.env.NODE_ENV === 'development') {
     store.commit('quearn/serverURL', 'http://localhost:8000/api')
@@ -21,46 +17,4 @@ export default ({ store, Vue }) => {
       }
     }
   }))
-  axios.get(store.getters['quearn/serverURL'] + '/configs/').then(
-    function (response) {
-      let config = response.data[0]
-      store.commit('quearn/config', config)
-      // document.title = config.appName
-
-      store.commit('quearn/removePatterns', new RegExp('\\*\\*' + config.appName + ' [Nn]otice:.*\n*', 'g'))
-    }).catch(
-    function (error) {
-      console.log(error)
-      Notify.create('Failed to contact API Server')
-    })
-  axios.get(store.getters['quearn/serverURL'] + '/topics/').then(
-    function (response) {
-      store.commit('quearn/topics', response.data)
-    }).catch(
-    function (error) {
-      console.log(error)
-      Notify.create('Failed to contact API Server')
-    })
-
-  if (store.getters['steem/username']) {
-    decryptAuthDetails(store.getters['steem/authDetails'])
-      .then((authDetails) => {
-        axios.get(store.getters['quearn/serverURL'] + '/bookmarks/',
-          {
-            params: {
-              username: store.getters['steem/username'],
-              posting_key: authDetails.steemPostingKey
-            }
-          }
-        ).then(function (response) {
-          store.commit('quearn/bookmarks', response.data)
-        }).catch(function (error) {
-          console.log(error)
-          Notify.create('Failed to contact API Server')
-        })
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
 }
