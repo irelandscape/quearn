@@ -17,7 +17,7 @@
             </div>
           </div>
       </q-toolbar-title>
-      <q-btn size="lg" @click="$router.go(-1)" >
+      <q-btn size="lg" @click="$router.go(-2)" >
         <q-icon name="close" outlined>
           <q-tooltip>Back</q-tooltip>
         </q-icon>
