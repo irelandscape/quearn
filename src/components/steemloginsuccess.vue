@@ -6,6 +6,7 @@
 
 import axios from 'axios'
 import { Loading } from 'quasar'
+
 export default {
 
   name: 'steemLoginSuccess',
@@ -31,6 +32,13 @@ export default {
         }
 
         this.$store.dispatch('steem/authDetails', response.data).then(() => {
+          let t = new Date()
+          const expiration = this.$store.getters['quearn/config'].session_expiration * 1000
+          t.setSeconds(t.getSeconds() + expiration)
+          localStorage.setItem('expires', t.toISOString())
+          window.session_timer = setTimeout(() => {
+            this.$root.$emit('session-expired')
+          }, expiration)
           Loading.hide()
           this.$router.push('/')
         })
