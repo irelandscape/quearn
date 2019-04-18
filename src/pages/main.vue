@@ -43,6 +43,32 @@
 
 export default {
   name: 'PageMain',
+  meta () {
+    return {
+      meta: [
+        {
+          property: 'og:site_name',
+          content: this.$store.getters['quearn/config'].site_name.length ? this.$store.getters['quearn/config'].site_name : ''
+        },
+        {
+          property: 'og:url',
+          content: this.$store.getters['quearn/config'].url.length ? this.$store.getters['quearn/config'].url : ''
+        },
+        {
+          property: 'og:image',
+          content: this.$store.getters['quearn/config'].image.length ? this.$store.getters['quearn/config'].image : ''
+        },
+        {
+          property: 'og:title',
+          content: this.$store.getters['quearn/config'].title.length ? this.$store.getters['quearn/config'].title : ''
+        },
+        {
+          property: 'og:description',
+          content: this.$store.getters['quearn/config'].description.length ? this.$store.getters['quearn/config'].description : ''
+        }
+      ]
+    }
+  },
   mounted: function () {
   }
 }

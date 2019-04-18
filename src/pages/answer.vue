@@ -110,6 +110,27 @@ export default {
     }
   },
   computed: {
+    description: function () {
+      return 'Answer by @' + this.blog.author
+    },
+    title: function () {
+      return this.blog.title.replace(/^A *- */g, '')
+    },
+    image: function () {
+      if (!this.blog) {
+        return ''
+      }
+      if (this.metadata && this.metadata.image) {
+        return this.metadata.image[0]
+      } else {
+        let images = this.blog.body.match('https?://.*?\\.(?:png|jpe?g|gif)')
+        if (images !== null && images.length > 0) {
+          return 'https://steemitimages.com/0x0/' + images[0]
+        } else {
+          return '/assets/atom.jpg'
+        }
+      }
+    },
     tags: function () {
       let tags = JSON.parse(this.blog.json_metadata).tags
       return tags.filter((elem) => {
@@ -167,6 +188,32 @@ export default {
   },
   watch: {
     blog: function () {
+    }
+  },
+  meta () {
+    return {
+      meta: [
+        {
+          property: 'og:site_name',
+          content: this.$store.getters['quearn/config'].site_name.length ? this.$store.getters['quearn/config'].site_name : ''
+        },
+        {
+          property: 'og:url',
+          content: window.location.href
+        },
+        {
+          property: 'og:image',
+          content: this.image
+        },
+        {
+          property: 'og:title',
+          content: this.title
+        },
+        {
+          property: 'og:description',
+          content: this.description
+        }
+      ]
     }
   },
   mounted () {
