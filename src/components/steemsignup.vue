@@ -50,7 +50,7 @@
         <div class="row">
           <div class="col-3">
             <q-chip
-              avatar="/assets/steemit.svg"
+              avatar="/statics/steemit.svg"
               @click="signupWithSteemit"
               style="cursor: pointer;"
             >

@@ -18,12 +18,6 @@
       />
       <SteemSignup class="float-left" />
     </div>
-    <q-dialog
-      v-model="showDialog"
-      :title="$tc('sessionexpired')"
-      @ok="logout()"
-      prevent-close
-    />
   </div>
 </template>
 
@@ -38,28 +32,13 @@ export default {
   },
   data: function () {
     return {
-      client: null,
-      showDialog: false,
-      timer: null
+      client: null
     }
   },
   props: {
   },
   mounted: function () {
     this.$root.$on('login', () => this.login())
-
-    if (localStorage.expires) {
-      let now = new Date()
-      let expires = new Date(localStorage.expires)
-
-      if (now > expires) {
-        this.showDialog = true
-      } else {
-        this.timer = setTimeout(() => {
-          this.showDialog = true
-        }, expires - now)
-      }
-    }
   },
   computed: {
     loggedIn () {
@@ -86,10 +65,6 @@ export default {
       document.location = 'https://signup.steemit.com/?ref=' + this.$store.getters['quearn/config'].appName
     },
     logout: function () {
-      if (this.timer) {
-        clearTimeout(this.timer)
-        this.timer = null
-      }
       this.$store.dispatch('steem/logout')
     },
     myTopics: function () {
