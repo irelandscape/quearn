@@ -144,7 +144,7 @@ export default {
         },
         {
           property: 'og:title',
-          content: this.blog.title
+          content: this.blog ? this.blog.title : ''
         },
         {
           property: 'og:description',
@@ -155,7 +155,9 @@ export default {
   },
   computed: {
     description: function () {
-      return 'Asked by @' + this.blog.author
+      if (this.blog) {
+        return 'Asked by @' + this.blog.author
+      }
     },
     image: function () {
       if (!this.blog) {

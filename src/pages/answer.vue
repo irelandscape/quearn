@@ -96,7 +96,6 @@ export default {
     Answer
   },
   props: {
-    blog: null,
     blogBody: {
       type: String,
       default: null
@@ -104,6 +103,7 @@ export default {
   },
   data () {
     return {
+      blog: null,
       editanswer: false,
       writecomment: false,
       showcomments: false
@@ -111,10 +111,14 @@ export default {
   },
   computed: {
     description: function () {
-      return 'Answer by @' + this.blog.author
+      if (this.blog) {
+        return 'Answer by @' + this.blog.author
+      }
     },
     title: function () {
-      return this.blog.title.replace(/^A *- */g, '')
+      if (this.blog) {
+        return this.blog.title.replace(/^A *- */g, '')
+      }
     },
     image: function () {
       if (!this.blog) {
@@ -225,6 +229,21 @@ export default {
       axios.get(
         this.$store.getters['quearn/serverURL'] +
           '/answers/?id=' + this.$route.params.id,
+        {
+          params: {
+          }
+        }
+      ).then((response) => {
+        this.answer = response.data[0]
+        window.history.pushState(null, this.$store.getters['quearn/config'].appName, '/answer/' + this.answer.author + '/' + this.answer.permlink)
+        this.getDiscussion(this.answer.author, this.answer.permlink)
+      }).catch(function (error) {
+        console.log(error)
+      })
+    } else if (this.$route.params.author && this.$route.params.permlink) {
+      axios.get(
+        this.$store.getters['quearn/serverURL'] +
+          '/answers/?author=' + this.$route.params.author + '&permlink=' + this.$route.params.permlink,
         {
           params: {
           }
