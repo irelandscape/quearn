@@ -38,7 +38,7 @@ export default [
         props: true
       },
       {
-        path: 'answer',
+        path: 'answer/:author/:permlink',
         name: 'answer',
         component: () => import('pages/answer'),
         props: true

@@ -19,3 +19,7 @@ export const authDetails = (state, authDetails) => {
     state.commit('authDetails', encrypted)
   })
 }
+
+export const logout = (state) => {
+  state.commit('logout')
+}

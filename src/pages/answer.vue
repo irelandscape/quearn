@@ -96,7 +96,6 @@ export default {
     Answer
   },
   props: {
-    blog: null,
     blogBody: {
       type: String,
       default: null
@@ -104,12 +103,38 @@ export default {
   },
   data () {
     return {
+      blog: null,
       editanswer: false,
       writecomment: false,
       showcomments: false
     }
   },
   computed: {
+    description: function () {
+      if (this.blog) {
+        return 'Answer by @' + this.blog.author
+      }
+    },
+    title: function () {
+      if (this.blog) {
+        return this.blog.title.replace(/^A *- */g, '')
+      }
+    },
+    image: function () {
+      if (!this.blog) {
+        return ''
+      }
+      if (this.metadata && this.metadata.image) {
+        return this.metadata.image[0]
+      } else {
+        let images = this.blog.body.match('https?://.*?\\.(?:png|jpe?g|gif)')
+        if (images !== null && images.length > 0) {
+          return 'https://steemitimages.com/0x0/' + images[0]
+        } else {
+          return '/assets/atom.jpg'
+        }
+      }
+    },
     tags: function () {
       let tags = JSON.parse(this.blog.json_metadata).tags
       return tags.filter((elem) => {
@@ -169,6 +194,32 @@ export default {
     blog: function () {
     }
   },
+  meta () {
+    return {
+      meta: [
+        {
+          property: 'og:site_name',
+          content: this.$store.getters['quearn/config'].site_name.length ? this.$store.getters['quearn/config'].site_name : ''
+        },
+        {
+          property: 'og:url',
+          content: window.location.href
+        },
+        {
+          property: 'og:image',
+          content: this.image
+        },
+        {
+          property: 'og:title',
+          content: this.title
+        },
+        {
+          property: 'og:description',
+          content: this.description
+        }
+      ]
+    }
+  },
   mounted () {
     if (this.$route.params.blog) {
       this.blog = this.$route.params.blog
@@ -178,6 +229,21 @@ export default {
       axios.get(
         this.$store.getters['quearn/serverURL'] +
           '/answers/?id=' + this.$route.params.id,
+        {
+          params: {
+          }
+        }
+      ).then((response) => {
+        this.answer = response.data[0]
+        window.history.pushState(null, this.$store.getters['quearn/config'].appName, '/answer/' + this.answer.author + '/' + this.answer.permlink)
+        this.getDiscussion(this.answer.author, this.answer.permlink)
+      }).catch(function (error) {
+        console.log(error)
+      })
+    } else if (this.$route.params.author && this.$route.params.permlink) {
+      axios.get(
+        this.$store.getters['quearn/serverURL'] +
+          '/answers/?author=' + this.$route.params.author + '&permlink=' + this.$route.params.permlink,
         {
           params: {
           }

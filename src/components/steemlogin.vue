@@ -32,13 +32,31 @@ export default {
   },
   data: function () {
     return {
-      client: null
+      client: null,
+      showDialog: false
     }
   },
   props: {
   },
   mounted: function () {
+    this.$root.$on('session-expired', () => {
+      this.showDialog = true
+    })
+
     this.$root.$on('login', () => this.login())
+
+    if (localStorage.expires) {
+      let now = new Date()
+      let expires = new Date(localStorage.expires)
+
+      if (now > expires) {
+        this.showDialog = true
+      } else {
+        window.session_timer = setTimeout(() => {
+          this.$root.$emit('session-expired')
+        }, expires - now)
+      }
+    }
   },
   computed: {
     loggedIn () {
@@ -58,13 +76,44 @@ export default {
       if (process.env.DEV) {
         window.location = url + '&dev'
       } else {
-        window.location = url
+        let isCordovaApp = document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1
+
+        if (isCordovaApp) {
+          let win = cordova.InAppBrowser.open(url, '_blank', 'location=no')
+          win.addEventListener('loadstart', (event) => {
+            let s = new URLSearchParams(event.url.split('?')[1])
+            let params = {}
+            for (let pair of s.entries()) {
+              params[pair[0]] = pair[1]
+            }
+
+            if (event.url.indexOf('steemlogin/success') > 0) {
+              win.close()
+              this.$router.push({
+                path: '/steemlogin/success',
+                query: params
+              })
+            } else if (event.url.indexOf('steemlogin/failure') > 0) {
+              win.close()
+              this.$router.push({
+                path: '/steemlogin/failure',
+                query: params
+              })
+            }
+          })
+        } else {
+          window.location = url
+        }
       }
     },
     signup: function () {
       document.location = 'https://signup.steemit.com/?ref=' + this.$store.getters['quearn/config'].appName
     },
     logout: function () {
+      if (window.session_timer) {
+        clearTimeout(window.session_timer)
+        window.session_timer = null
+      }
       this.$store.dispatch('steem/logout')
     },
     myTopics: function () {

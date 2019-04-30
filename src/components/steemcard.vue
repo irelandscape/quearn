@@ -67,7 +67,7 @@ export default {
         if (images !== null && images.length > 0) {
           return 'https://steemitimages.com/0x0/' + images[0]
         } else {
-          return '/statics/atom.jpg'
+          return '/assets/atom.jpg'
         }
       }
     },
